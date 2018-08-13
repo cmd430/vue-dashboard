@@ -14,7 +14,7 @@
     <ul>
       <calendar-items
         v-for="show in shows"
-        v-bind:key="show.index"
+        v-bind:key="show.id"
         v-bind:calendar_item="show"
         v-bind:type="'show'"
         v-bind:hideDownloaded="hideDownloaded"
@@ -24,7 +24,7 @@
     <ul>
       <calendar-items
         v-for="movie in movies"
-        v-bind:key="movie.index"
+        v-bind:key="movie.id"
         v-bind:calendar_item="movie"
         v-bind:type="'movie'"
         v-bind:hideDownloaded="hideDownloaded"
@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import CalendarItems from '@/components/CalendarItems'
 
 export default {
@@ -51,7 +52,6 @@ export default {
           return response.json()
         })
         .then(shows => {
-          let tmp = []
           shows.forEach(episode => {
             let status = {}
             if (episode.hasFile) {
@@ -69,11 +69,6 @@ export default {
                 status.status_text = this.strings.onAir
               }
             } else {
-              if (tmp.includes(episode.series.title)) {
-                return
-              } else {
-                tmp.push(episode.series.title)
-              }
               status.status_class = 'want'
               let now = new Date()
               let airTime = new Date(episode.airDateUtc)
@@ -100,7 +95,14 @@ export default {
             status.img_url = episode.series.images.filter(img => {
               return img.coverType === 'poster'
             })[0].url || ''
-            this.shows.push(status)
+            status.id = episode.id
+            if (this.shows !== [] && typeof this.shows.find(item => (item.id === status.id)) !== 'undefined') {
+              Vue.set(this.shows, this.shows.findIndex(item => item.id === status.id), status)
+            } else {
+              if (this.shows.findIndex(item => (item.name === status.name && item.status_class === 'want')) === -1) {
+                this.shows.push(status)
+              }
+            }
           })
         })
         .catch(err => {
@@ -151,7 +153,12 @@ export default {
             status.img_url = movie.images.filter(img => {
               return img.coverType === 'poster'
             })[0].url || ''
-            this.movies.push(status)
+            status.id = movie.id
+            if (this.movies !== [] && typeof this.movies.find(item => (item.id === status.id)) !== 'undefined') {
+              Vue.set(this.movies, this.movies.findIndex(item => item.id === status.id), status)
+            } else {
+              this.movies.push(status)
+            }
           })
         })
         .catch(err => {
@@ -199,6 +206,10 @@ export default {
   },
   created () {
     this.setMonth(new Date())
+    setInterval(() => {
+      console.log('Updating...')
+      this.getShows()
+    }, 30000)
   }
 }
 </script>
