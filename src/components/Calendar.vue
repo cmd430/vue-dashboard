@@ -133,6 +133,9 @@ export default {
               status.status_class = 'want'
               let now = new Date()
               let airTime = new Date(movie.physicalRelease)
+              if (new Date(this.month.start).toLocaleString('en-nz', { month: 'long' }) !== new Date(movie.physicalRelease).toLocaleString('en-nz', { month: 'long' }) || typeof movie.physicalRelease === 'undefined') {
+                return
+              }
               let diffMilliseconds = (airTime - now)
               let diffDays = Math.floor(diffMilliseconds / 86400000)
               let diffHours = Math.floor((diffMilliseconds % 86400000) / 3600000)
