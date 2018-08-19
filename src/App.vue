@@ -17,22 +17,25 @@ export default {
 </script>
 
 <style>
-body {
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+* {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  cursor: default;
+  user-select: none;
+}
+body {
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: rgb(238, 238, 238);
   background:
     url(./assets/noise.png),
     url(./assets/background.png) top left / cover no-repeat fixed,
     rgba(0, 0, 0, 0);
-  line-height: 1.71428571;
+  line-height: 1.7;
   overflow: overlay;
   width: 100%;
   height: 100%;
   padding: 0;
   margin: 0;
-  min-width: 953px;
 }
 @font-face {
   font-family: 'fontello';
@@ -54,8 +57,6 @@ body {
   font-variant: normal;
   text-transform: none;
   line-height: 1em;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 .icon-th-outline:before { content: '\e800'; }

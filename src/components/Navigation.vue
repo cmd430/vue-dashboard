@@ -66,6 +66,7 @@ li {
   padding: 6px;
   line-height: 1.9;
   color: rgb(153, 153, 153);
+  transition: color 100ms;
 }
 li:hover {
   color: rgb(238, 238, 238);
