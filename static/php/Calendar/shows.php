@@ -1,6 +1,6 @@
 <?php
 
-  include "./conf.php";
+  include "../Config/conf.php";
   header("Content-Type: application/json");
 
   $START = "";

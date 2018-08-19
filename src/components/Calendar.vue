@@ -12,7 +12,7 @@
     </div>
     <h2>TV Shows</h2>
     <ul>
-      <calendar-items
+      <calendar-item
         v-for="show in shows"
         v-bind:key="show.id"
         v-bind:calendar_item="show"
@@ -22,7 +22,7 @@
     </ul>
     <h2>Movies</h2>
     <ul>
-      <calendar-items
+      <calendar-item
         v-for="movie in movies"
         v-bind:key="movie.id"
         v-bind:calendar_item="movie"
@@ -35,16 +35,16 @@
 
 <script>
 import Vue from 'vue'
-import CalendarItems from '@/components/CalendarItems'
+import CalendarItem from '@/components/Calendar/CalendarItem'
 
 export default {
   name: 'Calendar',
   components: {
-    'calendar-items': CalendarItems
+    'calendar-item': CalendarItem
   },
   methods: {
     getShows: function () {
-      fetch('/static/php/shows.php?start=' + this.month.start + '&end=' + this.month.end)
+      fetch('/static/php/Calendar/shows.php?start=' + this.month.start + '&end=' + this.month.end)
         .then(response => {
           if (response.status !== 200) {
             return []
@@ -110,7 +110,7 @@ export default {
         })
     },
     getMovies: function () {
-      fetch('/static/php/movies.php?start=' + this.month.start + '&end=' + this.month.end)
+      fetch('/static/php/Calendar/movies.php?start=' + this.month.start + '&end=' + this.month.end)
         .then(response => {
           if (response.status !== 200) {
             return []
@@ -209,6 +209,7 @@ export default {
     setInterval(() => {
       console.log('Updating...')
       this.getShows()
+      this.getMovies()
     }, 30000)
   }
 }

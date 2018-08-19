@@ -1,6 +1,6 @@
 <?php
 
-  include "./conf.php";
+  include "../Config/conf.php";
   header("Content-Type: application/json");
 
   $START = "";
@@ -25,7 +25,7 @@
     } else {
       $movie['downloading'] = false;
     }
-    $movie['images'][0]['url'] = "/static/php/image.php?tmdb_id=" . $movie['tmdbId'];
+    $movie['images'][0]['url'] = "/static/php/Shared/image.php?tmdb_id=" . $movie['tmdbId'];
   }
 
   echo json_encode($MOVIES_CALENDAR);
