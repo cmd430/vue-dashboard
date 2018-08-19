@@ -135,4 +135,14 @@ ul {
   padding: 0 96px;
   list-style-type: none;
 }
+ul:empty::after {
+  content: 'Nothing to Show';
+  width: 100%;
+  font-size: 13px;
+  color: rgb(153, 153, 153);
+  text-align: center;
+  padding: 15px;
+  margin-left: 50%;
+  transform: translateX(-50%);
+}
 </style>

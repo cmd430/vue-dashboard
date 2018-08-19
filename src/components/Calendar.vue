@@ -72,10 +72,10 @@ export default {
               status.status_class = 'want'
               let now = new Date()
               let airTime = new Date(episode.airDateUtc)
-              let diffMilliseconds = (airTime - now) // milliseconds between now & airTime
-              let diffDays = Math.floor(diffMilliseconds / 86400000) // days
-              let diffHours = Math.floor((diffMilliseconds % 86400000) / 3600000) // hours
-              let diffMinutes = Math.floor(((diffMilliseconds % 86400000) % 3600000) / 60000) // minutes
+              let diffMilliseconds = (airTime - now)
+              let diffDays = Math.floor(diffMilliseconds / 86400000)
+              let diffHours = Math.floor((diffMilliseconds % 86400000) / 3600000)
+              let diffMinutes = Math.floor(((diffMilliseconds % 86400000) % 3600000) / 60000)
               if (diffDays === 0) {
                 if (diffHours === 0) {
                   status.status_text = this.strings.want.replace('??', diffMinutes + (diffMinutes > 1 ? ' Minutes' : ' Minute'))
@@ -133,10 +133,10 @@ export default {
               status.status_class = 'want'
               let now = new Date()
               let airTime = new Date(movie.physicalRelease)
-              let diffMilliseconds = (airTime - now) // milliseconds between now & airTime
-              let diffDays = Math.floor(diffMilliseconds / 86400000) // days
-              let diffHours = Math.floor((diffMilliseconds % 86400000) / 3600000) // hours
-              let diffMinutes = Math.floor(((diffMilliseconds % 86400000) % 3600000) / 60000) // minutes
+              let diffMilliseconds = (airTime - now)
+              let diffDays = Math.floor(diffMilliseconds / 86400000)
+              let diffHours = Math.floor((diffMilliseconds % 86400000) / 3600000)
+              let diffMinutes = Math.floor(((diffMilliseconds % 86400000) % 3600000) / 60000)
               if (diffDays === 0) {
                 if (diffHours === 0) {
                   status.status_text = this.strings.want.replace('??', diffMinutes + (diffMinutes > 1 ? ' Minutes' : ' Minute'))
@@ -231,6 +231,16 @@ ul {
   justify-content: flex-start;
   padding: 0 96px;
   list-style-type: none;
+}
+ul:empty::after {
+  content: 'Nothing to Show';
+  width: 100%;
+  font-size: 13px;
+  color: rgb(153, 153, 153);
+  text-align: center;
+  padding: 15px;
+  margin-left: 50%;
+  transform: translateX(-50%);
 }
 #navigation {
   position: absolute;
