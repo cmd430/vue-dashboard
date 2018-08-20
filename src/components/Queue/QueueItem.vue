@@ -1,9 +1,12 @@
 <template>
 <li>
   <div class="img" v-bind:style="{ 'background-image': 'url(' + queue_item.img_url + ')' }">
-    <span class="downloading">
+    <span v-if="queue_item.timeleft !== this.$store.state.strings.importing" class="downloading">
       <span>{{ queue_item.timeleft }}</span>
       <span>{{ queue_item.progress }}</span>
+    </span>
+    <span v-else class="importing">
+      <span>{{ queue_item.timeleft }}</span>
     </span>
   </div>
   <div class="info">
@@ -58,7 +61,8 @@ div.img {
   letter-spacing: 1px;
   font-size: 12px;
 }
-.img span.downloading {
+.img span.downloading,
+.img span.importing {
   background-color: rgba(143, 44, 189, 0.8);
   color: rgb(238, 238, 238);
   padding: 0;
@@ -68,6 +72,9 @@ span.downloading span:first-child {
 }
 span.downloading span:last-child {
   padding: 0 10px 5px;
+}
+span.importing span {
+  padding: 10px;
 }
 div.info {
   text-align: center;

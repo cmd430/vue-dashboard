@@ -22,7 +22,9 @@ export default new Vuex.Store({
       pending: 'Pending',
       onAir: 'On Air',
       want: 'In ??',
-      eta: 'In About ??'
+      calculating: 'Calculating',
+      eta: 'In About ??',
+      importing: 'Importing'
     }
   },
   mutations: {
