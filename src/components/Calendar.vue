@@ -190,16 +190,22 @@ export default {
     return {
       month: {},
       shows: [],
-      movies: []
+      movies: [],
+      update: null
     }
   },
   created () {
     this.setMonth(new Date())
-    setInterval(() => {
+  },
+  mounted () {
+    this.update = setInterval(() => {
       console.log('Updating...')
       this.getShows()
       this.getMovies()
     }, 30000)
+  },
+  beforeDestroy () {
+    clearInterval(this.update)
   }
 }
 </script>

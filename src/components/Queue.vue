@@ -115,18 +115,24 @@ export default {
   data () {
     return {
       shows: [],
-      movies: []
+      movies: [],
+      update: null
     }
   },
   created () {
     this.clearAll()
     this.getShows()
     this.getMovies()
-    setInterval(() => {
+  },
+  mounted () {
+    this.update = setInterval(() => {
       console.log('Updating...')
       this.getShows()
       this.getMovies()
     }, 30000)
+  },
+  beforeDestroy () {
+    clearInterval(this.update)
   }
 }
 </script>
