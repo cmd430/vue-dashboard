@@ -21,7 +21,8 @@ export default new Vuex.Store({
       downloading: 'Downloading',
       pending: 'Pending',
       onAir: 'On Air',
-      want: 'In ??'
+      want: 'In ??',
+      eta: 'In About ??'
     }
   },
   mutations: {

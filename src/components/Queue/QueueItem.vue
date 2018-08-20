@@ -1,7 +1,10 @@
 <template>
 <li>
   <div class="img" v-bind:style="{ 'background-image': 'url(' + queue_item.img_url + ')' }">
-    <span class="downloading">{{ queue_item.progress }}</span>
+    <span class="downloading">
+      <span>{{ queue_item.timeleft }}</span>
+      <span>{{ queue_item.progress }}</span>
+    </span>
   </div>
   <div class="info">
     <p v-if="type == 'show'" class="title">
@@ -54,11 +57,17 @@ div.img {
   text-transform: uppercase;
   letter-spacing: 1px;
   font-size: 12px;
-  padding: 10px;
 }
 .img span.downloading {
   background-color: rgba(143, 44, 189, 0.8);
   color: rgb(238, 238, 238);
+  padding: 0;
+}
+span.downloading span:first-child {
+  padding: 5px 10px 0;
+}
+span.downloading span:last-child {
+  padding: 0 10px 5px;
 }
 div.info {
   text-align: center;

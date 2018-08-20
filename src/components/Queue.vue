@@ -44,6 +44,21 @@ export default {
             if (status.progress === 'NAN%') {
               status.progress = '0%'
             }
+            let now = new Date()
+            let estimatedCompletionTime = new Date(episode.estimatedCompletionTime)
+            let diffMilliseconds = (estimatedCompletionTime - now)
+            let diffDays = Math.floor(diffMilliseconds / 86400000)
+            let diffHours = Math.floor((diffMilliseconds % 86400000) / 3600000)
+            let diffMinutes = Math.floor(((diffMilliseconds % 86400000) % 3600000) / 60000)
+            if (diffDays === 0) {
+              if (diffHours === 0) {
+                status.timeleft = this.$store.state.strings.eta.replace('??', diffMinutes + (diffMinutes > 1 ? ' Minutes' : ' Minute'))
+              } else {
+                status.timeleft = this.$store.state.strings.eta.replace('??', diffHours + (diffHours > 1 ? ' Hours' : ' Hour'))
+              }
+            } else if (diffDays > 0) {
+              status.timeleft = this.$store.state.strings.eta.replace('??', diffDays + (diffDays > 1 ? ' Days' : ' Day'))
+            }
             status.season_number = (episode.episode.seasonNumber.toString().length > 1 ? episode.episode.seasonNumber.toString() : '0' + episode.episode.seasonNumber.toString())
             status.episode_number = (episode.episode.episodeNumber.toString().length > 1 ? episode.episode.episodeNumber.toString() : '0' + episode.episode.episodeNumber.toString())
             status.episode_title = episode.episode.title
@@ -84,6 +99,21 @@ export default {
             status.progress = Math.round((((movie.size - movie.sizeleft) / movie.size) * 100) * 10) / 10 + '%'
             if (status.progress === 'NAN%') {
               status.progress = '0%'
+            }
+            let now = new Date()
+            let estimatedCompletionTime = new Date(movie.estimatedCompletionTime)
+            let diffMilliseconds = (estimatedCompletionTime - now)
+            let diffDays = Math.floor(diffMilliseconds / 86400000)
+            let diffHours = Math.floor((diffMilliseconds % 86400000) / 3600000)
+            let diffMinutes = Math.floor(((diffMilliseconds % 86400000) % 3600000) / 60000)
+            if (diffDays === 0) {
+              if (diffHours === 0) {
+                status.timeleft = this.$store.state.strings.eta.replace('??', diffMinutes + (diffMinutes > 1 ? ' Minutes' : ' Minute'))
+              } else {
+                status.timeleft = this.$store.state.strings.eta.replace('??', diffHours + (diffHours > 1 ? ' Hours' : ' Hour'))
+              }
+            } else if (diffDays > 0) {
+              status.timeleft = this.$store.state.strings.eta.replace('??', diffDays + (diffDays > 1 ? ' Days' : ' Day'))
             }
             status.name = movie.title
             status.img_url = movie.images.filter(img => {
