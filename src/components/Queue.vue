@@ -28,108 +28,62 @@ export default {
     'queue-item': QueueItem
   },
   methods: {
-    getShows: function () {
-      fetch('/static/php/Queue/shows.php')
+    processQueue: function (queueType) {
+      fetch(`/static/php/Queue/${queueType}.php`)
         .then(response => {
           if (response.status !== 200) {
             return []
           }
           return response.json()
         })
-        .then(shows => {
+        .then(queueItems => {
           let cache = []
-          shows.forEach(episode => {
-            let status = {}
-            status.progress = Math.round((((episode.size - episode.sizeleft) / episode.size) * 100) * 10) / 10 + '%'
-            if (status.progress === 'NAN%') {
-              status.progress = '0%'
+          queueItems.forEach(queueItem => {
+            let newQueueItem = {}
+            newQueueItem.progress = Math.round((((queueItem.size - queueItem.sizeleft) / queueItem.size) * 100) * 10) / 10 + '%'
+            if (newQueueItem.progress === 'NAN%') {
+              newQueueItem.progress = '0%'
             }
             let now = new Date()
-            let estimatedCompletionTime = new Date(episode.estimatedCompletionTime)
+            let estimatedCompletionTime = new Date(queueItem.estimatedCompletionTime)
             let diffMilliseconds = (estimatedCompletionTime - now)
             let diffDays = Math.floor(diffMilliseconds / 86400000)
             let diffHours = Math.floor((diffMilliseconds % 86400000) / 3600000)
             let diffMinutes = Math.floor(((diffMilliseconds % 86400000) % 3600000) / 60000)
             if (diffDays === 0) {
               if (diffHours === 0) {
-                status.timeleft = this.$store.state.strings.eta.replace('??', diffMinutes + (diffMinutes > 1 ? ' Minutes' : ' Minute'))
+                newQueueItem.timeleft = this.$store.state.strings.eta.replace('??', diffMinutes + (diffMinutes > 1 ? ' Minutes' : ' Minute'))
               } else {
-                status.timeleft = this.$store.state.strings.eta.replace('??', diffHours + (diffHours > 1 ? ' Hours' : ' Hour'))
+                newQueueItem.timeleft = this.$store.state.strings.eta.replace('??', diffHours + (diffHours > 1 ? ' Hours' : ' Hour'))
               }
             } else if (diffDays > 0) {
-              status.timeleft = this.$store.state.strings.eta.replace('??', diffDays + (diffDays > 1 ? ' Days' : ' Day'))
+              newQueueItem.timeleft = this.$store.state.strings.eta.replace('??', diffDays + (diffDays > 1 ? ' Days' : ' Day'))
             }
-            status.season_number = (episode.episode.seasonNumber.toString().length > 1 ? episode.episode.seasonNumber.toString() : '0' + episode.episode.seasonNumber.toString())
-            status.episode_number = (episode.episode.episodeNumber.toString().length > 1 ? episode.episode.episodeNumber.toString() : '0' + episode.episode.episodeNumber.toString())
-            status.episode_title = episode.episode.title
-            status.name = episode.series.title
-            status.img_url = episode.series.images.filter(img => {
-              return img.coverType === 'poster'
-            })[0].url || ''
-            status.id = episode.id
-            cache.push(status.id)
-            if (this.shows !== [] && typeof this.shows.find(item => (item.id === status.id)) !== 'undefined') {
-              Vue.set(this.shows, this.shows.findIndex(item => item.id === status.id), status)
+            if (queueType === 'shows') {
+              newQueueItem.season_number = (queueItem.episode.seasonNumber.toString().length > 1 ? queueItem.episode.seasonNumber.toString() : '0' + queueItem.episode.seasonNumber.toString())
+              newQueueItem.episode_number = (queueItem.episode.episodeNumber.toString().length > 1 ? queueItem.episode.episodeNumber.toString() : '0' + queueItem.episode.episodeNumber.toString())
+              newQueueItem.episode_title = queueItem.episode.title
+              newQueueItem.name = queueItem.series.title
+              newQueueItem.img_url = queueItem.series.images.filter(img => {
+                return img.coverType === 'poster'
+              })[0].url || ''
+            } else if (queueType === 'movies') {
+              newQueueItem.name = queueItem.title
+              newQueueItem.img_url = queueItem.images.filter(img => {
+                return img.coverType === 'poster'
+              })[0].url || ''
+            }
+            newQueueItem.id = queueItem.id
+            cache.push(newQueueItem.id)
+            if (this[queueType] !== [] && typeof this[queueType].find(item => (item.id === newQueueItem.id)) !== 'undefined') {
+              Vue.set(this[queueType], this[queueType].findIndex(item => item.id === newQueueItem.id), newQueueItem)
             } else {
-              this.shows.push(status)
+              this[queueType].push(newQueueItem)
             }
           })
-          this.shows.forEach(show => {
-            if (!cache.includes(show.id)) {
-              Vue.delete(this.shows, this.shows.findIndex(item => item.id === show.id))
-            }
-          })
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    },
-    getMovies: function () {
-      fetch('/static/php/Queue/movies.php')
-        .then(response => {
-          if (response.status !== 200) {
-            return []
-          }
-          return response.json()
-        })
-        .then(movies => {
-          let cache = []
-          movies.forEach(movie => {
-            let status = {}
-            status.progress = Math.round((((movie.size - movie.sizeleft) / movie.size) * 100) * 10) / 10 + '%'
-            if (status.progress === 'NAN%') {
-              status.progress = '0%'
-            }
-            let now = new Date()
-            let estimatedCompletionTime = new Date(movie.estimatedCompletionTime)
-            let diffMilliseconds = (estimatedCompletionTime - now)
-            let diffDays = Math.floor(diffMilliseconds / 86400000)
-            let diffHours = Math.floor((diffMilliseconds % 86400000) / 3600000)
-            let diffMinutes = Math.floor(((diffMilliseconds % 86400000) % 3600000) / 60000)
-            if (diffDays === 0) {
-              if (diffHours === 0) {
-                status.timeleft = this.$store.state.strings.eta.replace('??', diffMinutes + (diffMinutes > 1 ? ' Minutes' : ' Minute'))
-              } else {
-                status.timeleft = this.$store.state.strings.eta.replace('??', diffHours + (diffHours > 1 ? ' Hours' : ' Hour'))
-              }
-            } else if (diffDays > 0) {
-              status.timeleft = this.$store.state.strings.eta.replace('??', diffDays + (diffDays > 1 ? ' Days' : ' Day'))
-            }
-            status.name = movie.title
-            status.img_url = movie.images.filter(img => {
-              return img.coverType === 'poster'
-            })[0].url || ''
-            status.id = movie.id
-            cache.push(status.id)
-            if (this.movies !== [] && typeof this.movies.find(item => (item.id === status.id)) !== 'undefined') {
-              Vue.set(this.movies, this.movies.findIndex(item => item.id === status.id), status)
-            } else {
-              this.movies.push(status)
-            }
-          })
-          this.movies.forEach(movie => {
-            if (!cache.includes(movie.id)) {
-              Vue.delete(this.movie, this.movie.findIndex(item => item.id === movie.id))
+          this[queueType].forEach(queueItem => {
+            if (!cache.includes(queueItem.id)) {
+              Vue.delete(this[queueType], this[queueType].findIndex(item => item.id === queueItem.id))
             }
           })
         })
@@ -151,14 +105,14 @@ export default {
   },
   created () {
     this.clearAll()
-    this.getShows()
-    this.getMovies()
+    this.processQueue('shows')
+    this.processQueue('movies')
   },
   mounted () {
     this.update = setInterval(() => {
       console.log('Updating...')
-      this.getShows()
-      this.getMovies()
+      this.processQueue('shows')
+      this.processQueue('movies')
     }, 30000)
   },
   beforeDestroy () {
