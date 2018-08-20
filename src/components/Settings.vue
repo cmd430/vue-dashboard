@@ -1,25 +1,25 @@
 <template>
-<div id="settings">
-  <h1>Settings</h1>
-  <section id="home">
-    <h4>Home Settings</h4>
-    <p>No Settings</p>
-  </section>
-  <section id="calendar" class="left">
-    <h4>Calendar Settings</h4>
-    <div class="checkbox">
-      <label>
-        Hide Episodes and Movies that are '{{ this.$store.state.strings.downloaded }}'
-        <input type="checkbox" v-model="showDownloaded" />
-        <span></span>
-      </label>
-    </div>
-  </section>
-  <section id="queue" class="right">
-    <h4>Queue Settings</h4>
-    <p>No Settings</p>
-  </section>
-</div>
+  <div id="settings">
+    <h1>Settings</h1>
+    <section id="home">
+      <h4>Home Settings</h4>
+      <p>No Settings</p>
+    </section>
+    <section id="calendar" class="left">
+      <h4>Calendar Settings</h4>
+      <div class="checkbox">
+        <label>
+          Hide Episodes and Movies that are '{{ this.$store.state.strings.downloaded }}'
+          <input type="checkbox" v-model="showDownloaded" />
+          <span></span>
+        </label>
+      </div>
+    </section>
+    <section id="queue" class="right">
+      <h4>Queue Settings</h4>
+      <p>No Settings</p>
+    </section>
+  </div>
 </template>
 
 <script>

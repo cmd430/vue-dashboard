@@ -1,8 +1,8 @@
 <template>
-<div id="home">
-  <calendar/>
-  <queue/>
-</div>
+  <div id="home">
+    <calendar/>
+    <queue/>
+  </div>
 </template>
 
 <script>

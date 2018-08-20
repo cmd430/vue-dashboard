@@ -7,8 +7,7 @@
         v-bind:key="show.id"
         v-bind:queue_item="show"
         v-bind:type="'show'"
-      />
-      <queue-item
+      /><!-- Fix :empty not working... --><queue-item
         v-for="movie in movies"
         v-bind:key="movie.id"
         v-bind:queue_item="movie"

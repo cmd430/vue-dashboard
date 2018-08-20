@@ -1,7 +1,7 @@
 <template>
-<div id="about">
-  <p>TODO://</p>
-</div>
+  <div id="about">
+    <p>TODO://</p>
+  </div>
 </template>
 
 <script>

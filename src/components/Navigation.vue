@@ -1,40 +1,40 @@
 <template>
-<div id="navigation">
-  <ul class="left">
-    <li>
-      <router-link tag="li" to="/" exact>
-        <i class="icon-home"></i>
-        Home
-      </router-link>
-    </li>
-    <li>
-      <router-link tag="li" to="/calendar">
-        <i class="icon-calendar"></i>
-        Calendar
-      </router-link>
-    </li>
-    <li>
-      <router-link tag="li" to="/queue">
-        <i class="icon-th-list"></i>
-        Download Queue
-      </router-link>
-    </li>
-  </ul>
-  <ul class="right">
-    <li>
-      <router-link tag="li" to="/settings">
-        <i class="icon-cog"></i>
-        Settings
-      </router-link>
-    </li>
-    <li v-show="false"> <!-- Disabled for now -->
-      <router-link tag="li" to="/about">
-        <i class="icon-info"></i>
-        About
-      </router-link>
-    </li>
-  </ul>
-</div>
+  <div id="navigation">
+    <ul class="left">
+      <li>
+        <router-link tag="li" to="/" exact>
+          <i class="icon-home"></i>
+          Home
+        </router-link>
+      </li>
+      <li>
+        <router-link tag="li" to="/calendar">
+          <i class="icon-calendar"></i>
+          Calendar
+        </router-link>
+      </li>
+      <li>
+        <router-link tag="li" to="/queue">
+          <i class="icon-th-list"></i>
+          Download Queue
+        </router-link>
+      </li>
+    </ul>
+    <ul class="right">
+      <li>
+        <router-link tag="li" to="/settings">
+          <i class="icon-cog"></i>
+          Settings
+        </router-link>
+      </li>
+      <li v-show="false"> <!-- Disabled for now -->
+        <router-link tag="li" to="/about">
+          <i class="icon-info"></i>
+          About
+        </router-link>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
