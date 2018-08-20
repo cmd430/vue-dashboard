@@ -37,6 +37,7 @@ export default {
           return response.json()
         })
         .then(shows => {
+          let cache = []
           shows.forEach(episode => {
             let status = {}
             status.progress = this.strings.downloading + ' ' + Math.round((((episode.size - episode.sizeleft) / episode.size) * 100) * 10) / 10 + '%'
@@ -48,7 +49,17 @@ export default {
               return img.coverType === 'poster'
             })[0].url || ''
             status.id = episode.id
-            this.shows.push(status)
+            cache.push(status.id)
+            if (this.shows !== [] && typeof this.shows.find(item => (item.id === status.id)) !== 'undefined') {
+              Vue.set(this.shows, this.shows.findIndex(item => item.id === status.id), status)
+            } else {
+              this.shows.push(status)
+            }
+          })
+          this.shows.forEach(show => {
+            if (!cache.includes(show.id)) {
+              Vue.delete(this.shows, this.shows.findIndex(item => item.id === show.id))
+            }
           })
         })
         .catch(err => {
@@ -80,9 +91,9 @@ export default {
               this.movies.push(status)
             }
           })
-          this.movies.forEach((movie, index) => {
+          this.movies.forEach(movie => {
             if (!cache.includes(movie.id)) {
-              delete this.movies[index]
+              Vue.delete(this.movie, this.movie.findIndex(item => item.id === movie.id))
             }
           })
         })
@@ -110,7 +121,6 @@ export default {
     this.getMovies()
     setInterval(() => {
       console.log('Updating...')
-      this.clearAll()
       this.getShows()
       this.getMovies()
     }, 30000)

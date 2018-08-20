@@ -2,7 +2,7 @@
 <div id="navigation">
   <ul class="left">
     <li>
-      <router-link tag="li" to="/">
+      <router-link tag="li" to="/" exact>
         <i class="icon-home"></i>
         Home
       </router-link>
@@ -71,6 +71,7 @@ li {
 li:hover {
   color: rgb(238, 238, 238);
 }
+li.router-link-active,
 li.router-link-exact-active {
   color: rgb(249, 190, 3);
 }
