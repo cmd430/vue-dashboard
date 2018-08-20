@@ -8,13 +8,13 @@
       </router-link>
     </li>
     <li>
-      <router-link tag="li" to="Calendar">
+      <router-link tag="li" to="/calendar">
         <i class="icon-calendar"></i>
         Calendar
       </router-link>
     </li>
     <li>
-      <router-link tag="li" to="Queue">
+      <router-link tag="li" to="/queue">
         <i class="icon-th-list"></i>
         Download Queue
       </router-link>
@@ -22,13 +22,13 @@
   </ul>
   <ul class="right">
     <li>
-      <router-link tag="li" to="Settings">
+      <router-link tag="li" to="/settings">
         <i class="icon-cog"></i>
         Settings
       </router-link>
     </li>
-    <li>
-      <router-link tag="li" to="About">
+    <li v-show="false"> <!-- Disabled for now -->
+      <router-link tag="li" to="/about">
         <i class="icon-info"></i>
         About
       </router-link>

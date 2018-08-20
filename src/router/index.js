@@ -13,22 +13,22 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Home',
+      name: 'home',
       component: Home
     },
     {
       path: '/calendar',
-      name: 'Calendar',
+      name: 'calendar',
       component: Calendar
     },
     {
       path: '/queue',
-      name: 'Queue',
+      name: 'queue',
       component: Queue
     },
     {
       path: '/settings',
-      name: 'Settings',
+      name: 'settings',
       component: Settings
     },
     {
