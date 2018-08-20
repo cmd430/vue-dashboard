@@ -1,5 +1,5 @@
 <template>
-<li v-if="(hideDownloaded === true && calendar_item.status_class === 'downloaded') === false">
+<li v-if="(this.$store.state.settings.showDownloaded === true && calendar_item.status_class === 'downloaded') === false">
   <div class="img" v-bind:style="{ 'background-image': 'url(' + calendar_item.img_url + ')' }">
     <span v-bind:class="calendar_item.status_class">{{ calendar_item.status_text }}</span>
   </div>
@@ -18,8 +18,7 @@ export default {
   name: 'calendar-item',
   props: [
     'calendar_item',
-    'type',
-    'hideDownloaded'
+    'type'
   ]
 }
 </script>

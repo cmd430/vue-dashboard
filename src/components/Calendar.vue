@@ -4,11 +4,6 @@
       <button id="prev_month" v-on:click="setMonth(month.previous)">Previous Month</button>
       <h2 id="month">{{ month.name }}</h2>
       <button id="next_month" v-on:click="setMonth(month.next)">Next Month</button>
-      <label>
-        Hide '{{strings.downloaded}}'
-        <input type="checkbox" v-model="hideDownloaded" />
-        <span></span>
-      </label>
     </div>
     <h2>TV Shows</h2>
     <ul>
@@ -17,7 +12,6 @@
         v-bind:key="show.id"
         v-bind:calendar_item="show"
         v-bind:type="'show'"
-        v-bind:hideDownloaded="hideDownloaded"
       />
     </ul>
     <h2>Movies</h2>
@@ -27,7 +21,6 @@
         v-bind:key="movie.id"
         v-bind:calendar_item="movie"
         v-bind:type="'movie'"
-        v-bind:hideDownloaded="hideDownloaded"
       />
     </ul>
   </div>
@@ -35,6 +28,7 @@
 
 <script>
 import Vue from 'vue'
+
 import CalendarItem from '@/components/Calendar/CalendarItem'
 
 export default {
@@ -56,17 +50,17 @@ export default {
             let status = {}
             if (episode.hasFile) {
               status.status_class = 'downloaded'
-              status.status_text = this.strings.downloaded
+              status.status_text = this.$store.state.strings.downloaded
             } else if (episode.downloading) {
               status.status_class = 'downloading'
-              status.status_text = this.strings.downloading
+              status.status_text = this.$store.state.strings.downloading
             } else if (episode.airDateUtc < new Date().toISOString()) {
               if (new Date(new Date(episode.airDateUtc).getTime() + episode.series.runtime * 60000).toISOString() < new Date().toISOString()) {
                 status.status_class = 'pending'
-                status.status_text = this.strings.pending
+                status.status_text = this.$store.state.strings.pending
               } else {
                 status.status_class = 'airing'
-                status.status_text = this.strings.onAir
+                status.status_text = this.$store.state.strings.onAir
               }
             } else {
               status.status_class = 'want'
@@ -78,12 +72,12 @@ export default {
               let diffMinutes = Math.floor(((diffMilliseconds % 86400000) % 3600000) / 60000)
               if (diffDays === 0) {
                 if (diffHours === 0) {
-                  status.status_text = this.strings.want.replace('??', diffMinutes + (diffMinutes > 1 ? ' Minutes' : ' Minute'))
+                  status.status_text = this.$store.state.strings.want.replace('??', diffMinutes + (diffMinutes > 1 ? ' Minutes' : ' Minute'))
                 } else {
-                  status.status_text = this.strings.want.replace('??', diffHours + (diffHours > 1 ? ' Hours' : ' Hour'))
+                  status.status_text = this.$store.state.strings.want.replace('??', diffHours + (diffHours > 1 ? ' Hours' : ' Hour'))
                 }
               } else if (diffDays > 0) {
-                status.status_text = this.strings.want.replace('??', diffDays + (diffDays > 1 ? ' Days' : ' Day'))
+                status.status_text = this.$store.state.strings.want.replace('??', diffDays + (diffDays > 1 ? ' Days' : ' Day'))
               } else {
                 return
               }
@@ -122,13 +116,13 @@ export default {
             let status = {}
             if (movie.hasFile) {
               status.status_class = 'downloaded'
-              status.status_text = this.strings.downloaded
+              status.status_text = this.$store.state.strings.downloaded
             } else if (movie.downloading) {
               status.status_class = 'downloading'
-              status.status_text = this.strings.downloading
+              status.status_text = this.$store.state.strings.downloading
             } else if (movie.physicalRelease < new Date().toISOString()) {
               status.status_class = 'pending'
-              status.status_text = this.strings.pending
+              status.status_text = this.$store.state.strings.pending
             } else {
               status.status_class = 'want'
               let now = new Date()
@@ -142,12 +136,12 @@ export default {
               let diffMinutes = Math.floor(((diffMilliseconds % 86400000) % 3600000) / 60000)
               if (diffDays === 0) {
                 if (diffHours === 0) {
-                  status.status_text = this.strings.want.replace('??', diffMinutes + (diffMinutes > 1 ? ' Minutes' : ' Minute'))
+                  status.status_text = this.$store.state.strings.want.replace('??', diffMinutes + (diffMinutes > 1 ? ' Minutes' : ' Minute'))
                 } else {
-                  status.status_text = this.strings.want.replace('??', diffHours + (diffHours > 1 ? ' Hours' : ' Hour'))
+                  status.status_text = this.$store.state.strings.want.replace('??', diffHours + (diffHours > 1 ? ' Hours' : ' Hour'))
                 }
               } else if (diffDays > 0) {
-                status.status_text = this.strings.want.replace('??', diffDays + (diffDays > 1 ? ' Days' : ' Day'))
+                status.status_text = this.$store.state.strings.want.replace('??', diffDays + (diffDays > 1 ? ' Days' : ' Day'))
               } else {
                 return
               }
@@ -196,15 +190,7 @@ export default {
     return {
       month: {},
       shows: [],
-      movies: [],
-      strings: {
-        downloaded: 'In Plex',
-        downloading: 'Downloading',
-        pending: 'Pending',
-        onAir: 'On Air',
-        want: 'In ??'
-      },
-      hideDownloaded: true
+      movies: []
     }
   },
   created () {
@@ -288,51 +274,5 @@ ul:empty::after {
   font-weight: 400;
   text-align: center;
   margin: 0;
-}
-label {
-  display: inline-block;
-  top: 12px;
-  margin-left: -117px;
-  position: absolute;
-  padding-right: 25px;
-  cursor: pointer;
-  font-size: 12px;
-  user-select: none;
-}
-label input[type=checkbox] {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-}
-label span {
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 19px;
-  width: 19px;
-  border-radius: 3px;
-  border-color: rgb(204, 204, 204);
-  color: rgb(255, 255, 255);
-  background-color: rgba(255, 255, 255, 0.25);
-}
-label:hover input[type=checkbox] ~ span {
-  background-color: rgba(255, 255, 255, 0.3);
-}
-span::after {
-  content: "";
-  position: absolute;
-  display: none;
-}
-label input[type=checkbox]:checked ~ span::after {
-  display: block;
-}
-label span::after {
-  left: 6px;
-  top: 3px;
-  width: 4px;
-  height: 8px;
-  border: solid rgb(238, 238, 238);
-  border-width: 0 3px 3px 0;
-  transform: rotate(40deg);
 }
 </style>

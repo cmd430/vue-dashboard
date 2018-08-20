@@ -40,7 +40,10 @@ export default {
           let cache = []
           shows.forEach(episode => {
             let status = {}
-            status.progress = this.strings.downloading + ' ' + Math.round((((episode.size - episode.sizeleft) / episode.size) * 100) * 10) / 10 + '%'
+            status.progress = Math.round((((episode.size - episode.sizeleft) / episode.size) * 100) * 10) / 10 + '%'
+            if (status.progress === 'NAN%') {
+              status.progress = '0%'
+            }
             status.season_number = (episode.episode.seasonNumber.toString().length > 1 ? episode.episode.seasonNumber.toString() : '0' + episode.episode.seasonNumber.toString())
             status.episode_number = (episode.episode.episodeNumber.toString().length > 1 ? episode.episode.episodeNumber.toString() : '0' + episode.episode.episodeNumber.toString())
             status.episode_title = episode.episode.title
@@ -78,7 +81,10 @@ export default {
           let cache = []
           movies.forEach(movie => {
             let status = {}
-            status.progress = this.strings.downloading + ' ' + Math.round((((movie.size - movie.sizeleft) / movie.size) * 100) * 10) / 10 + '%'
+            status.progress = Math.round((((movie.size - movie.sizeleft) / movie.size) * 100) * 10) / 10 + '%'
+            if (status.progress === 'NAN%') {
+              status.progress = '0%'
+            }
             status.name = movie.title
             status.img_url = movie.images.filter(img => {
               return img.coverType === 'poster'
@@ -109,10 +115,7 @@ export default {
   data () {
     return {
       shows: [],
-      movies: [],
-      strings: {
-        downloading: ''
-      }
+      movies: []
     }
   },
   created () {
