@@ -28,7 +28,6 @@
 
 <script>
 import Vue from 'vue'
-
 import CalendarItem from '@/components/Calendar/CalendarItem'
 
 export default {
@@ -37,124 +36,93 @@ export default {
     'calendar-item': CalendarItem
   },
   methods: {
-    getShows: function () {
-      fetch('/static/php/Calendar/shows.php?start=' + this.month.start + '&end=' + this.month.end)
+    processCalendar: function (calendarType) {
+      fetch(`/static/php/Calendar/${calendarType}.php?start=${this.month.start}&end=${this.month.end}`)
         .then(response => {
           if (response.status !== 200) {
             return []
           }
           return response.json()
         })
-        .then(shows => {
-          shows.forEach(episode => {
-            let status = {}
-            if (episode.hasFile) {
-              status.status_class = 'downloaded'
-              status.status_text = this.$store.state.strings.downloaded
-            } else if (episode.downloading) {
-              status.status_class = 'downloading'
-              status.status_text = this.$store.state.strings.downloading
-            } else if (episode.airDateUtc < new Date().toISOString()) {
-              if (new Date(new Date(episode.airDateUtc).getTime() + episode.series.runtime * 60000).toISOString() < new Date().toISOString()) {
-                status.status_class = 'pending'
-                status.status_text = this.$store.state.strings.pending
-              } else {
-                status.status_class = 'airing'
-                status.status_text = this.$store.state.strings.onAir
+        .then(calendarItems => {
+          let cache = []
+          calendarItems.forEach(calendarItem => {
+            let newCalendarItem = {}
+            let airTime
+            if (calendarType === 'shows') {
+              newCalendarItem.season_number = (calendarItem.seasonNumber.toString().length > 1 ? calendarItem.seasonNumber.toString() : '0' + calendarItem.seasonNumber.toString())
+              newCalendarItem.episode_number = (calendarItem.episodeNumber.toString().length > 1 ? calendarItem.episodeNumber.toString() : '0' + calendarItem.episodeNumber.toString())
+              newCalendarItem.episode_title = calendarItem.title
+              newCalendarItem.name = calendarItem.series.title
+              newCalendarItem.img_url = calendarItem.series.images.filter(img => {
+                return img.coverType === 'poster'
+              })[0].url || ''
+              if (calendarItem.airDateUtc < new Date().toISOString()) {
+                if (new Date(new Date(calendarItem.airDateUtc).getTime() + calendarItem.series.runtime * 60000).toISOString() < new Date().toISOString()) {
+                  newCalendarItem.status_class = 'pending'
+                  newCalendarItem.status_text = this.$store.state.strings.pending
+                } else {
+                  newCalendarItem.status_class = 'airing'
+                  newCalendarItem.status_text = this.$store.state.strings.onAir
+                }
               }
-            } else {
-              status.status_class = 'want'
+              airTime = new Date(calendarItem.airDateUtc)
+            } else if (calendarType === 'movies') {
+              newCalendarItem.name = calendarItem.title
+              newCalendarItem.img_url = calendarItem.images.filter(img => {
+                return img.coverType === 'poster'
+              })[0].url || ''
+              if (calendarItem.physicalRelease < new Date().toISOString()) {
+                newCalendarItem.status_class = 'pending'
+                newCalendarItem.status_text = this.$store.state.strings.pending
+              }
+              if (new Date(this.month.start).toLocaleString('en-nz', { month: 'long' }) !== new Date(calendarItem.physicalRelease).toLocaleString('en-nz', { month: 'long' }) || typeof calendarItem.physicalRelease === 'undefined') {
+                return
+              }
+              airTime = new Date(calendarItem.physicalRelease)
+            }
+            if (calendarItem.hasFile) {
+              newCalendarItem.status_class = 'downloaded'
+              newCalendarItem.status_text = this.$store.state.strings.downloaded
+            } else if (calendarItem.downloading) {
+              newCalendarItem.status_class = 'downloading'
+              newCalendarItem.status_text = this.$store.state.strings.downloading
+            } else if (typeof newCalendarItem.status_text === 'undefined') {
               let now = new Date()
-              let airTime = new Date(episode.airDateUtc)
               let diffMilliseconds = (airTime - now)
               let diffDays = Math.floor(diffMilliseconds / 86400000)
               let diffHours = Math.floor((diffMilliseconds % 86400000) / 3600000)
               let diffMinutes = Math.floor(((diffMilliseconds % 86400000) % 3600000) / 60000)
+              newCalendarItem.status_class = 'want'
               if (diffDays === 0) {
                 if (diffHours === 0) {
-                  status.status_text = this.$store.state.strings.want.replace('??', diffMinutes + (diffMinutes > 1 ? ' Minutes' : ' Minute'))
+                  newCalendarItem.status_text = this.$store.state.strings.want.replace('??', diffMinutes + (diffMinutes > 1 ? ' Minutes' : ' Minute'))
                 } else {
-                  status.status_text = this.$store.state.strings.want.replace('??', diffHours + (diffHours > 1 ? ' Hours' : ' Hour'))
+                  newCalendarItem.status_text = this.$store.state.strings.want.replace('??', diffHours + (diffHours > 1 ? ' Hours' : ' Hour'))
                 }
               } else if (diffDays > 0) {
-                status.status_text = this.$store.state.strings.want.replace('??', diffDays + (diffDays > 1 ? ' Days' : ' Day'))
+                newCalendarItem.status_text = this.$store.state.strings.want.replace('??', diffDays + (diffDays > 1 ? ' Days' : ' Day'))
               } else {
                 return
               }
             }
-            status.season_number = (episode.seasonNumber.toString().length > 1 ? episode.seasonNumber.toString() : '0' + episode.seasonNumber.toString())
-            status.episode_number = (episode.episodeNumber.toString().length > 1 ? episode.episodeNumber.toString() : '0' + episode.episodeNumber.toString())
-            status.episode_title = episode.title
-            status.name = episode.series.title
-            status.img_url = episode.series.images.filter(img => {
-              return img.coverType === 'poster'
-            })[0].url || ''
-            status.id = episode.id
-            if (this.shows !== [] && typeof this.shows.find(item => (item.id === status.id)) !== 'undefined') {
-              Vue.set(this.shows, this.shows.findIndex(item => item.id === status.id), status)
+            newCalendarItem.id = calendarItem.id
+            cache.push(newCalendarItem.id)
+            if (this[calendarType] !== [] && typeof this[calendarType].find(item => (item.id === newCalendarItem.id)) !== 'undefined') {
+              Vue.set(this[calendarType], this[calendarType].findIndex(item => item.id === newCalendarItem.id), newCalendarItem)
             } else {
-              if (this.shows.findIndex(item => (item.name === status.name && item.status_class === 'want')) === -1) {
-                this.shows.push(status)
+              if (calendarType === 'shows') {
+                if (this.shows.findIndex(item => (item.name === newCalendarItem.name && item.status_class === 'want')) === -1) {
+                  this.shows.push(newCalendarItem)
+                }
+              } else if (calendarType === 'movies') {
+                this.movies.push(newCalendarItem)
               }
             }
           })
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    },
-    getMovies: function () {
-      fetch('/static/php/Calendar/movies.php?start=' + this.month.start + '&end=' + this.month.end)
-        .then(response => {
-          if (response.status !== 200) {
-            return []
-          }
-          return response.json()
-        })
-        .then(movies => {
-          movies.forEach(movie => {
-            let status = {}
-            if (movie.hasFile) {
-              status.status_class = 'downloaded'
-              status.status_text = this.$store.state.strings.downloaded
-            } else if (movie.downloading) {
-              status.status_class = 'downloading'
-              status.status_text = this.$store.state.strings.downloading
-            } else if (movie.physicalRelease < new Date().toISOString()) {
-              status.status_class = 'pending'
-              status.status_text = this.$store.state.strings.pending
-            } else {
-              status.status_class = 'want'
-              let now = new Date()
-              let airTime = new Date(movie.physicalRelease)
-              if (new Date(this.month.start).toLocaleString('en-nz', { month: 'long' }) !== new Date(movie.physicalRelease).toLocaleString('en-nz', { month: 'long' }) || typeof movie.physicalRelease === 'undefined') {
-                return
-              }
-              let diffMilliseconds = (airTime - now)
-              let diffDays = Math.floor(diffMilliseconds / 86400000)
-              let diffHours = Math.floor((diffMilliseconds % 86400000) / 3600000)
-              let diffMinutes = Math.floor(((diffMilliseconds % 86400000) % 3600000) / 60000)
-              if (diffDays === 0) {
-                if (diffHours === 0) {
-                  status.status_text = this.$store.state.strings.want.replace('??', diffMinutes + (diffMinutes > 1 ? ' Minutes' : ' Minute'))
-                } else {
-                  status.status_text = this.$store.state.strings.want.replace('??', diffHours + (diffHours > 1 ? ' Hours' : ' Hour'))
-                }
-              } else if (diffDays > 0) {
-                status.status_text = this.$store.state.strings.want.replace('??', diffDays + (diffDays > 1 ? ' Days' : ' Day'))
-              } else {
-                return
-              }
-            }
-            status.name = movie.title
-            status.img_url = movie.images.filter(img => {
-              return img.coverType === 'poster'
-            })[0].url || ''
-            status.id = movie.id
-            if (this.movies !== [] && typeof this.movies.find(item => (item.id === status.id)) !== 'undefined') {
-              Vue.set(this.movies, this.movies.findIndex(item => item.id === status.id), status)
-            } else {
-              this.movies.push(status)
+          this[calendarType].forEach(calendarItem => {
+            if (!cache.includes(calendarItem.id)) {
+              Vue.delete(this[calendarType], this[calendarType].findIndex(item => item.id === calendarItem.id))
             }
           })
         })
@@ -178,8 +146,8 @@ export default {
         next: next
       }
       this.clearAll()
-      this.getShows()
-      this.getMovies()
+      this.processCalendar('shows')
+      this.processCalendar('movies')
     },
     clearAll: function () {
       this.shows = []
@@ -200,8 +168,8 @@ export default {
   mounted () {
     this.update = setInterval(() => {
       console.log('Updating...')
-      this.getShows()
-      this.getMovies()
+      this.processCalendar('shows')
+      this.processCalendar('movies')
     }, 30000)
   },
   beforeDestroy () {
