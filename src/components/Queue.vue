@@ -76,8 +76,8 @@ export default {
                 return img.coverType === 'poster'
               })[0].url || ''
             } else if (queueType === 'movies') {
-              newQueueItem.name = queueItem.title
-              newQueueItem.img_url = queueItem.images.filter(img => {
+              newQueueItem.name = queueItem.movie.title
+              newQueueItem.img_url = queueItem.movie.images.filter(img => {
                 return img.coverType === 'poster'
               })[0].url || ''
             }
