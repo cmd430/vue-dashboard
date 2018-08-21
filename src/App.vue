@@ -39,8 +39,8 @@ body {
 }
 @font-face {
   font-family: 'fontello';
-  src: url('./assets/font/fontello.eot?96551581');
-  src: url('./assets/font/fontello.ttf?96551581') format('truetype');
+  src: url('./assets/fontello.eot?96551581');
+  src: url('./assets/fontello.ttf?96551581') format('truetype');
   font-weight: normal;
   font-style: normal;
 }

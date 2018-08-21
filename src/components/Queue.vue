@@ -147,13 +147,14 @@ ul {
   list-style-type: none;
 }
 ul:empty::after {
-  content: 'Nothing to Show';
+  content: "Nothing to Show";
   width: 100%;
   font-size: 13px;
   color: rgb(153, 153, 153);
   text-align: center;
   padding: 15px;
-  margin-left: 50%;
-  transform: translateX(-50%);
+  margin: 0 27px 0 11px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
 }
 </style>
