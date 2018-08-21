@@ -1,0 +1,35 @@
+<?php
+
+  include "../Config/conf.php";
+  header("Content-Type: application/json");
+
+  $CURRENT_ACTIVITY = json_decode(file_get_contents("${TAUTULLI}/api/v2?apikey=${API_KEY_TAUTULLI}&cmd=get_activity"), true);
+
+  $ACTIVITY = array();
+
+  foreach ($CURRENT_ACTIVITY['response']['data']['sessions'] as $item) {
+    $newItem = array();
+    if ($item['media_type'] == "episode") {
+      $newItem['series']['title'] = $item['grandparent_title'];
+      $newItem['series']['season'] = $item['parent_media_index'];
+      $newItem['series']['episode'] = $item['media_index'];
+      $newItem['series']['episode_title'] = $item['title'];
+      $newItem['images']['poster'] = "/static/php/Shared/image.php?rating_key=" . $item['grandparent_rating_key'] . "&type=poster";
+      $newItem['images']['art'] = "/static/php/Shared/image.php?rating_key=" . $item['grandparent_rating_key'] . "&type=art";
+    } else if ($item['media_type'] == 'movie') {
+      $newItem['series']['title'] = $item['parent_title'];
+      $newItem['series']['season'] = $item['media_index'];
+      $newItem['images']['poster'] = "/static/php/Shared/image.php?rating_key=" . $item['rating_key'] . "&type=poster";
+      $newItem['images']['art'] = "/static/php/Shared/image.php?rating_key=" . $item['rating_key'] . "&type=art";
+    } else {
+      continue;
+    }
+    $newItem['media_type'] = $item['media_type'];
+    $newItem['progress_percent'] = $item['progress_percent'];
+    $newItem['state'] = $item['state'];
+    array_push($ACTIVITY, $newItem);
+  }
+
+  echo json_encode($ACTIVITY);
+
+?>
