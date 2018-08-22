@@ -3,15 +3,10 @@
     <h2>Download Queue</h2>
     <ul>
       <queue-item
-        v-for="show in shows"
-        v-bind:key="show.id"
-        v-bind:queue_item="show"
-        v-bind:type="'show'"
-      /><!-- Fix :empty not working... --><queue-item
-        v-for="movie in movies"
-        v-bind:key="movie.id"
-        v-bind:queue_item="movie"
-        v-bind:type="'movie'"
+        v-for="item in queue"
+        v-bind:key="item.id"
+        v-bind:queue_item="item"
+        v-bind:type="item.type"
       />
     </ul>
   </div>
@@ -89,11 +84,13 @@ export default {
               newQueueItem.img_url = queueItem.series.images.filter(img => {
                 return img.coverType === 'poster'
               })[0].url || ''
+              newQueueItem.type = 'show'
             } else if (queueType === 'movies') {
               newQueueItem.name = queueItem.movie.title
               newQueueItem.img_url = queueItem.movie.images.filter(img => {
                 return img.coverType === 'poster'
               })[0].url || ''
+              newQueueItem.type = 'movie'
             }
             newQueueItem.id = queueItem.id
             cache.push(newQueueItem.id)
@@ -123,6 +120,21 @@ export default {
       shows: [],
       movies: [],
       update: null
+    }
+  },
+  computed: {
+    queue () {
+      let queue = this.shows.concat(this.movies)
+      function compare (a, b) {
+        if (parseInt(a.progress.replace('%', '')) > parseInt(b.progress.replace('%', ''))) {
+          return -1
+        }
+        if (parseInt(a.progress.replace('%', '')) < parseInt(b.progress.replace('%', ''))) {
+          return 1
+        }
+        return 0
+      }
+      return queue.sort(compare)
     }
   },
   created () {
