@@ -133,6 +133,7 @@ div#progress span.progress {
   position: absolute;
   top: 0;
   left: 0;
+  transition: width 200ms;
 }
 #progress span.text {
   font-size: 14px;
