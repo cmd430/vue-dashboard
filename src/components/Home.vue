@@ -1,20 +1,20 @@
 <template>
   <div id="home">
-    <!--<activity/>-->
+    <activity/>
     <history/>
     <recent/>
   </div>
 </template>
 
 <script>
-// import Activity from '@/components/Home/Activity'
+import Activity from '@/components/Home/Activity'
 import History from '@/components/Home/History'
 import Recent from '@/components/Home/Recent'
 
 export default {
   name: 'Home',
   components: {
-    // 'activity': Activity,
+    'activity': Activity,
     'history': History,
     'recent': Recent
   }

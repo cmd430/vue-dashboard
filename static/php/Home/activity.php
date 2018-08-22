@@ -11,8 +11,18 @@
     $newItem = array();
     if ($item['media_type'] == "episode") {
       $newItem['series']['title'] = $item['grandparent_title'];
-      $newItem['series']['season'] = $item['parent_media_index'];
-      $newItem['series']['episode'] = $item['media_index'];
+      $season = $item['parent_media_index'];
+      $episode = $item['media_index'];
+      if (strlen($season) == 1) {
+        $newItem['series']['season'] = '0' . $season;
+      } else {
+        $newItem['series']['season'] = $season;
+      }
+      if (strlen($episode) == 1) {
+        $newItem['series']['episode'] = '0' . $episode;
+      } else {
+        $newItem['series']['episode'] = $episode;
+      }
       $newItem['series']['episode_title'] = $item['title'];
       $newItem['images']['poster'] = "/static/php/Shared/image.php?rating_key=" . $item['grandparent_rating_key'] . "&type=poster";
       $newItem['images']['art'] = "/static/php/Shared/image.php?rating_key=" . $item['grandparent_rating_key'] . "&type=art";
@@ -27,6 +37,7 @@
     $newItem['media_type'] = $item['media_type'];
     $newItem['progress_percent'] = $item['progress_percent'];
     $newItem['state'] = $item['state'];
+    $newItem['id'] = $item['rating_key'];
     array_push($ACTIVITY, $newItem);
   }
 

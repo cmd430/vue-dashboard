@@ -31,7 +31,6 @@ foreach ($CURRENT_HISTORY['response']['data'][3]['rows'] as $item) {
   }
   $newItem['last_watch'] = $item['last_watch'];
   $newItem['id'] = $item['row_id'];
-
   array_push($HISTORY, $newItem);
 }
 

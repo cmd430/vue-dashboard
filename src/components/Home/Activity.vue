@@ -1,10 +1,10 @@
 <template>
   <div class="activity">
-    <h2>Activity</h2>
+    <h2>Current Activity</h2>
     <ul>
       <activity-item
         v-for="item in activity"
-        v-bind:key="item"
+        v-bind:key="item.id"
         v-bind:activity_item="item"
       />
     </ul>
@@ -30,7 +30,21 @@ export default {
           return response.json()
         })
         .then(activityItems => {
-          // TODO
+          let cache = []
+          activityItems.forEach(activityItem => {
+            let newActivityItem = activityItem
+            cache.push(newActivityItem.id)
+            if (this.activity !== [] && typeof this.activity.find(item => (item.id === newActivityItem.id)) !== 'undefined') {
+              Vue.set(this.activity, this.activity.findIndex(item => item.id === newActivityItem.id), newActivityItem)
+            } else {
+              this.activity.push(newActivityItem)
+            }
+          })
+          this.activity.forEach(activityItem => {
+            if (!cache.includes(activityItem.id)) {
+              Vue.delete(this.activity, this.activity.findIndex(item => item.id === activityItem.id))
+            }
+          })
         })
         .catch(err => {
           console.log(err)
