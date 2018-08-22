@@ -68,7 +68,7 @@ export default {
     this.update = setInterval(() => {
       console.log('Updating...')
       this.processActivity()
-    }, 5000)
+    }, 10000)
   }
 }
 </script>

@@ -10,9 +10,9 @@
     echo $IMAGE;
   } else if (isset($_GET['rating_key']) && isset($_GET['type'])) {
     if ($_GET['type'] == "art") {
-      $OPTIONS = "&height=270&opacity=40&background=282828&blur=3&fallback=art&refresh=true";
+      $OPTIONS = "&height=270&opacity=40&background=282828&blur=3&fallback=art";
     } else {
-      $OPTIONS = "&height=270&fallback=thumb&refresh=true";
+      $OPTIONS = "&height=270&fallback=thumb";
     }
     $IMAGE_URL = "${TAUTULLI}/pms_image_proxy?img=/library/metadata/" . $_GET['rating_key'] . "/" . $_GET['type'] . $OPTIONS;
     $IMAGE = file_get_contents($IMAGE_URL);
