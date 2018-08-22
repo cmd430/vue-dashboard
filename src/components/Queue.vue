@@ -49,8 +49,8 @@ export default {
             } else if (queueItem.status === 'Downloading') {
               let seconds = Math.floor((new Date(queueItem.estimatedCompletionTime) - new Date()) / 1000)
               let interval = Math.floor(seconds / 60)
-              if (Math.floor(seconds) > -1) {
-                newQueueItem.timeleft = this.$store.state.strings.eta.replace('??', Math.floor(seconds) + (seconds > 1 ? ' Seconds' : (seconds === 0 ? ' Seconds' : ' Second')))
+              if (Math.floor(seconds) > 5) { // If time is less than 5 Seconds we can assume its done (status wont be Downloading...) or somthings wrong so we should show Calculating
+                newQueueItem.timeleft = this.$store.state.strings.eta.replace('??', Math.floor(seconds) + ' Seconds')
               } else {
                 newQueueItem.timeleft = this.$store.state.strings.calculating
               }
