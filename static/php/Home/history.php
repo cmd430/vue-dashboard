@@ -3,7 +3,7 @@
 include "../Config/conf.php";
 header("Content-Type: application/json");
 
-$COUNT = 10;
+$COUNT = 5;
 
 $CURRENT_HISTORY = json_decode(file_get_contents("${TAUTULLI}/api/v2?apikey=${API_KEY_TAUTULLI}&cmd=get_home_stats&stats_count=${COUNT}"), true);
 
@@ -18,8 +18,20 @@ function getInbetweenStrings ($start, $end, $str) {
 
 foreach ($CURRENT_HISTORY['response']['data'][3]['rows'] as $item) {
   $newItem = array();
-  $newItem['title'] = $item['title'];
-  $newItem['image'] = "/static/php/Shared/image.php?rating_key=" . getInbetweenStrings("\/library\/metadata\/", "\/thumb\/", $item['grandparent_thumb'])[0] . "&type=poster";
+  if ($item['grandparent_thumb'] != "") {
+    $newItem['media_type'] = "episode";
+    $title_episode = explode(" - ", $item['title']);
+    $newItem['title'] = $title_episode[0];
+    $newItem['episode'] = $title_episode[1];
+    $newItem['image'] = "/static/php/Shared/image.php?rating_key=" . getInbetweenStrings("\/library\/metadata\/", "\/thumb\/", $item['grandparent_thumb'])[0] . "&type=poster";
+  } else {
+    $newItem['media_type'] = "movie";
+    $newItem['title'] = $item['title'];
+    $newItem['image'] = "/static/php/Shared/image.php?rating_key=" . getInbetweenStrings("\/library\/metadata\/", "\/thumb\/", $item['thumb'])[0] . "&type=poster";
+  }
+  $newItem['last_watch'] = $item['last_watch'];
+  $newItem['id'] = $item['row_id'];
+
   array_push($HISTORY, $newItem);
 }
 

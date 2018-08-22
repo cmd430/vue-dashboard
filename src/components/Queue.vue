@@ -40,33 +40,42 @@ export default {
           queueItems.forEach(queueItem => {
             let newQueueItem = {}
             newQueueItem.progress = Math.round((((queueItem.size - queueItem.sizeleft) / queueItem.size) * 100) * 10) / 10 + '%'
-            let now = new Date()
-            let estimatedCompletionTime = new Date(queueItem.estimatedCompletionTime)
-            let diffMilliseconds = (estimatedCompletionTime - now)
-            let diffDays = Math.floor(diffMilliseconds / 86400000)
-            let diffHours = Math.floor((diffMilliseconds % 86400000) / 3600000)
-            let diffMinutes = Math.floor(((diffMilliseconds % 86400000) % 3600000) / 60000)
-            let diffSeconds = Math.floor((((diffMilliseconds % 86400000) % 3600000) % 3600000) / 60000)
-            if (diffDays === 0) {
-              if (diffHours === 0) {
-                if (diffMinutes === 0) {
-                  newQueueItem.timeleft = this.$store.state.strings.eta.replace('??', diffSeconds + (diffSeconds > 1 ? ' Seconds' : ' Second'))
+            if (queueItem.status === 'Queued') {
+              newQueueItem.timeleft = this.$store.state.strings.queued
+            } else if (queueItem.status === 'Downloading') {
+              let now = new Date()
+              let estimatedCompletionTime = new Date(queueItem.estimatedCompletionTime)
+              let diffMilliseconds = (estimatedCompletionTime - now)
+              let diffDays = Math.floor(diffMilliseconds / 86400000)
+              let diffHours = Math.floor((diffMilliseconds % 86400000) / 3600000)
+              let diffMinutes = Math.floor(((diffMilliseconds % 86400000) % 3600000) / 60000)
+              let diffSeconds = Math.floor((((diffMilliseconds % 86400000) % 3600000) % 3600000) / 60000)
+              if (diffDays === 0) {
+                if (diffHours === 0) {
+                  if (diffMinutes === 0) {
+                    newQueueItem.timeleft = this.$store.state.strings.eta.replace('??', diffSeconds + (diffSeconds > 1 ? ' Seconds' : ' Second'))
+                  } else {
+                    newQueueItem.timeleft = this.$store.state.strings.eta.replace('??', diffMinutes + (diffMinutes > 1 ? ' Minutes' : ' Minute'))
+                  }
                 } else {
-                  newQueueItem.timeleft = this.$store.state.strings.eta.replace('??', diffMinutes + (diffMinutes > 1 ? ' Minutes' : ' Minute'))
+                  newQueueItem.timeleft = this.$store.state.strings.eta.replace('??', diffHours + (diffHours > 1 ? ' Hours' : ' Hour'))
                 }
-              } else {
-                newQueueItem.timeleft = this.$store.state.strings.eta.replace('??', diffHours + (diffHours > 1 ? ' Hours' : ' Hour'))
+              } else if (diffDays > 0) {
+                newQueueItem.timeleft = this.$store.state.strings.eta.replace('??', diffDays + (diffDays > 1 ? ' Days' : ' Day'))
               }
-            } else if (diffDays > 0) {
-              newQueueItem.timeleft = this.$store.state.strings.eta.replace('??', diffDays + (diffDays > 1 ? ' Days' : ' Day'))
+              if (newQueueItem.progress === 'NaN%' || newQueueItem.progress === '0%') {
+                newQueueItem.timeleft = this.$store.state.strings.calculating
+                newQueueItem.progress = '0%'
+              }
+              if (typeof newQueueItem.timeleft === 'undefined' || diffSeconds === 0) {
+                if (newQueueItem.progress.replace('%', '') > 80) {
+                  newQueueItem.timeleft = this.$store.state.strings.importing
+                } else {
+                  newQueueItem.timeleft = this.$store.state.strings.calculating
+                }
+              }
             }
-            if (newQueueItem.progress === 'NaN%' || newQueueItem.progress === '0%') {
-              newQueueItem.timeleft = this.$store.state.strings.calculating
-              newQueueItem.progress = '0%'
-            }
-            if (typeof newQueueItem.timeleft === 'undefined' || diffSeconds === 0) {
-              newQueueItem.timeleft = this.$store.state.strings.importing
-            }
+            newQueueItem.status = queueItem.status
             if (queueType === 'shows') {
               newQueueItem.season_number = (queueItem.episode.seasonNumber.toString().length > 1 ? queueItem.episode.seasonNumber.toString() : '0' + queueItem.episode.seasonNumber.toString())
               newQueueItem.episode_number = (queueItem.episode.episodeNumber.toString().length > 1 ? queueItem.episode.episodeNumber.toString() : '0' + queueItem.episode.episodeNumber.toString())

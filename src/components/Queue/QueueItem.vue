@@ -1,7 +1,7 @@
 <template>
 <li>
   <div class="img" v-bind:style="{ 'background-image': 'url(' + queue_item.img_url + ')' }">
-    <span v-if="queue_item.timeleft !== this.$store.state.strings.importing" class="downloading">
+    <span v-if="queue_item.status === 'Downloading'" class="downloading">
       <span>{{ queue_item.timeleft }}</span>
       <span>{{ queue_item.progress }}</span>
     </span>

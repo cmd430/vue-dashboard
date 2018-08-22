@@ -23,6 +23,7 @@ export default new Vuex.Store({
       onAir: 'On Air',
       want: 'In ??',
       calculating: 'Calculating',
+      queued: 'Queued',
       eta: 'In About ??',
       importing: 'Importing'
     }

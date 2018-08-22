@@ -1,10 +1,10 @@
 <template>
-  <div class="activity">
-    <h2>Recent</h2>
+  <div class="recent">
+    <h2>Recently Added</h2>
     <ul>
       <recent-item
         v-for="item in recent"
-        v-bind:key="item"
+        v-bind:key="item.id"
         v-bind:recent_item="item"
       />
     </ul>
@@ -30,7 +30,49 @@ export default {
           return response.json()
         })
         .then(recentItems => {
-          // TODO
+          let cache = []
+          recentItems.forEach(recentItem => {
+            let newRecentItem = recentItem
+            newRecentItem.id = recentItem.added_at
+            let seconds = Math.floor((new Date() - new Date(recentItem.added_at * 1000)) / 1000)
+            let interval = Math.floor(seconds / 60)
+            newRecentItem.added_at = Math.floor(seconds) + (seconds > 1 ? ' Seconds' : ' Second')
+            if (interval >= 1) {
+              newRecentItem.added_at = interval + (interval > 1 ? ' Minutes' : ' Minute')
+            }
+            interval = Math.floor(seconds / 3600)
+            if (interval >= 1) {
+              newRecentItem.added_at = interval + (interval > 1 ? ' Hours' : ' Hour')
+            }
+            interval = Math.floor(seconds / 86400)
+            if (interval >= 1) {
+              newRecentItem.added_at = interval + (interval > 1 ? ' Days' : ' Day')
+            }
+            interval = Math.floor(seconds / 604800)
+            if (interval >= 1) {
+              newRecentItem.added_at = interval + (interval > 1 ? ' Weeks' : ' Week')
+            }
+            interval = Math.floor(seconds / 2592000)
+            if (interval >= 1) {
+              newRecentItem.added_at = interval + (interval > 1 ? ' Months' : ' Month')
+            }
+            interval = Math.floor(seconds / 31536000)
+            if (interval >= 1) {
+              newRecentItem.added_at = interval + (interval > 1 ? ' Years' : ' Year')
+            }
+            newRecentItem.added_at = newRecentItem.added_at + ' Ago'
+            cache.push(newRecentItem.id)
+            if (this.recent !== [] && typeof this.recent.find(item => (item.id === newRecentItem.id)) !== 'undefined') {
+              Vue.set(this.recent, this.recent.findIndex(item => item.id === newRecentItem.id), newRecentItem)
+            } else {
+              this.recent.push(newRecentItem)
+            }
+          })
+          this.recent.forEach(recentItem => {
+            if (!cache.includes(recentItem.id)) {
+              Vue.delete(this.recent, this.recent.findIndex(item => item.id === recentItem.id))
+            }
+          })
         })
         .catch(err => {
           console.log(err)
@@ -54,7 +96,7 @@ export default {
     this.update = setInterval(() => {
       console.log('Updating...')
       this.processRecent()
-    }, 5000)
+    }, 30000)
   }
 }
 </script>
