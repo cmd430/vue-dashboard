@@ -40,40 +40,45 @@ export default {
           queueItems.forEach(queueItem => {
             let newQueueItem = {}
             newQueueItem.progress = Math.round((((queueItem.size - queueItem.sizeleft) / queueItem.size) * 100) * 10) / 10 + '%'
+            if (newQueueItem.progress === 'NaN%') {
+              newQueueItem.timeleft = this.$store.state.strings.calculating
+              newQueueItem.progress = '0%'
+            }
             if (queueItem.status === 'Queued') {
               newQueueItem.timeleft = this.$store.state.strings.queued
             } else if (queueItem.status === 'Downloading') {
-              let now = new Date()
-              let estimatedCompletionTime = new Date(queueItem.estimatedCompletionTime)
-              let diffMilliseconds = (estimatedCompletionTime - now)
-              let diffDays = Math.floor(diffMilliseconds / 86400000)
-              let diffHours = Math.floor((diffMilliseconds % 86400000) / 3600000)
-              let diffMinutes = Math.floor(((diffMilliseconds % 86400000) % 3600000) / 60000)
-              let diffSeconds = Math.floor((((diffMilliseconds % 86400000) % 3600000) % 3600000) / 60000)
-              if (diffDays === 0) {
-                if (diffHours === 0) {
-                  if (diffMinutes === 0) {
-                    newQueueItem.timeleft = this.$store.state.strings.eta.replace('??', diffSeconds + (diffSeconds > 1 ? ' Seconds' : ' Second'))
-                  } else {
-                    newQueueItem.timeleft = this.$store.state.strings.eta.replace('??', diffMinutes + (diffMinutes > 1 ? ' Minutes' : ' Minute'))
-                  }
-                } else {
-                  newQueueItem.timeleft = this.$store.state.strings.eta.replace('??', diffHours + (diffHours > 1 ? ' Hours' : ' Hour'))
-                }
-              } else if (diffDays > 0) {
-                newQueueItem.timeleft = this.$store.state.strings.eta.replace('??', diffDays + (diffDays > 1 ? ' Days' : ' Day'))
-              }
-              if (newQueueItem.progress === 'NaN%' || newQueueItem.progress === '0%') {
+              let seconds = Math.floor((new Date(queueItem.estimatedCompletionTime) - new Date()) / 1000)
+              let interval = Math.floor(seconds / 60)
+              if (Math.floor(seconds) > -1) {
+                newQueueItem.timeleft = this.$store.state.strings.eta.replace('??', Math.floor(seconds) + (seconds > 1 ? ' Seconds' : (seconds === 0 ? ' Seconds' : ' Second')))
+              } else {
                 newQueueItem.timeleft = this.$store.state.strings.calculating
-                newQueueItem.progress = '0%'
               }
-              if (typeof newQueueItem.timeleft === 'undefined' || diffSeconds === 0) {
-                if (newQueueItem.progress.replace('%', '') > 80) {
-                  newQueueItem.timeleft = this.$store.state.strings.importing
-                } else {
-                  newQueueItem.timeleft = this.$store.state.strings.calculating
-                }
+              if (interval >= 1) {
+                newQueueItem.timeleft = this.$store.state.strings.eta.replace('??', interval + (interval > 1 ? ' Minutes' : ' Minute'))
               }
+              interval = Math.floor(seconds / 3600)
+              if (interval >= 1) {
+                newQueueItem.timeleft = this.$store.state.strings.eta.replace('??', interval + (interval > 1 ? ' Hours' : ' Hour'))
+              }
+              interval = Math.floor(seconds / 86400)
+              if (interval >= 1) {
+                newQueueItem.timeleft = this.$store.state.strings.eta.replace('??', interval + (interval > 1 ? ' Days' : ' Day'))
+              }
+              interval = Math.floor(seconds / 604800)
+              if (interval >= 1) {
+                newQueueItem.timeleft = this.$store.state.strings.eta.replace('??', interval + (interval > 1 ? ' Weeks' : ' Week'))
+              }
+              interval = Math.floor(seconds / 2592000)
+              if (interval >= 1) {
+                newQueueItem.timeleft = this.$store.state.strings.eta.replace('??', interval + (interval > 1 ? ' Months' : ' Month'))
+              }
+              interval = Math.floor(seconds / 31536000)
+              if (interval >= 1) {
+                newQueueItem.timeleft = this.$store.state.strings.eta.replace('??', interval + (interval > 1 ? ' Years' : ' Year'))
+              }
+            } else if (queueItem.status === 'Seeding' || queueItem.status === 'Paused') {
+              newQueueItem.timeleft = this.$store.state.strings.importing
             }
             newQueueItem.status = queueItem.status
             if (queueType === 'shows') {
