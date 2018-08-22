@@ -88,22 +88,26 @@ export default {
               newCalendarItem.status_class = 'downloading'
               newCalendarItem.status_text = this.$store.state.strings.downloading
             } else if (typeof newCalendarItem.status_text === 'undefined') {
-              let now = new Date()
-              let diffMilliseconds = (airTime - now)
-              let diffDays = Math.floor(diffMilliseconds / 86400000)
-              let diffHours = Math.floor((diffMilliseconds % 86400000) / 3600000)
-              let diffMinutes = Math.floor(((diffMilliseconds % 86400000) % 3600000) / 60000)
               newCalendarItem.status_class = 'want'
-              if (diffDays === 0) {
-                if (diffHours === 0) {
-                  newCalendarItem.status_text = this.$store.state.strings.want.replace('??', diffMinutes + (diffMinutes > 1 ? ' Minutes' : ' Minute'))
-                } else {
-                  newCalendarItem.status_text = this.$store.state.strings.want.replace('??', diffHours + (diffHours > 1 ? ' Hours' : ' Hour'))
-                }
-              } else if (diffDays > 0) {
-                newCalendarItem.status_text = this.$store.state.strings.want.replace('??', diffDays + (diffDays > 1 ? ' Days' : ' Day'))
-              } else {
-                return
+              let seconds = Math.floor((airTime - new Date()) / 1000)
+              let interval = Math.floor(seconds / 60)
+              if (Math.floor(seconds) > -1) {
+                newCalendarItem.status_text = this.$store.state.strings.want.replace('??', Math.floor(seconds) + (seconds > 1 ? ' Seconds' : (seconds === 0 ? ' Seconds' : ' Second')))
+              }
+              if (interval >= 1) {
+                newCalendarItem.status_text = this.$store.state.strings.want.replace('??', interval + (interval > 1 ? ' Minutes' : ' Minute'))
+              }
+              interval = Math.floor(seconds / 3600)
+              if (interval >= 1) {
+                newCalendarItem.status_text = this.$store.state.strings.want.replace('??', interval + (interval > 1 ? ' Hours' : ' Hour'))
+              }
+              interval = Math.floor(seconds / 86400)
+              if (interval >= 1) {
+                newCalendarItem.status_text = this.$store.state.strings.want.replace('??', interval + (interval > 1 ? ' Days' : ' Day'))
+              }
+              interval = Math.floor(seconds / 604800)
+              if (interval >= 1) {
+                newCalendarItem.status_text = this.$store.state.strings.want.replace('??', interval + (interval > 1 ? ' Weeks' : ' Week'))
               }
             }
             newCalendarItem.id = calendarItem.id
