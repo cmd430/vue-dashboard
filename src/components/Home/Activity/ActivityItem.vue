@@ -108,12 +108,12 @@ div.info[data-type="movie"] {
   white-space: nowrap;
   text-overflow: ellipsis;
   font-size: 13px;
-  color: rgb(153, 153, 153);
+  color: rgb(238, 238, 238);
 }
 .info p span {
   font-weight: 700;
   font-size: 12px;
-  color: rgb(238, 238, 238);
+  color: rgb(153, 153, 153);
 }
 div#progress {
   text-align: center;
