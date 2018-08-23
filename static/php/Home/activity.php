@@ -27,8 +27,7 @@
       $newItem['images']['poster'] = "/static/php/Shared/image.php?rating_key=" . $item['grandparent_rating_key'] . "&type=poster";
       $newItem['images']['art'] = "/static/php/Shared/image.php?rating_key=" . $item['grandparent_rating_key'] . "&type=art";
     } else if ($item['media_type'] == 'movie') {
-      $newItem['series']['title'] = $item['parent_title'];
-      $newItem['series']['season'] = $item['media_index'];
+      $newItem['title'] = $item['title'];
       $newItem['images']['poster'] = "/static/php/Shared/image.php?rating_key=" . $item['rating_key'] . "&type=poster";
       $newItem['images']['art'] = "/static/php/Shared/image.php?rating_key=" . $item['rating_key'] . "&type=art";
     } else {
