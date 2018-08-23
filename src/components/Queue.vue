@@ -45,10 +45,10 @@ export default {
               let seconds = Math.floor((new Date(queueItem.estimatedCompletionTime) - new Date()) / 1000)
               let interval = Math.floor(seconds / 60)
               if (Math.floor(seconds) > 5) {
-                // If time is less than 5 Seconds we can assume its done
-                // (status wont be Downloading...) or somthings wrong so we should show Calculating
                 newQueueItem.timeleft = Math.floor(seconds) + ' Seconds'
               } else {
+                // If time is less than 5 Seconds we can assume its done
+                // or somthings wrong so we should show Calculating
                 newQueueItem.timeleft = this.$store.state.strings.calculating
               }
               if (interval >= 1) {
