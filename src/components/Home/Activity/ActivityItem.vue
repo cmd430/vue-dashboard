@@ -27,9 +27,9 @@
       {{ activity_item.title }}
     </p>
   </div>
-  <div id="progress" v-bind:data-progress="activity_item.progress_percent">
-    <span class="text">{{ activity_item.progress_percent }}%</span>
-    <span class="progress" v-bind:style="{ 'width': activity_item.progress_percent + '%' }"></span>
+  <div id="progress">
+    <span class="text">{{ activity_item.progress_percent }}</span>
+    <span class="progress" v-bind:style="{ 'width': activity_item.progress_percent }"></span>
   </div>
 </li>
 </template>

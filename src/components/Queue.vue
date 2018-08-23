@@ -44,36 +44,39 @@ export default {
             } else if (queueItem.status === 'Downloading') {
               let seconds = Math.floor((new Date(queueItem.estimatedCompletionTime) - new Date()) / 1000)
               let interval = Math.floor(seconds / 60)
-              if (Math.floor(seconds) > 5) { // If time is less than 5 Seconds we can assume its done (status wont be Downloading...) or somthings wrong so we should show Calculating
-                newQueueItem.timeleft = this.$store.state.strings.eta.replace('??', Math.floor(seconds) + ' Seconds')
+              if (Math.floor(seconds) > 5) {
+                // If time is less than 5 Seconds we can assume its done
+                // (status wont be Downloading...) or somthings wrong so we should show Calculating
+                newQueueItem.timeleft = Math.floor(seconds) + ' Seconds'
               } else {
                 newQueueItem.timeleft = this.$store.state.strings.calculating
               }
               if (interval >= 1) {
-                newQueueItem.timeleft = this.$store.state.strings.eta.replace('??', interval + (interval > 1 ? ' Minutes' : ' Minute'))
+                newQueueItem.timeleft = interval + (interval > 1 ? ' Minutes' : ' Minute')
               }
               interval = Math.floor(seconds / 3600)
               if (interval >= 1) {
-                newQueueItem.timeleft = this.$store.state.strings.eta.replace('??', interval + (interval > 1 ? ' Hours' : ' Hour'))
+                newQueueItem.timeleft = interval + (interval > 1 ? ' Hours' : ' Hour')
               }
               interval = Math.floor(seconds / 86400)
               if (interval >= 1) {
-                newQueueItem.timeleft = this.$store.state.strings.eta.replace('??', interval + (interval > 1 ? ' Days' : ' Day'))
+                newQueueItem.timeleft = interval + (interval > 1 ? ' Days' : ' Day')
               }
               interval = Math.floor(seconds / 604800)
               if (interval >= 1) {
-                newQueueItem.timeleft = this.$store.state.strings.eta.replace('??', interval + (interval > 1 ? ' Weeks' : ' Week'))
+                newQueueItem.timeleft = interval + (interval > 1 ? ' Weeks' : ' Week')
               }
               interval = Math.floor(seconds / 2592000)
               if (interval >= 1) {
-                newQueueItem.timeleft = this.$store.state.strings.eta.replace('??', interval + (interval > 1 ? ' Months' : ' Month'))
+                newQueueItem.timeleft = interval + (interval > 1 ? ' Months' : ' Month')
               }
               interval = Math.floor(seconds / 31536000)
               if (interval >= 1) {
-                newQueueItem.timeleft = this.$store.state.strings.eta.replace('??', interval + (interval > 1 ? ' Years' : ' Year'))
+                newQueueItem.timeleft = interval + (interval > 1 ? ' Years' : ' Year')
               }
-            } else if (queueItem.status === 'Seeding' || queueItem.status === 'Paused') {
-              newQueueItem.timeleft = this.$store.state.strings.importing
+              if (newQueueItem.timeleft !== this.$store.state.strings.calculating && newQueueItem.timeleft !== this.$store.state.strings.queued) {
+                newQueueItem.timeleft = this.$store.state.strings.eta.replace('??', newQueueItem.timeleft)
+              }
             }
             newQueueItem.status = queueItem.status
             if (queueType === 'shows') {

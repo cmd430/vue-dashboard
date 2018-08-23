@@ -35,7 +35,7 @@
       continue;
     }
     $newItem['media_type'] = $item['media_type'];
-    $newItem['progress_percent'] = $item['progress_percent'];
+    $newItem['progress_percent'] = $item['progress_percent'] . "%";
     $newItem['state'] = $item['state'];
     $newItem['id'] = $item['rating_key'];
     array_push($ACTIVITY, $newItem);

@@ -25,7 +25,7 @@ export default new Vuex.Store({
       calculating: 'Calculating',
       queued: 'Queued',
       eta: 'In About ??',
-      importing: 'Importing'
+      ago: '?? Ago'
     }
   },
   mutations: {

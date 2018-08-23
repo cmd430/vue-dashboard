@@ -59,7 +59,7 @@ export default {
             if (interval >= 1) {
               newHistoryItem.last_watch = interval + (interval > 1 ? ' Years' : ' Year')
             }
-            newHistoryItem.last_watch = newHistoryItem.last_watch + ' Ago'
+            newHistoryItem.last_watch = this.$store.state.strings.ago.replace('??', newHistoryItem.last_watch)
             if (this.history !== [] && typeof this.history.find(item => (item.id === newHistoryItem.id)) !== 'undefined') {
               Vue.set(this.history, this.history.findIndex(item => item.id === newHistoryItem.id), newHistoryItem)
             } else {

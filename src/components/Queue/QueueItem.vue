@@ -5,7 +5,7 @@
       <span>{{ queue_item.timeleft }}</span>
       <span>{{ queue_item.progress }}</span>
     </span>
-    <span v-else class="importing">
+    <span v-else class="queued">
       <span>{{ queue_item.timeleft }}</span>
     </span>
   </div>
@@ -62,7 +62,7 @@ div.img {
   font-size: 12px;
 }
 .img span.downloading,
-.img span.importing {
+.img span.queued {
   background-color: rgba(143, 44, 189, 0.8);
   color: rgb(238, 238, 238);
   padding: 0;
@@ -73,7 +73,7 @@ span.downloading span:first-child {
 span.downloading span:last-child {
   padding: 0 10px 5px;
 }
-span.importing span {
+span.queued span {
   padding: 10px;
 }
 div.info {

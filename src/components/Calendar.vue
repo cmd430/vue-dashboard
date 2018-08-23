@@ -92,23 +92,24 @@ export default {
               let seconds = Math.floor((airTime - new Date()) / 1000)
               let interval = Math.floor(seconds / 60)
               if (Math.floor(seconds) > -1) {
-                newCalendarItem.status_text = this.$store.state.strings.want.replace('??', Math.floor(seconds) + (seconds > 1 ? ' Seconds' : (seconds === 0 ? ' Seconds' : ' Second')))
+                newCalendarItem.status_text = Math.floor(seconds) + (seconds > 1 ? ' Seconds' : (seconds === 0 ? ' Seconds' : ' Second'))
               }
               if (interval >= 1) {
-                newCalendarItem.status_text = this.$store.state.strings.want.replace('??', interval + (interval > 1 ? ' Minutes' : ' Minute'))
+                newCalendarItem.status_text = interval + (interval > 1 ? ' Minutes' : ' Minute')
               }
               interval = Math.floor(seconds / 3600)
               if (interval >= 1) {
-                newCalendarItem.status_text = this.$store.state.strings.want.replace('??', interval + (interval > 1 ? ' Hours' : ' Hour'))
+                newCalendarItem.status_text = interval + (interval > 1 ? ' Hours' : ' Hour')
               }
               interval = Math.floor(seconds / 86400)
               if (interval >= 1) {
-                newCalendarItem.status_text = this.$store.state.strings.want.replace('??', interval + (interval > 1 ? ' Days' : ' Day'))
+                newCalendarItem.status_text = interval + (interval > 1 ? ' Days' : ' Day')
               }
               interval = Math.floor(seconds / 604800)
               if (interval >= 1) {
-                newCalendarItem.status_text = this.$store.state.strings.want.replace('??', interval + (interval > 1 ? ' Weeks' : ' Week'))
+                newCalendarItem.status_text = interval + (interval > 1 ? ' Weeks' : ' Week')
               }
+              newCalendarItem.status_text = this.$store.state.strings.want.replace('??', newCalendarItem.status_text)
             }
             newCalendarItem.id = calendarItem.id
             cache.push(newCalendarItem.id)

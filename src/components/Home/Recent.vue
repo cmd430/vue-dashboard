@@ -60,7 +60,7 @@ export default {
             if (interval >= 1) {
               newRecentItem.added_at = interval + (interval > 1 ? ' Years' : ' Year')
             }
-            newRecentItem.added_at = newRecentItem.added_at + ' Ago'
+            newRecentItem.added_at = this.$store.state.strings.ago.replace('??', newRecentItem.added_at)
             cache.push(newRecentItem.id)
             if (this.recent !== [] && typeof this.recent.find(item => (item.id === newRecentItem.id)) !== 'undefined') {
               Vue.set(this.recent, this.recent.findIndex(item => item.id === newRecentItem.id), newRecentItem)
