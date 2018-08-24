@@ -22,15 +22,15 @@
     </ul>
     <ul class="right">
       <li>
+        <router-link tag="li" to="/stats">
+          <i class="icon-chart-pie"></i>
+          Stats
+        </router-link>
+      </li>
+      <li>
         <router-link tag="li" to="/settings">
           <i class="icon-cog"></i>
           Settings
-        </router-link>
-      </li>
-      <li v-show="false"> <!-- Disabled for now -->
-        <router-link tag="li" to="/about">
-          <i class="icon-info"></i>
-          About
         </router-link>
       </li>
     </ul>
