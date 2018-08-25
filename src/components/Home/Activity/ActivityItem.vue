@@ -1,7 +1,7 @@
 <template>
 <li>
   <div class="bg_img" v-bind:style="{ 'background-image': 'url(' + activity_item.images.art + ')' }">
-    <span>{{ activity_item.state }}</span>
+    <span>{{ activity_item.playback.state }}</span>
   </div>
   <div class="img" v-bind:style="{ 'background-image': 'url(' + activity_item.images.poster + ')' }">
   </div>
@@ -28,8 +28,9 @@
     </p>
   </div>
   <div id="progress">
-    <span class="text">{{ activity_item.progress_percent }}</span>
-    <span class="progress" v-bind:style="{ 'width': activity_item.progress_percent }"></span>
+    <span class="progress_text">{{ activity_item.playback.progress_text }} / {{ activity_item.playback.duration_text }}</span>
+    <span class="percent_text">{{ activity_item.playback.progress_percent }}</span>
+    <span class="progress" v-bind:style="{ 'width': activity_item.playback.progress_percent }"></span>
   </div>
 </li>
 </template>
@@ -116,31 +117,34 @@ div.info[data-type="movie"] {
   color: rgb(153, 153, 153);
 }
 div#progress {
-  text-align: center;
   position: absolute;
-  top: 260px;
+  top: 265px;
   left: 162px;
   width: 318px;
-  height: 8px;
-  border-radius: 2px;
+  height: 4px;
   background-color: rgba(0,0,0,.3);
 }
 div#progress span.progress {
   height: 100%;
   width: 0;
-  border-radius: 2px;
-  background-color: rgba(249, 190, 3, 0.5);
+  background-color: rgba(249, 190, 3, 0.8);
   position: absolute;
   top: 0;
   left: 0;
   transition: width 200ms;
 }
-#progress span.text {
-  font-size: 14px;
-  position: relative;
+#progress span.percent_text,
+#progress span.progress_text {
+  font-size: 10px;
+  position: absolute;
   width: 100%;
-  height: 20px;
-  top: -10px;
+  top: -18px;
   font-weight: 600;
+  color: rgb(238, 238, 238);
+  text-align: right
+}
+#progress span.progress_text {
+  color: rgb(153, 153, 153);
+  text-align: left
 }
 </style>

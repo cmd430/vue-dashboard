@@ -34,8 +34,11 @@
       continue;
     }
     $newItem['media_type'] = $item['media_type'];
-    $newItem['progress_percent'] = $item['progress_percent'] . "%";
-    $newItem['state'] = $item['state'];
+    $newItem['playback']['progress_percent'] = $item['progress_percent'] . "%";
+    $newItem['playback']['progress_ms'] = $item['view_offset'];
+    $newItem['playback']['runtime_ms'] = $item['stream_duration'];
+    $newItem['playback']['quality'] = $item['stream_video_resolution'];
+    $newItem['playback']['state'] = $item['state'];
     $newItem['id'] = $item['rating_key'];
     array_push($ACTIVITY, $newItem);
   }
