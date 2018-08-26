@@ -34,22 +34,6 @@ export default {
           activityItems.forEach(activityItem => {
             let newActivityItem = activityItem
             cache.push(newActivityItem.id)
-            let runtimeMS = newActivityItem.playback.runtime_ms
-            let rHour = Math.floor(runtimeMS / (1000 * 60 * 60)).toString()
-            let rMin = Math.floor(runtimeMS / (1000 * 60)).toString()
-            let rSec = Math.floor((runtimeMS % (60 * 1000)) / 1000).toString()
-            rHour = (rHour === '0' ? '' : (rHour.length === 2 ? rHour : '0' + rHour) + ':')
-            rMin = (rMin.length === 2 ? rMin : '0' + rMin) + ':'
-            rSec = (rSec.length === 2 ? rSec : '0' + rSec)
-            let progressMS = newActivityItem.playback.progress_ms
-            let pHour = Math.floor(progressMS / (1000 * 60 * 60)).toString()
-            let pMin = Math.floor(progressMS / (1000 * 60)).toString()
-            let pSec = Math.floor((progressMS % (60 * 1000)) / 1000).toString()
-            pHour = (rHour === '' ? '' : (pHour.length === 2 ? pHour : '0' + pHour) + ':')
-            pMin = (pMin.length === 2 ? pMin : '0' + pMin) + ':'
-            pSec = (pSec.length === 2 ? pSec : '0' + pSec)
-            newActivityItem.playback.progress_text = pHour + pMin + pSec
-            newActivityItem.playback.duration_text = rHour + rMin + rSec
             if (this.activity !== [] && typeof this.activity.find(item => (item.id === newActivityItem.id)) !== 'undefined') {
               Vue.set(this.activity, this.activity.findIndex(item => item.id === newActivityItem.id), newActivityItem)
             } else {
@@ -84,7 +68,7 @@ export default {
     this.update = setInterval(() => {
       console.log('Updating...')
       this.processActivity()
-    }, 5000)
+    }, 10000)
   }
 }
 </script>
