@@ -28,7 +28,7 @@
     </p>
   </div>
   <div id="progress">
-    <span class="progress_text">{{ toHHMMSS(this.activity_item.playback.progress_ms) }} / {{ toHHMMSS(this.activity_item.playback.runtime_ms) }}</span>
+    <span class="progress_text">{{ progress }} / {{ duration }}</span>
     <span class="percent_text">{{ activity_item.playback.progress_percent }}</span>
     <span class="progress" v-bind:style="{ 'width': activity_item.playback.progress_percent }"></span>
   </div>
@@ -43,14 +43,14 @@ export default {
   ],
   data () {
     return {
-      toHHMMSS: function (milliseconds) {
+      toHHMMSS: function (milliseconds, overrideHours = false) {
         let hours
         let minutes
         let seconds = milliseconds / 1000
         let result = ''
         hours = Math.floor(seconds / 3600)
         seconds -= hours * 3600
-        if (hours) {
+        if (hours || overrideHours) {
           result = hours < 10 ? '0' + hours + ':' : hours + ':'
         }
         minutes = Math.floor(seconds / 60)
@@ -61,6 +61,18 @@ export default {
         return result
       },
       update: null
+    }
+  },
+  computed: {
+    progress () {
+      let override = false
+      if ((this.duration.split(':').length - 1) === 2) {
+        override = true
+      }
+      return this.toHHMMSS(this.activity_item.playback.progress_ms, override)
+    },
+    duration () {
+      return this.toHHMMSS(this.activity_item.playback.runtime_ms)
     }
   }
 }
