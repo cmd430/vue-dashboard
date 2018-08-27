@@ -18,6 +18,9 @@ import QueueItem from '@/components/Queue/QueueItem'
 
 export default {
   name: 'Queue',
+  metaInfo: {
+    title: 'Download Queue'
+  },
   components: {
     'queue-item': QueueItem
   },

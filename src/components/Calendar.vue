@@ -32,6 +32,9 @@ import CalendarItem from '@/components/Calendar/CalendarItem'
 
 export default {
   name: 'Calendar',
+  metaInfo: {
+    title: 'Calendar'
+  },
   components: {
     'calendar-item': CalendarItem
   },

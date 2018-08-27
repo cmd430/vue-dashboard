@@ -25,6 +25,9 @@
 <script>
 export default {
   name: 'Settings',
+  metaInfo: {
+    title: 'Settings'
+  },
   components: {},
   methods: {},
   data () {

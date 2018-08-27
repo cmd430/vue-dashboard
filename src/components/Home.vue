@@ -13,6 +13,9 @@ import Recent from '@/components/Home/Recent'
 
 export default {
   name: 'Home',
+  metaInfo: {
+    title: 'Home'
+  },
   components: {
     'activity': Activity,
     'history': History,

@@ -10,6 +10,12 @@ import Navigation from '@/components/Navigation'
 
 export default {
   name: 'App',
+  metaInfo: {
+    title: '',
+    titleTemplate: (titleChunk) => {
+      return titleChunk ? `Dashboard | ${titleChunk}` : 'Dashboard'
+    }
+  },
   components: {
     'navigation': Navigation
   }

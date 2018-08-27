@@ -1,14 +1,14 @@
 <template>
-  <div id="stats">
-    <p>TODO://</p>
+  <div id="error">
+    <p>TODO:// Make this error page</p>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Stats',
+  name: 'Error',
   metaInfo: {
-    title: 'Stats'
+    title: 'Error'
   }
 }
 </script>
