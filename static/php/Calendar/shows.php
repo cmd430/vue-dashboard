@@ -13,8 +13,8 @@
     $END = "&end=" . $_GET['end'];
   }
 
-  $SERIES_QUEUE = json_decode(file_get_contents("${SONARR}/api/queue?apikey=${API_KEY_SONARR}"), true);
-  $SERIES_CALENDAR = json_decode(file_get_contents("${SONARR}/api/calendar?apikey=${API_KEY_SONARR}&unmonitored=false" . $START . $END), true);
+  $SERIES_QUEUE = json_decode(file_get_contents("${SONARR}/queue?apikey=${API_KEY_SONARR}"), true);
+  $SERIES_CALENDAR = json_decode(file_get_contents("${SONARR}/calendar?apikey=${API_KEY_SONARR}&unmonitored=false" . $START . $END), true);
   $SERIES_DOWNLOADING = array();
   foreach ($SERIES_QUEUE as $episode) {
     array_push($SERIES_DOWNLOADING, $episode['episode']['id']);

@@ -5,8 +5,8 @@
 
   $COUNT = 7;
 
-  $RECENT_ADDED_SHOWS = json_decode(file_get_contents("${TAUTULLI}/api/v2?apikey=${API_KEY_TAUTULLI}&cmd=get_recently_added&count=${COUNT}&type=show"), true);
-  $RECENT_ADDED_MOVIES = json_decode(file_get_contents("${TAUTULLI}/api/v2?apikey=${API_KEY_TAUTULLI}&cmd=get_recently_added&count=${COUNT}&type=movie"), true);
+  $RECENT_ADDED_SHOWS = json_decode(file_get_contents("${TAUTULLI}?apikey=${API_KEY_TAUTULLI}&cmd=get_recently_added&count=${COUNT}&type=show"), true);
+  $RECENT_ADDED_MOVIES = json_decode(file_get_contents("${TAUTULLI}?apikey=${API_KEY_TAUTULLI}&cmd=get_recently_added&count=${COUNT}&type=movie"), true);
 
   $RECENT_ITEMS = array();
 
@@ -27,11 +27,14 @@
         $newItem['series']['episode'] = $episode;
       }
       $newItem['series']['episode_title'] = $item['title'];
-      $newItem['image'] = "/static/php/Shared/image.php?rating_key=" . $item['grandparent_rating_key'] . "&type=thumb";
+      $RATING_KEY = $item['grandparent_rating_key'];
+      $newItem['image'] = "${IMAGE_PROXY}?rating_key=${RATING_KEY}&type=thumb";
     } else if ($item['media_type'] == 'series') {
+      // THIS IS CURRENTLY NEVER USED!
       $newItem['title'] = $item['parent_title'];
       $newItem['series']['season'] = $item['media_index'];
-      $newItem['image'] = "/static/php/Shared/image.php?rating_key=" . $item['rating_key'] . "&type=thumb";
+      $RATING_KEY = $item['rating_key'];
+      $newItem['image'] = "${IMAGE_PROXY}?rating_key=${RATING_KEY}&type=thumb";
     } else {
       continue;
     }
@@ -47,7 +50,8 @@
       continue;
     }
     $newItem['media_type'] = $item['media_type'];
-    $newItem['image'] = "/static/php/Shared/image.php?rating_key=" . $item['rating_key'] . "&type=thumb";
+    $RATING_KEY = $item['rating_key'];
+    $newItem['image'] = "${IMAGE_PROXY}?rating_key=${RATING_KEY}&type=thumb";
     $newItem['added_at'] = $item['added_at'];
     array_push($RECENT_ITEMS, $newItem);
   }

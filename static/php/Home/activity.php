@@ -3,7 +3,7 @@
   include "../Config/conf.php";
   header("Content-Type: application/json");
 
-  $CURRENT_ACTIVITY = json_decode(file_get_contents("${TAUTULLI}/api/v2?apikey=${API_KEY_TAUTULLI}&cmd=get_activity"), true);
+  $CURRENT_ACTIVITY = json_decode(file_get_contents("${TAUTULLI}?apikey=${API_KEY_TAUTULLI}&cmd=get_activity"), true);
 
   $ACTIVITY = array();
 
@@ -24,12 +24,14 @@
         $newItem['series']['episode'] = $episode;
       }
       $newItem['series']['episode_title'] = $item['title'];
-      $newItem['images']['poster'] = "/static/php/Shared/image.php?rating_key=" . $item['grandparent_rating_key'] . "&type=poster";
-      $newItem['images']['art'] = "/static/php/Shared/image.php?rating_key=" . $item['grandparent_rating_key'] . "&type=art";
+      $RATING_KEY = $item['grandparent_rating_key'];
+      $newItem['images']['poster'] = "${IMAGE_PROXY}?rating_key=${RATING_KEY}&type=poster";
+      $newItem['images']['art'] = "${IMAGE_PROXY}?rating_key=${RATING_KEY}&type=art";
     } else if ($item['media_type'] == 'movie') {
       $newItem['title'] = $item['title'];
-      $newItem['images']['poster'] = "/static/php/Shared/image.php?rating_key=" . $item['rating_key'] . "&type=poster";
-      $newItem['images']['art'] = "/static/php/Shared/image.php?rating_key=" . $item['rating_key'] . "&type=art";
+      $RATING_KEY = $item['rating_key'];
+      $newItem['images']['poster'] = "${IMAGE_PROXY}?rating_key=${RATING_KEY}&type=poster";
+      $newItem['images']['art'] = "${IMAGE_PROXY}?rating_key=${RATING_KEY}&type=art";
     } else {
       continue;
     }

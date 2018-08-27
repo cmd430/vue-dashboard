@@ -3,10 +3,11 @@
   include "../Config/conf.php";
   header("Content-Type: application/json");
 
-  $MOVIES_QUEUE = json_decode(file_get_contents("${RADARR}/api/queue?apikey=${API_KEY_RADARR}"), true);
+  $MOVIES_QUEUE = json_decode(file_get_contents("${RADARR}/queue?apikey=${API_KEY_RADARR}"), true);
 
   foreach ($MOVIES_QUEUE as &$movie) {
-    $movie['movie']['images'][0]['url'] = "/static/php/Shared/image.php?tmdb_id=" . $movie['movie']['tmdbId'];
+    $TMDB_ID = $movie['movie']['tmdbId'];
+    $movie['movie']['images'][0]['url'] = "${IMAGE_PROXY}?tmdb_id=${TMDB_ID}";
   }
   echo json_encode($MOVIES_QUEUE);
 
