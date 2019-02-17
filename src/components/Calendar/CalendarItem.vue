@@ -2,10 +2,8 @@
 <li v-if="(this.$store.state.settings.showDownloaded === true && calendar_item.status_class === 'downloaded') === false">
   <div class="img" v-bind:style="{ 'background-image': 'url(' + calendar_item.img_url + ')' }">
     <span v-bind:class="calendar_item.status_class">{{ calendar_item.status_text }}</span>
-    <span v-if="type == 'show'" class="title" v-bind:title="'Season: ' + calendar_item.season_number + ' Episode: ' + calendar_item.episode_number + '\r\nEpisode Title: ' + calendar_item.episode_title + '\r\nShow: ' + calendar_item.name"></span>
-    <span v-if="type != 'show'" class="title" v-bind:title="'Movie Title: ' + calendar_item.name"></span>
   </div>
-  <div class="info">
+  <div class="info" v-bind:title="type == 'show' ? 'Season: ' + calendar_item.season_number + ' Episode: ' + calendar_item.episode_number + '\r\nEpisode Title: ' + calendar_item.episode_title + '\r\nShow: ' + calendar_item.name : 'Movie Title: ' + calendar_item.name">
     <p v-if="type == 'show'" class="title">
       <span>{{ calendar_item.season_number }}x{{ calendar_item.episode_number }}</span>
       {{ calendar_item.episode_title }}
@@ -77,14 +75,6 @@ div.img {
 .img span.downloaded {
   background-color: rgba(44, 189, 78, 0.8);
   color: rgb(238, 238, 238);
-}
-.img span.title {
-  position: relative;
-  margin-top: -40px;
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  background: rgba(0, 0, 0, 0);
 }
 div.info {
   text-align: center;

@@ -1,6 +1,7 @@
 <template>
 <li>
   <div class="bg_img" v-bind:style="{ 'background-image': 'url(' + activity_item.images.art + ')' }">
+    <span>{{ activity_item.playback.user }}</span>
     <span>{{ activity_item.playback.state }}</span>
   </div>
   <div class="img" v-bind:style="{ 'background-image': 'url(' + activity_item.images.poster + ')' }">
@@ -105,15 +106,22 @@ div.img {
   left: 0;
   right: 0;
   width: 100%;
-  display: block;
+  display: inline-block;
   box-sizing: border-box;
   z-index: 1;
   text-transform: uppercase;
   letter-spacing: 1px;
   font-size: 12px;
   padding: 10px;
-  background-color: rgba(238, 238, 238, 0.8);
   color: rgb(0, 0,0 );
+}
+.bg_img span:first-child {
+  text-align: left;
+  background-color: rgba(237, 237, 237, 0.8)
+}
+.bg_img span:last-child {
+  top: -40px;
+  position: relative;
 }
 div.img {
   height: 209px;

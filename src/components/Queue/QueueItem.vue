@@ -8,10 +8,8 @@
     <span v-else class="queued">
       <span>{{ queue_item.timeleft }}</span>
     </span>
-    <span v-if="type == 'show'" class="title" v-bind:title="'Season: ' + queue_item.season_number + ' Episode: ' + queue_item.episode_number + '\r\nEpisode Title: ' + queue_item.episode_title + '\r\nShow: ' + queue_item.name"></span>
-    <span v-if="type != 'show'" class="title" v-bind:title="'Movie Title: ' + queue_item.name"></span>
   </div>
-  <div class="info">
+  <div class="info" v-bind:title="type == 'show' ? 'Season: ' + queue_item.season_number + ' Episode: ' + queue_item.episode_number + '\r\nEpisode Title: ' + queue_item.episode_title + '\r\nShow: ' + queue_item.name : 'Movie Title: ' + queue_item.name">
     <p v-if="type == 'show'" class="title">
       <span>{{ queue_item.season_number }}x{{ queue_item.episode_number }}</span>
       {{ queue_item.episode_title }}
@@ -62,14 +60,6 @@ div.img {
   text-transform: uppercase;
   letter-spacing: 1px;
   font-size: 12px;
-}
-.img span.title {
-  position: relative;
-  margin-top: -40px;
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  background: rgba(0, 0, 0, 0);
 }
 .img span.downloading,
 .img span.queued {

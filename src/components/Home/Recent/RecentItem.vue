@@ -2,10 +2,8 @@
 <li>
   <div class="img" v-bind:style="{ 'background-image': 'url(' + recent_item.image + ')' }">
     <span>{{ recent_item.added_at }}</span>
-    <span v-if="recent_item.media_type == 'episode'" class="title" v-bind:title="'Season: ' + recent_item.series.season + ' Episode: ' + recent_item.series.episode + '\r\nEpisode Title: ' + recent_item.series.episode_title + '\r\nShow: ' + recent_item.title"></span>
-    <span v-if="recent_item.media_type != 'episode'" class="title" v-bind:title="'Movie Title: ' + recent_item.title"></span>
   </div>
-  <div class="info">
+  <div class="info" v-bind:title="recent_item.media_type == 'episode' ? 'Season: ' + recent_item.series.season + ' Episode: ' + recent_item.series.episode + '\r\nEpisode Title: ' + recent_item.series.episode_title + '\r\nShow: ' + recent_item.title : 'Movie Title: ' + recent_item.title">
     <p v-if="recent_item.media_type == 'episode'" class="title">
       <span>{{ recent_item.series.season }}x{{ recent_item.series.episode }}</span>
       {{ recent_item.series.episode_title }}
@@ -61,14 +59,6 @@ div.img {
   padding: 10px;
   background-color: rgba(44, 189, 78, 0.8);
   color: rgb(238, 238, 238);
-}
-.img span.title {
-  position: relative;
-  margin-top: -40px;
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  background: rgba(0, 0, 0, 0);
 }
 div.info {
   text-align: center;

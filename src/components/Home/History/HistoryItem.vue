@@ -1,11 +1,10 @@
 <template>
 <li>
   <div class="img" v-bind:style="{ 'background-image': 'url(' + history_item.image + ')' }">
+    <span>{{ history_item.user }}</span>
     <span>{{ history_item.last_watch }}</span>
-    <span v-if="history_item.media_type == 'episode'" class="title" v-bind:title="'Episode Title: ' + history_item.episode + '\r\nShow: ' + history_item.title"></span>
-    <span v-if="history_item.media_type != 'episode'" class="title" v-bind:title="'Movie Title: ' + history_item.title"></span>
   </div>
-  <div class="info">
+  <div class="info" v-bind:title="history_item.media_type == 'episode' ? 'Episode Title: ' + history_item.episode + '\r\nShow: ' + history_item.title : 'Movie Title: ' + history_item.title">
     <p v-if="history_item.media_type == 'episode'" class="title">
       <span>{{ history_item.episode }}</span>
     </p>
@@ -54,17 +53,15 @@ div.img {
   text-transform: uppercase;
   letter-spacing: 1px;
   font-size: 12px;
-  padding: 10px;
   background-color: rgba(238, 238, 238, 0.8);
   color: rgb(0, 0,0 );
-}
-.img span.title {
-  position: relative;
-  margin-top: -40px;
-  width: 100%;
-  height: 100%;
   padding: 0;
-  background: rgba(0, 0, 0, 0);
+}
+.img span:first-child {
+  padding: 5px 10px 0;
+}
+.img span:last-child {
+  padding: 0 10px 5px;
 }
 div.info {
   text-align: center;
