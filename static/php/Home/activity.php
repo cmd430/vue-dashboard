@@ -41,6 +41,7 @@
     $newItem['playback']['runtime_ms'] = $item['stream_duration'];
     $newItem['playback']['quality'] = $item['stream_video_resolution'];
     $newItem['playback']['state'] = $item['state'];
+    $newItem['playback']['user'] = $item['friendly_name'];
     $newItem['id'] = $item['rating_key'];
     array_push($ACTIVITY, $newItem);
   }

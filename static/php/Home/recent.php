@@ -3,7 +3,7 @@
   include "../Config/conf.php";
   header("Content-Type: application/json");
 
-  $COUNT = 7;
+  $COUNT = 9;
 
   $RECENT_ADDED_SHOWS = json_decode(file_get_contents("${TAUTULLI}?apikey=${API_KEY_TAUTULLI}&cmd=get_recently_added&count=${COUNT}&type=show"), true);
   $RECENT_ADDED_MOVIES = json_decode(file_get_contents("${TAUTULLI}?apikey=${API_KEY_TAUTULLI}&cmd=get_recently_added&count=${COUNT}&type=movie"), true);

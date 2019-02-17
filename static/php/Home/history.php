@@ -3,7 +3,7 @@
 include "../Config/conf.php";
 header("Content-Type: application/json");
 
-$COUNT = 5;
+$COUNT = 9;
 
 $CURRENT_HISTORY = json_decode(file_get_contents("${TAUTULLI}?apikey=${API_KEY_TAUTULLI}&cmd=get_home_stats&stats_count=${COUNT}"), true);
 
@@ -32,6 +32,7 @@ foreach ($CURRENT_HISTORY['response']['data'][3]['rows'] as $item) {
     $newItem['image'] = "${IMAGE_PROXY}?rating_key=${RATING_KEY}&type=poster";
   }
   $newItem['last_watch'] = $item['last_watch'];
+  $newItem['user'] = $item['friendly_name'];
   $newItem['id'] = $item['row_id'];
   array_push($HISTORY, $newItem);
 }
