@@ -1,5 +1,5 @@
 <template>
-<li v-if="(this.$store.state.settings.showDownloaded === true && calendar_item.status_class === 'downloaded') === false">
+<li v-if="((this.$store.state.settings.showDownloaded === true && calendar_item.status_class === 'downloaded') === false) && (((this.$store.state.settings.showNextUnairedOnly === true && calendar_item.nextEpisode === true) === true) || (this.$store.state.settings.showNextUnairedOnly === false))">
   <div class="img" v-bind:style="{ 'background-image': 'url(' + calendar_item.img_url + ')' }">
     <span v-bind:class="calendar_item.status_class">{{ calendar_item.status_text }}</span>
   </div>

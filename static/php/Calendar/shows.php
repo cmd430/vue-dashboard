@@ -16,6 +16,7 @@
   $SERIES_QUEUE = json_decode(file_get_contents("${SONARR}/queue?apikey=${API_KEY_SONARR}"), true);
   $SERIES_CALENDAR = json_decode(file_get_contents("${SONARR}/calendar?apikey=${API_KEY_SONARR}&unmonitored=false" . $START . $END), true);
   $SERIES_DOWNLOADING = array();
+  $SERIES_IDS = array();
   foreach ($SERIES_QUEUE as $episode) {
     array_push($SERIES_DOWNLOADING, $episode['episode']['id']);
   }
@@ -24,6 +25,12 @@
       $episode['downloading'] = true;
     } else {
       $episode['downloading'] = false;
+    }
+    if ($episode['hasFile'] === false && !in_array($episode['seriesId'], $SERIES_IDS, true)) {
+      array_push($SERIES_IDS, $episode['seriesId']);
+      $episode['nextEpisode'] = true;
+    } else {
+      $episode['nextEpisode'] = false;
     }
   }
 

@@ -14,6 +14,13 @@
           <span></span>
         </label>
       </div>
+      <div class="checkbox">
+        <label>
+          Only Show Next Unaired Episode
+          <input type="checkbox" v-model="showNextUnairedOnly" />
+          <span></span>
+        </label>
+      </div>
     </section>
     <section id="queue" class="right">
       <h4>Queue Settings</h4>
@@ -40,6 +47,14 @@ export default {
       },
       set (value) {
         this.$store.commit('showDownloaded', value)
+      }
+    },
+    showNextUnairedOnly: {
+      get () {
+        return this.$store.state.settings.showNextUnairedOnly
+      },
+      set (value) {
+        this.$store.commit('showNextUnairedOnly', value)
       }
     }
   },
@@ -90,7 +105,6 @@ section.right {
   margin-left: 0;
   right: 0;
 }
-
 section::before{
   content: '';
   background: rgba(0, 0, 0, 0.3);
@@ -105,6 +119,9 @@ div.checkbox {
   position: relative;
   height: 20px;
   width: 100px;
+}
+div.checkbox:last-child:not(:first-child) {
+  margin-top: 10px;
 }
 label {
   display: inline-block;

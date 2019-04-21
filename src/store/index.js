@@ -14,7 +14,8 @@ export default new Vuex.Store({
   ],
   state: {
     settings: {
-      showDownloaded: true
+      showDownloaded: true,
+      showNextUnairedOnly: true
     },
     strings: {
       downloaded: 'In Plex',
@@ -31,6 +32,9 @@ export default new Vuex.Store({
   mutations: {
     showDownloaded (state, payload) {
       state.settings.showDownloaded = payload
+    },
+    showNextUnairedOnly (state, payload) {
+      state.settings.showNextUnairedOnly = payload
     }
   }
 })
