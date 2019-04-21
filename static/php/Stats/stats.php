@@ -5,6 +5,24 @@
 
   $STATS = array();
 
+  // Libaries
+  $LIBRARY_MOVIES = json_decode(file_get_contents("${TAUTULLI}?apikey=${API_KEY_TAUTULLI}&cmd=get_library&section_id=1"), true);
+  $LIBRARY_SHOWS = json_decode(file_get_contents("${TAUTULLI}?apikey=${API_KEY_TAUTULLI}&cmd=get_library&section_id=2"), true);
+  $LIBRARY_MOVIES_WATCHTIME_STATS = json_decode(file_get_contents("${TAUTULLI}?apikey=${API_KEY_TAUTULLI}&cmd=get_library_watch_time_stats&section_id=1"), true);
+  $LIBRARY_SHOWS_WATCHTIME_STATS = json_decode(file_get_contents("${TAUTULLI}?apikey=${API_KEY_TAUTULLI}&cmd=get_library_watch_time_stats&section_id=2"), true);
+
+  $STATS['libraries']['movies']['total'] = $LIBRARY_MOVIES['response']['data']['count'];
+  $STATS['libraries']['movies']['plays'] = $LIBRARY_MOVIES_WATCHTIME_STATS['response']['data'][3]['total_plays'];
+  $STATS['libraries']['movies']['time_watched'] = $LIBRARY_MOVIES_WATCHTIME_STATS['response']['data'][3]['total_time'];
+  $STATS['libraries']['shows']['total']['series'] = $LIBRARY_SHOWS['response']['data']['count'];
+  $STATS['libraries']['shows']['total']['seasons'] = $LIBRARY_SHOWS['response']['data']['parent_count'];
+  $STATS['libraries']['shows']['total']['episodes'] = $LIBRARY_SHOWS['response']['data']['child_count'];
+  $STATS['libraries']['shows']['plays'] = $LIBRARY_SHOWS_WATCHTIME_STATS['response']['data'][3]['total_plays'];
+  $STATS['libraries']['shows']['time_watched'] = $LIBRARY_SHOWS_WATCHTIME_STATS['response']['data'][3]['total_time'];
+  $STATS['libraries']['total']['files'] = $LIBRARY_MOVIES['response']['data']['count'] + $LIBRARY_SHOWS['response']['data']['child_count'];
+  $STATS['libraries']['total']['plays'] = $LIBRARY_MOVIES_WATCHTIME_STATS['response']['data'][3]['total_plays'] + $LIBRARY_SHOWS_WATCHTIME_STATS['response']['data'][3]['total_plays'];
+  $STATS['libraries']['total']['time_watched'] = $LIBRARY_MOVIES_WATCHTIME_STATS['response']['data'][3]['total_time'] + $LIBRARY_SHOWS_WATCHTIME_STATS['response']['data'][3]['total_time'];
+
   // Diskspace
   $DISKSPACE = json_decode(file_get_contents("${SONARR}/diskspace?apikey=${API_KEY_SONARR}"), true);
 
