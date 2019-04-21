@@ -1,8 +1,8 @@
 <template>
   <div id="home">
-    <activity/>
-    <history/>
-    <recent/>
+    <activity v-if="(this.$store.state.settings.showActivity === true)" />
+    <history v-if="(this.$store.state.settings.showHistory === true)"/>
+    <recent v-if="(this.$store.state.settings.showRecent === true)"/>
   </div>
 </template>
 

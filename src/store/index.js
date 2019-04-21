@@ -14,6 +14,9 @@ export default new Vuex.Store({
   ],
   state: {
     settings: {
+      showActivity: true,
+      showHistory: true,
+      showRecent: true,
       showDownloaded: true,
       showNextUnairedOnly: true
     },
@@ -30,6 +33,15 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    showActivity (state, payload) {
+      state.settings.showActivity = payload
+    },
+    showHistory (state, payload) {
+      state.settings.showHistory = payload
+    },
+    showRecent (state, payload) {
+      state.settings.showRecent = payload
+    },
     showDownloaded (state, payload) {
       state.settings.showDownloaded = payload
     },

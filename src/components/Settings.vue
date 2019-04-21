@@ -1,11 +1,31 @@
 <template>
   <div id="settings">
     <h1>Settings</h1>
-    <section id="home">
+    <section id="home" class="left">
       <h4>Home Settings</h4>
-      <p>No Settings</p>
+      <div class="checkbox">
+        <label>
+          Show Activity
+          <input type="checkbox" v-model="showActivity" />
+          <span></span>
+        </label>
+      </div>
+      <div class="checkbox">
+        <label>
+          Show Recently Watched
+          <input type="checkbox" v-model="showHistory" />
+          <span></span>
+        </label>
+      </div>
+      <div class="checkbox">
+        <label>
+          Show Recently Added
+          <input type="checkbox" v-model="showRecent" />
+          <span></span>
+        </label>
+      </div>
     </section>
-    <section id="calendar" class="left">
+    <section id="calendar" class="center">
       <h4>Calendar Settings</h4>
       <div class="checkbox">
         <label>
@@ -41,6 +61,30 @@ export default {
     return {}
   },
   computed: {
+    showActivity: {
+      get () {
+        return this.$store.state.settings.showActivity
+      },
+      set (value) {
+        this.$store.commit('showActivity', value)
+      }
+    },
+    showHistory: {
+      get () {
+        return this.$store.state.settings.showHistory
+      },
+      set (value) {
+        this.$store.commit('showHistory', value)
+      }
+    },
+    showRecent: {
+      get () {
+        return this.$store.state.settings.showRecent
+      },
+      set (value) {
+        this.$store.commit('showRecent', value)
+      }
+    },
     showDownloaded: {
       get () {
         return this.$store.state.settings.showDownloaded
@@ -65,6 +109,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 p {
+  display: table;
   font-size: 12px;
   user-select: none;
   color: rgb(153, 153, 153);
@@ -88,23 +133,21 @@ h4 {
   position: relative;
 }
 section {
-  position: relative;
-  margin: 0 147px 40px;
-  padding: 0 20px;
-}
-section.left,
-section.right {
-  position: absolute;
-  width: calc(40% - 30px);
+  width: 400px;
+  margin-right: 20px;
+  margin-bottom: 40px;
   display: inline-block;
+  box-sizing: border-box;
+  padding: 0 20px;
+  position: relative;
 }
 section.left {
-  margin-right: 0;
+  margin-left: 147px;
 }
-section.right {
-  margin-left: 0;
-  right: 0;
-}
+/*
+section.center {}
+section.right {}
+*/
 section::before{
   content: '';
   background: rgba(0, 0, 0, 0.3);
@@ -120,8 +163,8 @@ div.checkbox {
   height: 20px;
   width: 100px;
 }
-div.checkbox:last-child:not(:first-child) {
-  margin-top: 10px;
+div.checkbox:not(:last-child) {
+  margin-bottom: 10px;
 }
 label {
   display: inline-block;
