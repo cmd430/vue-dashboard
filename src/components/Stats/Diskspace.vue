@@ -1,8 +1,12 @@
 <template>
 <li>
-  <p>Total Diskspace: {{ friendlyUnit(diskspace.total) }}</p>
-  <p>Free Diskspace:  {{ friendlyUnit(diskspace.free) }} ({{ diskspace.free_percent.toFixed(1) }}%)</p>
-  <p>Used Diskspace:  {{ friendlyUnit(diskspace.used) }} ({{ diskspace.used_percent.toFixed(1) }}%)</p>
+  <section>
+    <div>
+      <p>Total Diskspace: <span>{{ friendlyUnit(diskspace.total) }}</span></p>
+      <p>Free Diskspace:  <span>{{ friendlyUnit(diskspace.free) }} ({{ diskspace.free_percent.toFixed(1) }}%)</span></p>
+      <p>Used Diskspace:  <span>{{ friendlyUnit(diskspace.used) }} ({{ diskspace.used_percent.toFixed(1) }}%)</span></p>
+    </div>
+  </section>
 </li>
 </template>
 
@@ -54,15 +58,3 @@ export default {
   }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-li {
-  display: inline-block;
-  padding: 10px;
-  width: 480px;
-  height: 270px;
-  position: relative;
-  box-sizing: content-box;
-}
-</style>

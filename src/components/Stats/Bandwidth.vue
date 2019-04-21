@@ -1,8 +1,12 @@
 <template>
 <li>
-  <p>Total Used Bandwidth:  {{ friendlyUnit(bandwidth.total) }}</p>
-  <p>Current Local Bandwidth:  {{ friendlyUnit(bandwidth.live.local, true) }}</p>
-  <p>Current Remote Bandwidth: {{ friendlyUnit(bandwidth.live.remote, true) }}</p>
+  <section>
+    <div>
+      <p>Total Used Bandwidth:  <span>{{ friendlyUnit(bandwidth.total) }}</span></p>
+      <p>Current Local Bandwidth:  <span>{{ friendlyUnit(bandwidth.live.local, true) }}</span></p>
+      <p>Current Remote Bandwidth: <span>{{ friendlyUnit(bandwidth.live.remote, true) }}</span></p>
+    </div>
+  </section>
 </li>
 </template>
 
@@ -66,15 +70,3 @@ export default {
   }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-li {
-  display: inline-block;
-  padding: 10px;
-  width: 480px;
-  height: 270px;
-  position: relative;
-  box-sizing: content-box;
-}
-</style>
