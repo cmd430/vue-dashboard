@@ -2,9 +2,11 @@
 <li>
   <section>
     <div>
-      <p>Total Used Bandwidth:  <span>{{ friendlyUnit(bandwidth.total) }}</span></p>
-      <p>Current Local Bandwidth:  <span>{{ friendlyUnit(bandwidth.live.local, true) }}</span></p>
-      <p>Current Remote Bandwidth: <span>{{ friendlyUnit(bandwidth.live.remote, true) }}</span></p>
+      <p>Current Upload Rate:  <span>{{ friendlyUnit(bandwidth.live.upload, true) }}</span></p>
+      <p>Current Download Rate: <span>{{ friendlyUnit(bandwidth.live.download, true) }}</span></p>
+      <p>Total Data Used:  <span>{{ friendlyUnit(bandwidth.total) }}</span></p>
+      <p>Total Data Uploaded:  <span>{{ friendlyUnit(bandwidth.upload) }}</span></p>
+      <p>Total Data Downloaded:  <span>{{ friendlyUnit(bandwidth.download) }}</span></p>
     </div>
   </section>
 </li>
@@ -28,7 +30,7 @@ export default {
         'EB'
       ]
       if (perSecond) {
-        value = (value * 8 == 24 ? 0 : value * 8)
+        value = (value == 6 ? 0 : value * 8)
         units = [
           'bps',
           'kbps',

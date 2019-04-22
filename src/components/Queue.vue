@@ -42,7 +42,8 @@ export default {
               newQueueItem.timeleft = this.$store.state.strings.calculating
               newQueueItem.progress = '0%'
             }
-            if (queueItem.status === 'Queued') {
+            if (queueItem.status === 'Queued' || queueItem.status === 'Warning') {
+              // qBittorrent shows 'Warning' when first added
               newQueueItem.timeleft = this.$store.state.strings.queued
             } else if (queueItem.status === 'Downloading') {
               let seconds = Math.floor((new Date(queueItem.estimatedCompletionTime) - new Date()) / 1000)

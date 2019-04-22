@@ -33,6 +33,12 @@
   $STATS['diskspace']['used_percent'] = 100 - (($DISKSPACE[0]['freeSpace'] / $DISKSPACE[0]['totalSpace']) * 100);
 
   // Bandwidth
+  $BANDWIDTH_TORRENT = json_decode(file_get_contents("${QBITTORRENT}/sync/maindata", false, stream_context_create(array(
+    'http' => array(
+      'method' => "GET",
+      'timeout' => .1 // hack to make it not take FUCKING ages to close the connection
+    )
+  ))), true);
   $BANDWIDTH_LIVE = json_decode(file_get_contents("${PLEX}/bandwidth?timespan=6&X-Plex-Token=${API_KEY_PLEX}", false, stream_context_create(array(
     'http' => array(
       'method' => "GET",
@@ -46,40 +52,76 @@
     )
   ))), true);
 
-  $STATS['bandwidth']['live']['total'] = 0;
-  $STATS['bandwidth']['live']['local'] = 0;
-  $STATS['bandwidth']['live']['remote'] = 0;
-  $STATS['bandwidth']['total'] = 0;
-  $STATS['bandwidth']['local'] = 0;
-  $STATS['bandwidth']['remote'] = 0;
+  // Plex Stats
+  $STATS['bandwidth']['plex']['live']['total'] = 0;
+  $STATS['bandwidth']['plex']['live']['local'] = 0;
+  $STATS['bandwidth']['plex']['live']['remote'] = 0;
+  $STATS['bandwidth']['plex']['total'] = 0;
+  $STATS['bandwidth']['plex']['local'] = 0;
+  $STATS['bandwidth']['plex']['remote'] = 0;
 
-  //Live Bandwidth
+  // qBittorrent Stats
+  $STATS['bandwidth']['qbittorrent']['live']['total'] = 0;
+  $STATS['bandwidth']['qbittorrent']['live']['upload'] = 0;
+  $STATS['bandwidth']['qbittorrent']['live']['download'] = 0;
+  $STATS['bandwidth']['qbittorrent']['total'] = 0;
+  $STATS['bandwidth']['qbittorrent']['upload'] = 0;
+  $STATS['bandwidth']['qbittorrent']['download'] = 0;
+
+  // Combined Stats
+  $STATS['bandwidth']['live']['total'] = 0;
+  $STATS['bandwidth']['live']['upload'] = 0;
+  $STATS['bandwidth']['live']['download'] = 0;
+  $STATS['bandwidth']['total'] = 0;
+  $STATS['bandwidth']['upload'] = 0;
+  $STATS['bandwidth']['download'] = 0;
+
+  //Live Plex Bandwidth
   $ACCOUNTS_LIVE = array();
   foreach ($BANDWIDTH_LIVE['MediaContainer']['Account'] as $Account) {
     foreach (array_reverse($BANDWIDTH_LIVE['MediaContainer']['StatisticsBandwidth'], true) as $account_bandwidth) {
       if ($account_bandwidth['accountID'] == $Account['id'] && !in_array($Account['id'], $ACCOUNTS_LIVE)) {
         array_push($ACCOUNTS_LIVE, $Account['id']);
-        $STATS['bandwidth']['live']['total'] += $account_bandwidth['bytes'];
+        $STATS['bandwidth']['plex']['live']['total'] += $account_bandwidth['bytes'];
         if ($account_bandwidth['lan'] === true) {
-          $STATS['bandwidth']['live']['local'] += $account_bandwidth['bytes'];
+          $STATS['bandwidth']['plex']['live']['local'] += $account_bandwidth['bytes'];
         } else {
-          $STATS['bandwidth']['live']['remote'] += $account_bandwidth['bytes'];
+          $STATS['bandwidth']['plex']['live']['remote'] += $account_bandwidth['bytes'];
         }
       } else {
         next;
       }
     }
   }
-  //Total Bandwidth
+  //Total Plex Bandwidth
   foreach ($BANDWIDTH['MediaContainer']['StatisticsBandwidth'] as $bandwidth) {
-    $STATS['bandwidth']['total'] += $bandwidth['bytes'];
+    $STATS['bandwidth']['plex']['total'] += $bandwidth['bytes'];
     if ($bandwidth['lan'] === true) {
-      $STATS['bandwidth']['local'] += $bandwidth['bytes'];
+      $STATS['bandwidth']['plex']['local'] += $bandwidth['bytes'];
     } else {
-      $STATS['bandwidth']['remote'] += $bandwidth['bytes'];
+      $STATS['bandwidth']['plex']['remote'] += $bandwidth['bytes'];
     }
   }
 
- echo json_encode($STATS);
+  // Live qBittorrent Bandwidth
+  $STATS['bandwidth']['qbittorrent']['live']['total'] += $BANDWIDTH_TORRENT['server_state']['dl_info_speed'] + $BANDWIDTH_TORRENT['server_state']['up_info_speed'];
+  $STATS['bandwidth']['qbittorrent']['live']['upload'] += $BANDWIDTH_TORRENT['server_state']['up_info_speed'];
+  $STATS['bandwidth']['qbittorrent']['live']['download'] +=  $BANDWIDTH_TORRENT['server_state']['dl_info_speed'];
 
+  // Total qBittorrent Bandwidth
+  $STATS['bandwidth']['qbittorrent']['total'] += $BANDWIDTH_TORRENT['server_state']['alltime_dl'] + $BANDWIDTH_TORRENT['server_state']['alltime_ul'];
+  $STATS['bandwidth']['qbittorrent']['upload'] += $BANDWIDTH_TORRENT['server_state']['alltime_ul'];
+  $STATS['bandwidth']['qbittorrent']['download'] += $BANDWIDTH_TORRENT['server_state']['alltime_dl'];
+
+  // Combined Live Bandwidth
+  $STATS['bandwidth']['live']['total'] += $STATS['bandwidth']['qbittorrent']['live']['total'] + $STATS['bandwidth']['plex']['live']['total'];
+  $STATS['bandwidth']['live']['upload'] += $STATS['bandwidth']['qbittorrent']['live']['upload'] + $STATS['bandwidth']['plex']['live']['total'];
+  $STATS['bandwidth']['live']['download'] += $STATS['bandwidth']['qbittorrent']['live']['download'];
+
+  // Combined Total Bandwidth
+  $STATS['bandwidth']['total'] += $STATS['bandwidth']['qbittorrent']['total'] + $STATS['bandwidth']['plex']['total'];
+  $STATS['bandwidth']['upload'] += $STATS['bandwidth']['plex']['total'] + $STATS['bandwidth']['qbittorrent']['upload'];
+  $STATS['bandwidth']['download'] += $STATS['bandwidth']['qbittorrent']['download'];
+
+ echo json_encode($STATS);
 ?>
