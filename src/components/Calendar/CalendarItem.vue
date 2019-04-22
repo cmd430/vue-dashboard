@@ -72,6 +72,10 @@ div.img {
   background-color: rgba(143, 44, 189, 0.8);
   color: rgb(238, 238, 238);
 }
+.img span.warning {
+  background-color: hsla(24, 62%, 46%, 0.8);
+  color: rgb(238, 238, 238);
+}
 .img span.downloaded {
   background-color: rgba(44, 189, 78, 0.8);
   color: rgb(238, 238, 238);

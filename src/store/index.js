@@ -21,6 +21,8 @@ export default new Vuex.Store({
       showNextUnairedOnly: true
     },
     strings: {
+      importing: 'Importing',
+      downloadWarning: 'Check Download',
       downloaded: 'In Plex',
       downloading: 'Downloading',
       pending: 'Pending',

@@ -20,9 +20,12 @@
   foreach ($SERIES_QUEUE as $episode) {
     array_push($SERIES_DOWNLOADING, $episode['episode']['id']);
   }
+  $i = 0;
   foreach ($SERIES_CALENDAR as &$episode) {
     if (in_array($episode['id'], $SERIES_DOWNLOADING)) {
       $episode['downloading'] = true;
+      $episode['trackedDownloadStatus'] = $SERIES_QUEUE[$i]['trackedDownloadStatus'];
+      $i++;
     } else {
       $episode['downloading'] = false;
     }

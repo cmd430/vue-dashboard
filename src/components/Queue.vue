@@ -82,6 +82,15 @@ export default {
               }
             }
             newQueueItem.status = queueItem.status
+            console.log(newQueueItem.progress)
+            if (newQueueItem.progress === '100%') {
+              if (queueItem.status === 'Complete' && queueItem.trackedDownloadStatus !== 'Warning') {
+                newQueueItem.timeleft = this.$store.state.strings.importing
+              } else {
+                newQueueItem.timeleft = this.$store.state.strings.downloadWarning
+                newQueueItem.status = 'warning'
+              }
+            }
             if (queueType === 'shows') {
               newQueueItem.season_number = (queueItem.episode.seasonNumber.toString().length > 1 ? queueItem.episode.seasonNumber.toString() : '0' + queueItem.episode.seasonNumber.toString())
               newQueueItem.episode_number = (queueItem.episode.episodeNumber.toString().length > 1 ? queueItem.episode.episodeNumber.toString() : '0' + queueItem.episode.episodeNumber.toString())

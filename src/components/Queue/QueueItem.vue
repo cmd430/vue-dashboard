@@ -5,7 +5,7 @@
       <span>{{ queue_item.timeleft }}</span>
       <span>{{ queue_item.progress }}</span>
     </span>
-    <span v-else class="queued">
+    <span v-else v-bind:class="queue_item.status === 'warning' ? 'warning' : 'queued'">
       <span>{{ queue_item.timeleft }}</span>
     </span>
   </div>
@@ -67,13 +67,19 @@ div.img {
   color: rgb(238, 238, 238);
   padding: 0;
 }
+.img span.warning {
+  background-color: hsla(24, 62%, 46%, 0.8);
+  color: rgb(238, 238, 238);
+  padding: 0;
+}
 span.downloading span:first-child {
   padding: 5px 10px 0;
 }
 span.downloading span:last-child {
   padding: 0 10px 5px;
 }
-span.queued span {
+span.queued span,
+span.warning span {
   padding: 10px;
 }
 div.info {

@@ -89,8 +89,13 @@ export default {
               newCalendarItem.status_class = 'downloaded'
               newCalendarItem.status_text = this.$store.state.strings.downloaded
             } else if (calendarItem.downloading) {
-              newCalendarItem.status_class = 'downloading'
-              newCalendarItem.status_text = this.$store.state.strings.downloading
+              if (calendarItem.trackedDownloadStatus === 'Warning') {
+                newCalendarItem.status_class = 'warning'
+                newCalendarItem.status_text = this.$store.state.strings.downloadWarning
+              } else {
+                newCalendarItem.status_class = 'downloading'
+                newCalendarItem.status_text = this.$store.state.strings.downloading
+              }
             } else if (typeof newCalendarItem.status_text === 'undefined') {
               newCalendarItem.status_class = 'want'
               let seconds = Math.floor((airTime - new Date()) / 1000)
