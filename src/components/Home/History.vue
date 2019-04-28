@@ -30,6 +30,7 @@ export default {
           return response.json()
         })
         .then(historyItems => {
+          this.history = []
           historyItems.forEach(historyItem => {
             let newHistoryItem = historyItem
             newHistoryItem.id = historyItem.id

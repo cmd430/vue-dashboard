@@ -4,9 +4,10 @@
     <span>{{ history_item.user }}</span>
     <span>{{ history_item.last_watch }}</span>
   </div>
-  <div class="info" v-bind:title="history_item.media_type == 'episode' ? 'Episode Title: ' + history_item.episode + '\r\nShow: ' + history_item.title : 'Movie Title: ' + history_item.title">
+  <div class="info" v-bind:title="history_item.media_type == 'episode' ? 'Season: ' + history_item.season + ' Episode: ' + history_item.episode + '\r\nEpisode Title: ' + history_item.episode_title + '\r\nShow: ' + history_item.title : 'Movie Title: ' + history_item.title">
     <p v-if="history_item.media_type == 'episode'" class="title">
-      <span>{{ history_item.episode }}</span>
+      <span>{{ history_item.season }}x{{ history_item.episode }}</span>
+      {{ history_item.episode_title }}
     </p>
     <p class="name">{{ history_item.title }}</p>
   </div>
@@ -78,7 +79,7 @@ div.info {
 }
 .title span {
   font-weight: 700;
-  font-size: 12px;
+  font-size: 14px;
 }
 .info .name {
   font-size: 13px;
