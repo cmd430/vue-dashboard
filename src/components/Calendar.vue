@@ -126,9 +126,9 @@ export default {
               Vue.set(this[calendarType], this[calendarType].findIndex(item => item.id === newCalendarItem.id), newCalendarItem)
             } else {
               if (calendarType === 'shows') {
-                //if (this.shows.findIndex(item => (item.name === newCalendarItem.name && item.status_class === 'want')) === -1) {
-                //  this.shows.push(newCalendarItem)
-                //}
+                // if (this.shows.findIndex(item => (item.name === newCalendarItem.name && item.status_class === 'want')) === -1) {
+                //   this.shows.push(newCalendarItem)
+                // }
                 this.shows.push(newCalendarItem)
               } else if (calendarType === 'movies') {
                 this.movies.push(newCalendarItem)

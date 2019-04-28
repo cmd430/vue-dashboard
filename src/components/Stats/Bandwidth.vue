@@ -30,7 +30,7 @@ export default {
         'EB'
       ]
       if (perSecond) {
-        value = (value == 6 ? 0 : value * 8)
+        value = (value === 6 ? 0 : value * 8)
         units = [
           'bps',
           'kbps',
