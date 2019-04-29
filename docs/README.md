@@ -4,9 +4,9 @@
 
 ## Screenshots
 
-![](/docs/home.png?raw=true "Home Page")
-![](/docs/calendar.png?raw=true "Calendar")
-![](/docs/queue.png?raw=true "Download Queue")
+![](./home.png?raw=true "Home Page")
+![](./calendar.png?raw=true "Calendar")
+![](./queue.png?raw=true "Download Queue")
 
 ## Build Setup
 
@@ -32,3 +32,12 @@ scp -r dist <username>@<hostname>:<destination path>
 - qBittorrent
 
 This project requires a webserver with php such as `Nginx + PHP FPM`
+
+## License
+GNU GENERAL PUBLIC LICENSE
+
+ Version 3, 29 June 2007
+
+ Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
+ Everyone is permitted to copy and distribute verbatim copies
+ of this license document, but changing it is not allowed.
