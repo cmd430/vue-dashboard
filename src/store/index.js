@@ -22,7 +22,7 @@ export default new Vuex.Store({
     },
     strings: {
       importing: 'Importing',
-      downloadWarning: 'Check Download',
+      downloadWarning: 'Requires Attention', // 'Check Download',
       downloaded: 'In Plex',
       downloading: 'Downloading',
       pending: 'Pending',
