@@ -40,6 +40,6 @@
   $TAUTULLI = "${CONNECTION}://${TAUTULLI_HOST}:${TAUTULLI_PORT}${TAUTULLI_BASE}/api/v2";
   $QBITTORRENT = "${CONNECTION}://${QBITTORRENT_HOST}:${QBITTORRENT_PORT}/api/v2";
 
-  $IMAGE_PROXY = "/static/php/Shared/image.php";
+  $IMAGE_PROXY = "/php/Shared/image.php";
 
 ?>

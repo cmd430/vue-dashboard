@@ -22,7 +22,7 @@ export default new Vuex.Store({
     },
     strings: {
       importing: 'Importing',
-      downloadWarning: 'Requires Attention', // 'Check Download',
+      downloadWarning: 'Check Download',
       downloaded: 'In Plex',
       downloading: 'Downloading',
       pending: 'Pending',
@@ -50,5 +50,6 @@ export default new Vuex.Store({
     showNextUnairedOnly (state, payload) {
       state.settings.showNextUnairedOnly = payload
     }
-  }
+  },
+  actions: {}
 })

@@ -22,7 +22,7 @@ export default {
   },
   methods: {
     processHistory: function () {
-      fetch('/static/php/Home/history.php')
+      fetch('/php/Home/history.php')
         .then(response => {
           if (response.status !== 200) {
             return []

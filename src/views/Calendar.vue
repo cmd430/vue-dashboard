@@ -40,7 +40,7 @@ export default {
   },
   methods: {
     processCalendar: function (calendarType) {
-      fetch(`/static/php/Calendar/${calendarType}.php?start=${this.month.start}&end=${this.month.end}`)
+      fetch(`/php/Calendar/${calendarType}.php?start=${this.month.start}&end=${this.month.end}`)
         .then(response => {
           if (response.status !== 200) {
             return []
@@ -126,9 +126,6 @@ export default {
               Vue.set(this[calendarType], this[calendarType].findIndex(item => item.id === newCalendarItem.id), newCalendarItem)
             } else {
               if (calendarType === 'shows') {
-                // if (this.shows.findIndex(item => (item.name === newCalendarItem.name && item.status_class === 'want')) === -1) {
-                //   this.shows.push(newCalendarItem)
-                // }
                 this.shows.push(newCalendarItem)
               } else if (calendarType === 'movies') {
                 this.movies.push(newCalendarItem)

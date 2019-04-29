@@ -22,7 +22,7 @@ export default {
   },
   methods: {
     processRecent: function () {
-      fetch('/static/php/Home/recent.php')
+      fetch('/php/Home/recent.php')
         .then(response => {
           if (response.status !== 200) {
             return []
@@ -30,7 +30,7 @@ export default {
           return response.json()
         })
         .then(recentItems => {
-          let cache = []
+          this.recent = []
           recentItems.forEach(recentItem => {
             let newRecentItem = recentItem
             newRecentItem.id = recentItem.added_at
@@ -61,16 +61,10 @@ export default {
               newRecentItem.added_at = interval + (interval > 1 ? ' Years' : ' Year')
             }
             newRecentItem.added_at = this.$store.state.strings.ago.replace('??', newRecentItem.added_at)
-            cache.push(newRecentItem.id)
             if (this.recent !== [] && typeof this.recent.find(item => (item.id === newRecentItem.id)) !== 'undefined') {
               Vue.set(this.recent, this.recent.findIndex(item => item.id === newRecentItem.id), newRecentItem)
             } else {
               this.recent.push(newRecentItem)
-            }
-          })
-          this.recent.forEach(recentItem => {
-            if (!cache.includes(recentItem.id)) {
-              Vue.delete(this.recent, this.recent.findIndex(item => item.id === recentItem.id))
             }
           })
         })

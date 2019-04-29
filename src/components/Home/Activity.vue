@@ -22,7 +22,7 @@ export default {
   },
   methods: {
     processActivity: function () {
-      fetch('/static/php/Home/activity.php')
+      fetch('/php/Home/activity.php')
         .then(response => {
           if (response.status !== 200) {
             return []

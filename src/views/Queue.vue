@@ -26,7 +26,7 @@ export default {
   },
   methods: {
     processQueue: function (queueType) {
-      fetch(`/static/php/Queue/${queueType}.php`)
+      fetch(`/php/Queue/${queueType}.php`)
         .then(response => {
           if (response.status !== 200) {
             return []

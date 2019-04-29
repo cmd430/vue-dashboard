@@ -25,7 +25,7 @@ export default {
   },
   methods: {
     showStats: function () {
-      fetch(`/static/php/Stats/stats.php`)
+      fetch(`/php/Stats/stats.php`)
         .then(response => {
           if (response.status !== 200) {
             return []
