@@ -1,5 +1,5 @@
 <template>
-<li v-if="((this.$store.state.settings.showDownloaded === true && calendar_item.status_class === 'downloaded') === false) && (((this.$store.state.settings.showNextUnairedOnly === true && calendar_item.nextEpisode === true) === true) || (this.$store.state.settings.showNextUnairedOnly === false))">
+<li v-if="shouldShow()">
   <div class="img" v-bind:style="{ 'background-image': 'url(' + calendar_item.img_url + ')' }">
     <span v-bind:class="calendar_item.status_class">{{ calendar_item.status_text }}</span>
   </div>
@@ -19,7 +19,22 @@ export default {
   props: [
     'calendar_item',
     'type'
-  ]
+  ],
+  methods: {
+    shouldShow () {
+      // showDownloaded is dumb (im dumb)
+      // true = hide
+      // false = show
+      let a = (this.$store.state.settings.showNextUnairedOnly === true && this.calendar_item.nextEpisode === true)
+      let b = (this.$store.state.settings.showNextUnairedOnly === false && this.calendar_item.status_class !== 'downloaded')
+      let c = (this.$store.state.settings.showDownloaded === true && this.calendar_item.status_class !== 'downloaded')
+      let d = (this.$store.state.settings.showDownloaded === false && this.calendar_item.status_class === 'downloaded')
+      if (a || b || (a && c) || d) {
+        return true
+      }
+      return false
+    }
+  }
 }
 </script>
 
