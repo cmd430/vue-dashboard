@@ -83,7 +83,6 @@ export default {
               }
             }
             newQueueItem.status = queueItem.status
-            console.log(newQueueItem.progress)
             if (newQueueItem.progress === '100%') {
               if (queueItem.status === 'Complete' && queueItem.trackedDownloadStatus !== 'Warning') {
                 newQueueItem.timeleft = this.$store.state.strings.importing
