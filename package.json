@@ -5,7 +5,7 @@
   "scripts": {
     "start": "npm-run-all -s open dev",
     "dev": "npm-run-all -p -r serve watch",
-    "serve": "serve -S localhost:80 -t dist/",
+    "serve": "php -S localhost:80 -t dist/",
     "watch": "npm-watch build_dev",
     "open": "opn http://localhost/",
     "_serve": "vue-cli-service serve",
