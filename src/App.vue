@@ -45,6 +45,13 @@ body {
     -moz-osx-font-smoothing: grayscale;
     cursor: default;
     user-select: none;
+    h1, h2 {
+      text-align: left;
+      margin: 20px 107px;
+      font-size: 28px;
+      font-weight: 100;
+      letter-spacing: 1px;
+    }
   }
 }
 </style>

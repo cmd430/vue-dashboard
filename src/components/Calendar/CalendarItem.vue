@@ -39,14 +39,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-li {
-  display: inline-block;
-  padding: 10px;
-  box-sizing: border-box;
-  width: 190px;
-  height: 351px;
-}
+<style lang="scss" scoped>
 div.img {
   height: 270px;
   width: 170px;
@@ -56,63 +49,60 @@ div.img {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-}
-.img span {
-  text-align: right;
-  top: 0px;
-  left: 0;
-  right: 0;
-  width: 100%;
-  display: block;
-  box-sizing: border-box;
-  z-index: 1;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-size: 12px;
-  padding: 10px;
-}
-.img span.want {
-  background-color: rgba(238, 238, 238, 0.8);
-  color: rgb(0, 0,0 );
-}
-.img span.airing {
-  background-color: rgba(214, 214, 56, 0.8);
-  color: rgb(0, 0,0 );
-}
-.img span.pending {
-  background-color: rgba(215, 57, 57, 0.8);             /* http://colorizer.org/ */
-  color: rgb(238, 238, 238);
-}
-.img span.downloading {
-  background-color: rgba(143, 44, 189, 0.8);
-  color: rgb(238, 238, 238);
-}
-.img span.warning {
-  background-color: hsla(24, 62%, 46%, 0.8);
-  color: rgb(238, 238, 238);
-}
-.img span.downloaded {
-  background-color: rgba(44, 189, 78, 0.8);
-  color: rgb(238, 238, 238);
+  span {
+    text-align: right;
+    top: 0px;
+    left: 0;
+    right: 0;
+    width: 100%;
+    display: block;
+    box-sizing: border-box;
+    z-index: 1;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 12px;
+    padding: 10px;
+    color: rgb(238, 238, 238);
+    &.want {
+      background-color: rgba(238, 238, 238, 0.8);
+      color: rgb(0, 0,0 );
+    }
+    &.airing {
+      background-color: rgba(214, 214, 56, 0.8);
+      color: rgb(0, 0,0 );
+    }
+    &.pending {
+      background-color: rgba(215, 57, 57, 0.8);             /* http://colorizer.org/ */
+    }
+    &.downloading {
+      background-color: rgba(143, 44, 189, 0.8);
+    }
+    &.warning {
+      background-color: hsla(24, 62%, 46%, 0.8);
+    }
+    &.downloaded {
+      background-color: rgba(44, 189, 78, 0.8);
+    }
+  }
 }
 div.info {
   text-align: center;
-}
-.info p {
-  width: 160px;
-  margin: 5px 0 5px 5px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-.info .title {
-  font-size: 12px;
-}
-.title span {
-  font-weight: 700;
-  font-size: 14px;
-}
-.info .name {
-  font-size: 13px;
+  p {
+    width: 160px;
+    margin: 5px 0 5px 5px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  span {
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .title {
+    font-size: 12px;
+  }
+  .name {
+    font-size: 13px;
+  }
 }
 </style>

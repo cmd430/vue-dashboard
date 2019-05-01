@@ -191,14 +191,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h1, h2 {
-  text-align: left;
-  margin: 20px 107px;
-  font-size: 28px;
-  font-weight: 100;
-  letter-spacing: 1px;
-}
+<style lang="scss" scoped>
 ul {
   display: flex;
   flex-wrap: wrap;
@@ -206,60 +199,66 @@ ul {
   justify-content: flex-start;
   padding: 0 96px;
   list-style-type: none;
-}
-ul:empty::after {
-  content: "Nothing to Show";
-  width: 100%;
-  font-size: 13px;
-  color: rgb(153, 153, 153);
-  text-align: center;
-  padding: 15px;
-  margin: 0 27px 0 11px;
-  background: rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
+  &:empty::after {
+    content: "Nothing to Show";
+    width: 100%;
+    font-size: 13px;
+    color: rgb(153, 153, 153);
+    text-align: center;
+    padding: 15px;
+    margin: 0 27px 0 11px;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+  }
+  &::v-deep li { /* use ::v-deep to select child componets */
+    display: inline-block;
+    padding: 10px;
+    box-sizing: border-box;
+    width: 190px;
+    height: 351px;
+  }
 }
 #navigation {
   position: absolute;
   width: 550px;
   right: 0;
   margin: 0 124px;
-}
-#prev_month,
-#next_month {
-  top: 0;
-  width: 170px;
-  position: absolute;
-  display: inline-block;
-  padding: 13px 16px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  border: 0;
-  font-size: 12px;
-  line-height: 1.5;
-  border-radius: 3px;
-  border-color: rgb(204, 204, 204);
-  color: rgb(255, 255, 255);
-  background-color: rgba(255, 255, 255, 0.25);
-  transition: background-color 100ms;
-  cursor: pointer;
-}
-#prev_month:hover,
-#next_month:hover {
-  background-color: rgba(255, 255, 255, 0.3);
-}
-#prev_month {
-  left: 0;
-}
-#next_month {
-  right: 0;
-}
-#month {
-  text-transform: uppercase;
-  letter-spacing: 5px;
-  font-size: 26px;
-  font-weight: 400;
-  text-align: center;
-  margin: 0;
+  #prev_month,
+  #next_month {
+    top: 0;
+    width: 170px;
+    position: absolute;
+    display: inline-block;
+    padding: 13px 16px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 0;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+    border-color: rgb(204, 204, 204);
+    color: rgb(255, 255, 255);
+    background-color: rgba(255, 255, 255, 0.25);
+    transition: background-color 100ms;
+    cursor: pointer;
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.3);
+    }
+  }
+  #prev_month {
+    left: 0;
+  }
+  #next_month {
+    right: 0;
+  }
+  #month {
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    font-size: 26px;
+    font-weight: 400;
+    text-align: center;
+    margin: 0;
+  }
 }
 </style>
