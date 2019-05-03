@@ -3,6 +3,9 @@ node_modules
 /dist
 conf.php
 
+# notes
+.notes
+
 # local env files
 .env.local
 .env.*.local
