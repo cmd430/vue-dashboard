@@ -7,7 +7,7 @@ import mixins from './mixins'
 Vue.config.devtools = true
 Vue.config.productionTip = false
 
-Vue.mixin(mixins)
+Vue.use(mixins)
 
 new Vue({
   router,
