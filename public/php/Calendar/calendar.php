@@ -68,7 +68,7 @@
   }
 
   $CALENDAR = [
-    'shows' => getSeries($START, $END, $CONFIG),
+    'series' => getSeries($START, $END, $CONFIG),
     'movies' => getMovies($START, $END, $CONFIG)
   ];
 
