@@ -19,19 +19,6 @@ export default new Vuex.Store({
       showRecent: true,
       showDownloaded: true,
       showNextUnairedOnly: true
-    },
-    strings: {
-      importing: 'Importing',
-      downloadWarning: 'Check Download',
-      downloaded: 'In Plex',
-      downloading: 'Downloading',
-      pending: 'Pending',
-      onAir: 'On Air',
-      want: 'In ??',
-      calculating: 'Calculating',
-      queued: 'Queued',
-      eta: 'In About ??',
-      ago: '?? Ago'
     }
   },
   mutations: {
