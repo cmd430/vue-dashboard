@@ -2,12 +2,13 @@
 
   require "../Config/conf.php";
 
-  $START = (isset($_GET['start']) ? "&start=" . $_GET['start'] : "");
-  $END = (isset($_GET['end']) ? "&end=" . $_GET['end'] : "");
+  $START = (isset($_GET['start']) ? "start=" . $_GET['start'] : "");
+  $END = (isset($_GET['end']) ? "end=" . $_GET['end'] : "");
 
-  function getSeries($START, $END, $CONFIG) {
-    $SERIES_QUEUE = json_decode(file_get_contents("{$CONFIG['SONARR']['URL']}/queue?apikey={$CONFIG['SONARR']['API_KEY']}"), true);
-    $SERIES_CALENDAR = json_decode(file_get_contents("{$CONFIG['SONARR']['URL']}/calendar?apikey={$CONFIG['SONARR']['API_KEY']}{$START}{$END}&unmonitored=false"), true);
+  function getSeries($START, $END) {
+    $CONFIG = new Config();
+    $SERIES_QUEUE = $CONFIG->Sonarr("queue");
+    $SERIES_CALENDAR = $CONFIG->Sonarr("calendar", "{$START}&{$END}&unmonitored=false");
     $SERIES_DOWNLOADING = [];
     $SERIES = [];
     foreach ($SERIES_QUEUE as $SERIES_QUEUE) {
@@ -37,9 +38,10 @@
     }
     return $SERIES;
   }
-  function getMovies($START, $END, $CONFIG) {
-    $MOVIES_QUEUE = json_decode(file_get_contents("{$CONFIG['RADARR']['URL']}/queue?apikey={$CONFIG['RADARR']['API_KEY']}"), true);
-    $MOVIES_CALENDAR = json_decode(file_get_contents("{$CONFIG['RADARR']['URL']}/calendar?apikey={$CONFIG['RADARR']['API_KEY']}{$START}{$END}&unmonitored=false"), true);
+  function getMovies($START, $END) {
+    $CONFIG = new Config();
+    $MOVIES_QUEUE = $CONFIG->Radarr("queue");
+    $MOVIES_CALENDAR = $CONFIG->Radarr("calendar", "{$START}&{$END}&unmonitored=false");
     $MOVIES_DOWNLOADING = [];
     $MOVIES = [];
     foreach ($MOVIES_QUEUE as $MOVIE_QUEUE) {
@@ -51,7 +53,7 @@
     foreach ($MOVIES_CALENDAR as $MOVIE_RAW) {
       $MOVIES[] = [
         'title' => $MOVIE_RAW['title'],
-        'poster' => "{$CONFIG['PROXY']['IMAGE']}?tmdb_id={$MOVIE_RAW['tmdbId']}",
+        'poster' => $CONFIG->Proxy("tmdb_id={$MOVIE_RAW['tmdbId']}"),
         'release' => [
           'cinema' => (isset($MOVIE_RAW['inCinemas']) ? $MOVIE_RAW['inCinemas'] : null),
           'physical' => (isset($MOVIE_RAW['physicalRelease']) ? $MOVIE_RAW['physicalRelease'] : null)
@@ -68,8 +70,8 @@
   }
 
   $CALENDAR = [
-    'series' => getSeries($START, $END, $CONFIG),
-    'movies' => getMovies($START, $END, $CONFIG)
+    'series' => getSeries($START, $END),
+    'movies' => getMovies($START, $END)
   ];
 
   header("Content-Type: application/json");
