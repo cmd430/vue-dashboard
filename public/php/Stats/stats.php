@@ -18,7 +18,7 @@
       'movies' => [
         'total' => $LIBRARY_MOVIES['response']['data']['count'],
         'plays' => $LIBRARY_MOVIES_WATCHTIME_STATS['response']['data'][3]['total_plays'],
-        'time_watched' => $LIBRARY_MOVIES_WATCHTIME_STATS['response']['data'][3]['total_time']
+        'time_watched' => ($LIBRARY_MOVIES_WATCHTIME_STATS['response']['data'][3]['total_time']) * 1000
       ],
       'shows' => [
         'total' => [
@@ -27,12 +27,12 @@
           'episodes' => $LIBRARY_SHOWS['response']['data']['child_count']
         ],
         'plays' => $LIBRARY_SHOWS_WATCHTIME_STATS['response']['data'][3]['total_plays'],
-        'time_watched' => $LIBRARY_SHOWS_WATCHTIME_STATS['response']['data'][3]['total_time']
+        'time_watched' => ($LIBRARY_SHOWS_WATCHTIME_STATS['response']['data'][3]['total_time']) * 1000
       ],
       'total' => [
         'files' => $LIBRARY_MOVIES['response']['data']['count'] + $LIBRARY_SHOWS['response']['data']['child_count'],
         'plays' => $LIBRARY_MOVIES_WATCHTIME_STATS['response']['data'][3]['total_plays'] + $LIBRARY_SHOWS_WATCHTIME_STATS['response']['data'][3]['total_plays'],
-        'time_watched' => $LIBRARY_MOVIES_WATCHTIME_STATS['response']['data'][3]['total_time'] + $LIBRARY_SHOWS_WATCHTIME_STATS['response']['data'][3]['total_time']
+        'time_watched' => ($LIBRARY_MOVIES_WATCHTIME_STATS['response']['data'][3]['total_time'] + $LIBRARY_SHOWS_WATCHTIME_STATS['response']['data'][3]['total_time']) * 1000
       ]
     ],
     'diskspace' => [
