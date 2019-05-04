@@ -13,8 +13,8 @@
         'downloading' => [
           'timeleft' => $MOVIE_RAW['timeleft'],
           'progress' => round(($MOVIE_RAW['size'] - $MOVIE_RAW['sizeleft'])/ ($MOVIE_RAW['size'] / 100), 2),
-          'status' => $MOVIE_RAW['status'],
-          'trackedStatus' => $MOVIE_RAW['trackedDownloadStatus']
+          'status' => strtolower($MOVIE_RAW['status']),
+          'trackedStatus' => strtolower($MOVIE_RAW['trackedDownloadStatus'])
         ]
       ];
     }
@@ -36,8 +36,8 @@
         'downloading' => [
           'timeleft' => $SERIES_RAW['timeleft'],
           'progress' => round(($SERIES_RAW['size'] - $SERIES_RAW['sizeleft'])/ ($SERIES_RAW['size'] / 100), 2),
-          'status' => $SERIES_RAW['status'],
-          'trackedStatus' => $SERIES_RAW['trackedDownloadStatus']
+          'status' => strtolower($SERIES_RAW['status']),
+          'trackedStatus' => strtolower($SERIES_RAW['trackedDownloadStatus'])
         ]
       ];
     }
