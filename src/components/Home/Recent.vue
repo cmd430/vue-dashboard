@@ -59,8 +59,8 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h1, h2 {
+<style lang="scss" scoped>
+h2 {
   text-align: left;
   margin: 20px 107px;
   font-size: 28px;
@@ -74,16 +74,23 @@ ul {
   justify-content: flex-start;
   padding: 0 96px;
   list-style-type: none;
-}
-ul:empty::after {
-  content: "Nothing to Show";
-  width: 100%;
-  font-size: 13px;
-  color: rgb(153, 153, 153);
-  text-align: center;
-  padding: 15px;
-  margin: 0 27px 0 11px;
-  background: rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
+  &:empty::after {
+    content: "Nothing to Show";
+    width: 100%;
+    font-size: 13px;
+    color: rgb(153, 153, 153);
+    text-align: center;
+    padding: 15px;
+    margin: 0 27px 0 11px;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+  }
+  &::v-deep li {
+    display: inline-block;
+    padding: 10px;
+    box-sizing: border-box;
+    width: 190px;
+    height: 351px;
+  }
 }
 </style>

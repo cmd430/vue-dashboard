@@ -60,7 +60,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-h1, h2 {
+h2 {
   text-align: left;
   margin: 20px 107px;
   font-size: 28px;
