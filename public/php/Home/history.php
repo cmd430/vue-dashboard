@@ -21,7 +21,7 @@
         ],
         'mediatype' => 'episode',
         'watched' => [
-          'stopped' => $TV_RAW['stopped'],
+          'stopped' => date('c', $TV_RAW['stopped']),
           'user' => $TV_RAW['friendly_name']
         ]
       ];
@@ -34,7 +34,7 @@
         'poster' => $CONFIG->Proxy("rating_key={$MOVIE_RAW['rating_key']}&type=thumb"),
         'mediatype' => 'movie',
         'watched' => [
-          'stopped' => $MOVIE_RAW['stopped'],
+          'stopped' => date('c', $MOVIE_RAW['stopped']),
           'user' => $MOVIE_RAW['friendly_name']
         ]
       ];

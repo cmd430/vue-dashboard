@@ -1,15 +1,15 @@
 <template>
 <li>
-  <div class="img" v-bind:style="{ 'background-image': 'url(' + history_item.image + ')' }">
-    <span>{{ history_item.user }}</span>
-    <span>{{ history_item.last_watch }}</span>
+  <div class="img" v-bind:style="{ 'background-image': 'url(' + (history.series ? history.series.poster : history.poster) + ')' }">
+    <span>{{ history.watched.user }}</span>
+    <span>{{ history.watched.stopped | moment("from", "now") }}</span>
   </div>
-  <div class="info" v-bind:title="history_item.media_type == 'episode' ? 'Season: ' + history_item.season + ' Episode: ' + history_item.episode + '\r\nEpisode Title: ' + history_item.episode_title + '\r\nShow: ' + history_item.title : 'Movie Title: ' + history_item.title">
-    <p v-if="history_item.media_type == 'episode'" class="title">
-      <span>{{ history_item.season }}x{{ history_item.episode }}</span>
-      {{ history_item.episode_title }}
+  <div class="info">
+    <p v-if="history.mediatype == 'episode'" class="title">
+      <span>{{ history.series.season }}x{{ history.series.episode }}</span>
+      {{ history.title }}
     </p>
-    <p class="name">{{ history_item.title }}</p>
+    <p class="name">{{ (history.series ? history.series.title : history.title) }}</p>
   </div>
 </li>
 </template>
@@ -18,7 +18,7 @@
 export default {
   name: 'history-item',
   props: [
-    'history_item'
+    'history'
   ]
 }
 </script>
