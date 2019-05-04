@@ -18,7 +18,7 @@
     } else {
       $OPTIONS = "&height=270&fallback=thumb";
     }
-    $IMAGE_URL = $CONFIG->Tautulli("pms_image_proxy", "img=/library/metadata/${RATING_KEY}/${TYPE}${OPTIONS}");
+    $IMAGE_URL = $CONFIG->Tautulli("pms_image_proxy", "img=/library/metadata/${RATING_KEY}/${TYPE}${OPTIONS}", false);
     $IMAGE = file_get_contents($IMAGE_URL);
   }
 
