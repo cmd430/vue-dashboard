@@ -14,70 +14,70 @@
   $BANDWIDTH = $CONFIG->Plex("bandwidth", "timespan=1&at>=0");
 
   $STATS = [
-    "libraries" => [
-      "movies" => [
-        "total" => $LIBRARY_MOVIES['response']['data']['count'],
-        "plays" => $LIBRARY_MOVIES_WATCHTIME_STATS['response']['data'][3]['total_plays'],
-        "time_watched" => $LIBRARY_MOVIES_WATCHTIME_STATS['response']['data'][3]['total_time']
+    'libraries' => [
+      'movies' => [
+        'total' => $LIBRARY_MOVIES['response']['data']['count'],
+        'plays' => $LIBRARY_MOVIES_WATCHTIME_STATS['response']['data'][3]['total_plays'],
+        'time_watched' => $LIBRARY_MOVIES_WATCHTIME_STATS['response']['data'][3]['total_time']
       ],
-      "shows" => [
-        "total" => [
-          "series" => $LIBRARY_SHOWS['response']['data']['count'],
-          "seasons" => $LIBRARY_SHOWS['response']['data']['parent_count'],
-          "episodes" => $LIBRARY_SHOWS['response']['data']['child_count']
+      'shows' => [
+        'total' => [
+          'series' => $LIBRARY_SHOWS['response']['data']['count'],
+          'seasons' => $LIBRARY_SHOWS['response']['data']['parent_count'],
+          'episodes' => $LIBRARY_SHOWS['response']['data']['child_count']
         ],
-        "plays" => $LIBRARY_SHOWS_WATCHTIME_STATS['response']['data'][3]['total_plays'],
-        "time_watched" => $LIBRARY_SHOWS_WATCHTIME_STATS['response']['data'][3]['total_time']
+        'plays' => $LIBRARY_SHOWS_WATCHTIME_STATS['response']['data'][3]['total_plays'],
+        'time_watched' => $LIBRARY_SHOWS_WATCHTIME_STATS['response']['data'][3]['total_time']
       ],
-      "total" => [
-        "files" => $LIBRARY_MOVIES['response']['data']['count'] + $LIBRARY_SHOWS['response']['data']['child_count'],
-        "plays" => $LIBRARY_MOVIES_WATCHTIME_STATS['response']['data'][3]['total_plays'] + $LIBRARY_SHOWS_WATCHTIME_STATS['response']['data'][3]['total_plays'],
-        "time_watched" => $LIBRARY_MOVIES_WATCHTIME_STATS['response']['data'][3]['total_time'] + $LIBRARY_SHOWS_WATCHTIME_STATS['response']['data'][3]['total_time']
+      'total' => [
+        'files' => $LIBRARY_MOVIES['response']['data']['count'] + $LIBRARY_SHOWS['response']['data']['child_count'],
+        'plays' => $LIBRARY_MOVIES_WATCHTIME_STATS['response']['data'][3]['total_plays'] + $LIBRARY_SHOWS_WATCHTIME_STATS['response']['data'][3]['total_plays'],
+        'time_watched' => $LIBRARY_MOVIES_WATCHTIME_STATS['response']['data'][3]['total_time'] + $LIBRARY_SHOWS_WATCHTIME_STATS['response']['data'][3]['total_time']
       ]
     ],
-    "diskspace" => [
-      "total" => [
-        "bytes" => $DISKSPACE[0]['totalSpace']
+    'diskspace' => [
+      'total' => [
+        'bytes' => $DISKSPACE[0]['totalSpace']
       ],
-      "free" => [
-        "bytes" => $DISKSPACE[0]['freeSpace'],
-        "percent" => ($DISKSPACE[0]['freeSpace'] / $DISKSPACE[0]['totalSpace']) * 100
+      'free' => [
+        'bytes' => $DISKSPACE[0]['freeSpace'],
+        'percent' => ($DISKSPACE[0]['freeSpace'] / $DISKSPACE[0]['totalSpace']) * 100
       ],
-      "used" => [
-        "bytes" => $DISKSPACE[0]['totalSpace'] - $DISKSPACE[0]['freeSpace'],
-        "percent" => 100 - (($DISKSPACE[0]['freeSpace'] / $DISKSPACE[0]['totalSpace']) * 100)
+      'used' => [
+        'bytes' => $DISKSPACE[0]['totalSpace'] - $DISKSPACE[0]['freeSpace'],
+        'percent' => 100 - (($DISKSPACE[0]['freeSpace'] / $DISKSPACE[0]['totalSpace']) * 100)
       ]
     ],
-    "bandwidth" => [
-      "qbittorrent" => [
-        "live" => [
-          "total" => $BANDWIDTH_TORRENT['server_state']['dl_info_speed'] + $BANDWIDTH_TORRENT['server_state']['up_info_speed'],
-          "upload" => $BANDWIDTH_TORRENT['server_state']['up_info_speed'],
-          "download" => $BANDWIDTH_TORRENT['server_state']['dl_info_speed']
+    'bandwidth' => [
+      'qbittorrent' => [
+        'live' => [
+          'total' => $BANDWIDTH_TORRENT['server_state']['dl_info_speed'] + $BANDWIDTH_TORRENT['server_state']['up_info_speed'],
+          'upload' => $BANDWIDTH_TORRENT['server_state']['up_info_speed'],
+          'download' => $BANDWIDTH_TORRENT['server_state']['dl_info_speed']
         ],
-        "total" => $BANDWIDTH_TORRENT['server_state']['alltime_dl'] + $BANDWIDTH_TORRENT['server_state']['alltime_ul'],
-        "upload" => $BANDWIDTH_TORRENT['server_state']['alltime_ul'],
-        "download" => $BANDWIDTH_TORRENT['server_state']['alltime_dl']
+        'total' => $BANDWIDTH_TORRENT['server_state']['alltime_dl'] + $BANDWIDTH_TORRENT['server_state']['alltime_ul'],
+        'upload' => $BANDWIDTH_TORRENT['server_state']['alltime_ul'],
+        'download' => $BANDWIDTH_TORRENT['server_state']['alltime_dl']
       ],
-      "plex" => [
-        "live" => [
-          "total" => 0,
-          "local" => 0,
-          "remote" => 0
+      'plex' => [
+        'live' => [
+          'total' => 0,
+          'local' => 0,
+          'remote' => 0
         ],
-        "total" => 0,
-        "local" => 0,
-        "remote" => 0
+        'total' => 0,
+        'local' => 0,
+        'remote' => 0
       ],
-      "total" => [
-        "live" => [
-          "total" => 0,
-          "upload" => 0,
-          "download" => 0
+      'total' => [
+        'live' => [
+          'total' => 0,
+          'upload' => 0,
+          'download' => 0
         ],
-        "total" => 0,
-        "upload" => 0,
-        "download" => 0
+        'total' => 0,
+        'upload' => 0,
+        'download' => 0
       ]
     ]
   ];
