@@ -2,9 +2,9 @@
 <li>
   <section>
     <div>
-      <p>Total Diskspace: <span>{{ friendlyDataUnit(diskspace.total) }}</span></p>
-      <p>Free Diskspace:  <span>{{ friendlyDataUnit(diskspace.free) }} ({{ diskspace.free_percent.toFixed(1) }}%)</span></p>
-      <p>Used Diskspace:  <span>{{ friendlyDataUnit(diskspace.used) }} ({{ diskspace.used_percent.toFixed(1) }}%)</span></p>
+      <p>Total Diskspace: <span>{{ (diskspace ? diskspace.total.bytes : 0) | DataUnit() }}</span></p>
+      <p>Free Diskspace:  <span>{{ (diskspace ? diskspace.free.bytes : 0) | DataUnit() }} ({{ (diskspace ? diskspace.free.percent : 0).toFixed(1) }}%)</span></p>
+      <p>Used Diskspace:  <span>{{ (diskspace ? diskspace.used.bytes : 0) | DataUnit()}} ({{ (diskspace ? diskspace.used.percent : 0).toFixed(1) }}%)</span></p>
     </div>
   </section>
 </li>

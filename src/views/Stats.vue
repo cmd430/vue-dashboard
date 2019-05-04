@@ -42,7 +42,11 @@ export default {
   },
   data () {
     return {
-      stats: [],
+      stats: {
+        libraries: null,
+        diskspace: null,
+        bandwidth: null
+      },
       update: null
     }
   },
