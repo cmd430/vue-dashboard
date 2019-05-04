@@ -2,11 +2,11 @@
 <li>
   <section>
     <div>
-      <p>Current Upload Rate:  <span>{{ friendlyDataUnit(bandwidth.live.upload, true) }}</span></p>
-      <p>Current Download Rate: <span>{{ friendlyDataUnit(bandwidth.live.download, true) }}</span></p>
-      <p>Total Data Used:  <span>{{ friendlyDataUnit(bandwidth.total) }}</span></p>
-      <p>Total Data Uploaded:  <span>{{ friendlyDataUnit(bandwidth.upload) }}</span></p>
-      <p>Total Data Downloaded:  <span>{{ friendlyDataUnit(bandwidth.download) }}</span></p>
+      <p>Current Upload Rate:  <span>{{ friendlyDataUnit(bandwidth.total.live.upload, true) }}</span></p>
+      <p>Current Download Rate: <span>{{ friendlyDataUnit(bandwidth.total.live.download, true) }}</span></p>
+      <p>Total Data Used:  <span>{{ friendlyDataUnit(bandwidth.total.total) }}</span></p>
+      <p>Total Data Uploaded:  <span>{{ friendlyDataUnit(bandwidth.total.upload) }}</span></p>
+      <p>Total Data Downloaded:  <span>{{ friendlyDataUnit(bandwidth.total.download) }}</span></p>
     </div>
   </section>
 </li>
