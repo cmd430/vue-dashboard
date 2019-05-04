@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "npm-run-all -s open dev",
+    "start": "npm-run-all -s build_dev dev open",
     "dev": "npm-run-all -p -r serve watch",
     "serve": "php -S localhost:80 -t dist/",
     "watch": "npm-watch build_dev",
