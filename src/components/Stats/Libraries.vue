@@ -50,6 +50,7 @@ p {
   color: rgb(238, 238, 238);
   text-align: left;
   margin: 0;
+  text-transform: capitalize;
 }
 span {
   text-align: center;
