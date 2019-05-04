@@ -1,17 +1,14 @@
 <template>
 <li>
-  <div class="img" v-bind:style="{ 'background-image': 'url(' + recent_item.image + ')' }">
-    <span>{{ recent_item.added_at }}</span>
+  <div class="img" v-bind:style="{ 'background-image': 'url(' + (recent.series ? recent.series.poster : recent.poster) + ')' }">
+    <span>{{ recent.added | moment("from", "now") }}</span>
   </div>
-  <div class="info" v-bind:title="recent_item.media_type == 'episode' ? 'Season: ' + recent_item.series.season + ' Episode: ' + recent_item.series.episode + '\r\nEpisode Title: ' + recent_item.series.episode_title + '\r\nShow: ' + recent_item.title : 'Movie Title: ' + recent_item.title">
-    <p v-if="recent_item.media_type == 'episode'" class="title">
-      <span>{{ recent_item.series.season }}x{{ recent_item.series.episode }}</span>
-      {{ recent_item.series.episode_title }}
+  <div class="info">
+    <p v-if="recent.mediatype == 'episode'" class="title">
+      <span>{{ recent.series.season }}x{{ recent.series.episode }}</span>
+      {{ recent.title }}
     </p>
-    <p v-if="recent_item.media_type == 'series'" class="title">
-      {{ recent_item.series.season }}
-    </p>
-    <p class="name">{{ recent_item.title }}</p>
+    <p class="name">{{ (recent.series ? recent.series.title : recent.title) }}</p>
   </div>
 </li>
 </template>
@@ -20,7 +17,7 @@
 export default {
   name: 'recent-item',
   props: [
-    'recent_item'
+    'recent'
   ]
 }
 </script>

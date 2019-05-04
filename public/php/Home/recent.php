@@ -20,7 +20,7 @@
           'poster' => $CONFIG->Proxy("rating_key={$SERIES_RAW['grandparent_rating_key']}&type=thumb")
         ],
         'mediatype' => 'episode',
-        'added' => $SERIES_RAW['added_at']
+        'added' => date('c', $SERIES_RAW['added_at'])
       ];
     }
   }
@@ -30,7 +30,7 @@
         'title' => $MOVIE_RAW['full_title'],
         'poster' => $CONFIG->Proxy("rating_key={$MOVIE_RAW['rating_key']}&type=thumb"),
         'mediatype' => 'movie',
-        'added' => $MOVIE_RAW['added_at']
+        'added' => date('c', $MOVIE_RAW['added_at'])
       ];
     }
   }
