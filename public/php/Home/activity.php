@@ -36,8 +36,8 @@
       $ACTIVITY[] = [
         'title' => $ACTIVITY_RAW['title'],
         'images' => [
-          'poster' => $CONFIG->Proxy("rating_key={$ACTIVITY_RAW['grandparent_rating_key']}&type=thumb"),
-          'art' => $CONFIG->Proxy("rating_key={$ACTIVITY_RAW['grandparent_rating_key']}&type=art")
+          'poster' => $CONFIG->Proxy("rating_key={$ACTIVITY_RAW['rating_key']}&type=thumb"),
+          'art' => $CONFIG->Proxy("rating_key={$ACTIVITY_RAW['rating_key']}&type=art")
         ],
         'playback' => [
           'user' => $ACTIVITY_RAW['friendly_name'],
