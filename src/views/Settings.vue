@@ -2,7 +2,7 @@
   <div id="settings">
     <h1>Settings</h1>
     <section id="home" class="left">
-      <h4>Home Settings</h4>
+      <h2>Home Settings</h2>
       <div class="checkbox">
         <label>
           Show Activity
@@ -26,7 +26,7 @@
       </div>
     </section>
     <section id="calendar" class="center">
-      <h4>Calendar Settings</h4>
+      <h2>Calendar Settings</h2>
       <div class="checkbox">
         <label>
           Hide Episodes and Movies that are '{{ this.$store.state.strings.downloaded }}'
@@ -43,7 +43,7 @@
       </div>
     </section>
     <section id="queue" class="right">
-      <h4>Queue Settings</h4>
+      <h2>Queue Settings</h2>
       <p>No Settings</p>
     </section>
   </div>
@@ -118,19 +118,6 @@ p {
 }
 div#settings {
   margin-bottom: 40px;
-}
-h1, h2, h4 {
-  text-align: left;
-  margin: 20px 107px;
-  font-size: 28px;
-  font-weight: 100;
-  letter-spacing: 1px;
-}
-h4 {
-  font-size: 18px;
-  margin: 0 0 20px 0;
-  left: -20px;
-  position: relative;
 }
 section {
   width: 400px;

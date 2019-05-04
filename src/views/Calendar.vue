@@ -2,10 +2,10 @@
   <div class="calendar">
     <div id="navigation">
       <button id="prev_month" v-on:click="setMonth(month.previous)">Previous Month</button>
-      <h2 id="month">{{ month.name }}</h2>
+      <h1 id="month">{{ month.name }}</h1>
       <button id="next_month" v-on:click="setMonth(month.next)">Next Month</button>
     </div>
-    <h2>TV Shows</h2>
+    <h1>TV Shows</h1>
     <ul>
       <calendar-item
         v-for="show in shows"
@@ -14,7 +14,7 @@
         v-bind:type="'show'"
       />
     </ul>
-    <h2>Movies</h2>
+    <h1>Movies</h1>
     <ul>
       <calendar-item
         v-for="movie in movies"

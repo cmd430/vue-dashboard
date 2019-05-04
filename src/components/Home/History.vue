@@ -1,6 +1,6 @@
 <template>
   <div class="history">
-    <h2>Recent Plays</h2>
+    <h1>Recent Plays</h1>
     <ul>
       <history-item
         v-for="item in history"
@@ -60,13 +60,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-h2 {
-  text-align: left;
-  margin: 20px 107px;
-  font-size: 28px;
-  font-weight: 100;
-  letter-spacing: 1px;
-}
 ul {
   display: flex;
   flex-wrap: wrap;
