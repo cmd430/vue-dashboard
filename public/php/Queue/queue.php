@@ -4,17 +4,17 @@
 
   function getMovies() {
     $CONFIG = new Config();
-    $MOVIES_QUEUE = $CONFIG->Radarr("queue");
+    $MOVIES_QUEUE = $CONFIG->Radarr("queue", "sort_by=timeleft&order=asc");
     $MOVIES = [];
     foreach ($MOVIES_QUEUE as $MOVIE_RAW) {
       $MOVIES[] = [
         'title' => $MOVIE_RAW['movie']['title'],
-        'poster' => $CONFIG->Proxy("tmdb_id={$MOVIE_RAW['movie']['tmdbId']}"),
+        'poster' => $CONFIG->Proxy("radarr_id={$MOVIE_RAW['movie']['id']}"),
         'downloading' => [
           'timeleft' => $MOVIE_RAW['timeleft'],
           'progress' => round(($MOVIE_RAW['size'] - $MOVIE_RAW['sizeleft'])/ ($MOVIE_RAW['size'] / 100), 2),
           'status' => strtolower($MOVIE_RAW['status']),
-          'trackedStatus' => strtolower($MOVIE_RAW['trackedDownloadStatus'])
+          'message' => strtolower($MOVIE_RAW['trackedDownloadStatus'])
         ]
       ];
     }
@@ -22,7 +22,7 @@
   }
   function getSeries() {
     $CONFIG = new Config();
-    $SERIES_QUEUE = $CONFIG->Sonarr("queue");
+    $SERIES_QUEUE = $CONFIG->Sonarr("queue", "sort_by=timeleft&order=asc");
     $SERIES = [];
     foreach ($SERIES_QUEUE as $SERIES_RAW) {
       $SERIES[] = [
@@ -31,13 +31,13 @@
           'title' => $SERIES_RAW['series']['title'],
           'season' => (strlen($SERIES_RAW['episode']['seasonNumber']) === 1 ? 0 : null) . $SERIES_RAW['episode']['seasonNumber'],
           'episode' => (strlen($SERIES_RAW['episode']['episodeNumber']) === 1 ? 0 : null) . $SERIES_RAW['episode']['episodeNumber'],
-          'poster' => array_column($SERIES_RAW['series']['images'], 'url', 'coverType')['poster']
+          'poster' => $CONFIG->Proxy("sonarr_id={$SERIES_RAW['series']['id']}")
         ],
         'downloading' => [
           'timeleft' => $SERIES_RAW['timeleft'],
           'progress' => round(($SERIES_RAW['size'] - $SERIES_RAW['sizeleft'])/ ($SERIES_RAW['size'] / 100), 2),
           'status' => strtolower($SERIES_RAW['status']),
-          'trackedStatus' => strtolower($SERIES_RAW['trackedDownloadStatus'])
+          'message' => strtolower($SERIES_RAW['trackedDownloadStatus'])
         ]
       ];
     }
