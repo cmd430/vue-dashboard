@@ -53,7 +53,7 @@ export default {
     this.update = setInterval(() => {
       console.log('Updating...')
       this.processRecent()
-    }, 30000)
+    }, 10000)
   }
 }
 </script>
