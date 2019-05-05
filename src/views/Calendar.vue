@@ -1,9 +1,9 @@
 <template>
   <div class="calendar">
     <div id="navigation">
-      <button id="prev_month" v-on:click="setMonth(month.previous)">Previous Month</button>
-      <h1 id="month">{{ month.name }}</h1>
-      <button id="next_month" v-on:click="setMonth(month.next)">Next Month</button>
+      <button id="prev_month" @click="setMonth(month.previous)">Previous Month</button>
+      <h1 id="month" @click="setMonth(new Date())">{{ month.name }}</h1>
+      <button id="next_month" @click="setMonth(month.next)">Next Month</button>
     </div>
     <h1>TV Shows</h1>
     <ul>
@@ -66,6 +66,7 @@ export default {
         previous: previous,
         next: next
       }
+      this.processCalendar()
     }
   },
   data () {
@@ -80,7 +81,7 @@ export default {
   },
   created () {
     this.setMonth(new Date())
-    this.processCalendar()
+
   },
   mounted () {
     this.update = setInterval(() => {
@@ -163,6 +164,7 @@ ul {
     font-weight: 400;
     text-align: center;
     margin: 0;
+    cursor: pointer;
   }
 }
 </style>
