@@ -22,19 +22,19 @@ export default {
   methods: {
     processHistory: function () {
       fetch('/php/Home/history.php')
-      .then(response => {
-        if (response.status !== 200) {
-          return []
-        }
-        return response.json()
-      })
-      .then(history => {
-        this.history = history
-      })
-      .catch(err => {
-        console.error('[History]', err)
-      })
-    },
+        .then(response => {
+          if (response.status !== 200) {
+            return []
+          }
+          return response.json()
+        })
+        .then(history => {
+          this.history = history
+        })
+        .catch(err => {
+          console.error('[History]', err)
+        })
+    }
   },
   data () {
     return {

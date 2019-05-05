@@ -37,7 +37,6 @@
 </template>
 
 <script>
-import { setTimeout } from 'timers';
 export default {
   name: 'activity-item',
   props: [

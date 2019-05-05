@@ -73,21 +73,21 @@ export default {
       return returntext.trim()
     })
     Vue.filter('MediaTime', function (value, forceHours = false) {
-        let hours
-        let minutes
-        let seconds = value / 1000
-        let result = ''
-        hours = Math.floor(seconds / 3600)
-        seconds -= hours * 3600
-        if (hours || forceHours) {
-          result = hours < 10 ? '0' + hours + ':' : hours + ':'
-        }
-        minutes = Math.floor(seconds / 60)
-        seconds -= minutes * 60
-        result += minutes < 10 ? '0' + minutes + ':' : minutes + ':'
-        seconds = Math.floor(seconds % 60)
-        result += seconds < 10 ? '0' + seconds : seconds
-        return result
+      let hours
+      let minutes
+      let seconds = value / 1000
+      let result = ''
+      hours = Math.floor(seconds / 3600)
+      seconds -= hours * 3600
+      if (hours || forceHours) {
+        result = hours < 10 ? '0' + hours + ':' : hours + ':'
+      }
+      minutes = Math.floor(seconds / 60)
+      seconds -= minutes * 60
+      result += minutes < 10 ? '0' + minutes + ':' : minutes + ':'
+      seconds = Math.floor(seconds % 60)
+      result += seconds < 10 ? '0' + seconds : seconds
+      return result
     })
   }
 }
