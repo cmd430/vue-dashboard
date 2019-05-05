@@ -9,15 +9,26 @@
     $CONFIG = new Config();
     $SERIES_QUEUE = $CONFIG->Sonarr("queue");
     $SERIES_CALENDAR = $CONFIG->Sonarr("calendar", "{$START}&{$END}&unmonitored=false");
+    $SERIES_UPCOMMING = $CONFIG->Sonarr("calendar", "unmonitored=false");
     $SERIES_DOWNLOADING = [];
+    $SERIES_UPCOMMING_EPISODES = [];
+    $SERIES_IDS = [];
     $SERIES = [];
-    foreach ($SERIES_QUEUE as $SERIES_QUEUE) {
-      $SERIES_DOWNLOADING[$SERIES_QUEUE['episode']['id']] = [
-        'status' => $SERIES_QUEUE['status'],
-        'trackedStatus' => $SERIES_QUEUE['trackedDownloadStatus']
+    foreach ($SERIES_QUEUE as $SHOW_QUEUE) {
+      $SERIES_DOWNLOADING[$SHOW_QUEUE['episode']['id']] = [
+        'status' => $SHOW_QUEUE['status'],
+        'trackedStatus' => $SHOW_QUEUE['trackedDownloadStatus']
       ];
     }
+    foreach ($SERIES_UPCOMMING as $UPCOMMING) {
+      $SERIES_UPCOMMING_EPISODES[] = $UPCOMMING['id'];
+    }
     foreach ($SERIES_CALENDAR as $SERIES_RAW) {
+      $NEXT = null;
+      if ($SERIES_RAW['hasFile'] === false && !in_array($SERIES_RAW['seriesId'], $SERIES_IDS, true)) {
+        $SERIES_IDS[] = $SERIES_RAW['seriesId'];
+        $NEXT = 'next';
+      }
       $SERIES[] = [
         'title' => $SERIES_RAW['title'],
         'series' => [
@@ -25,9 +36,13 @@
           'season' => (strlen($SERIES_RAW['seasonNumber']) === 1 ? 0 : null) . $SERIES_RAW['seasonNumber'],
           'episode' => (strlen($SERIES_RAW['episodeNumber']) === 1 ? 0 : null) . $SERIES_RAW['episodeNumber'],
           'overview' => (isset($SERIES_RAW['series']['overview']) ? $SERIES_RAW['series']['overview'] : ""),
-          'poster' => array_column($SERIES_RAW['series']['images'], 'url', 'coverType')['poster']
+          'poster' => $CONFIG->Proxy("sonarr_id={$SERIES_RAW['series']['id']}")
         ],
-        'release' => (isset($SERIES_RAW['airDateUtc']) ? $SERIES_RAW['airDateUtc'] : null),
+        'release' => [
+          'air' => (isset($SERIES_RAW['airDateUtc']) ? $SERIES_RAW['airDateUtc'] : null),
+          'runtime' => $SERIES_RAW['series']['runtime'],
+          'status' => (in_array($SERIES_RAW['id'], $SERIES_UPCOMMING_EPISODES) ? 'today' : $NEXT)
+        ],
         'overview' => (isset($SERIES_RAW['overview']) ? $SERIES_RAW['overview'] : ""),
         'downloaded' => $SERIES_RAW['hasFile'],
         'downloading' => [
@@ -53,10 +68,11 @@
     foreach ($MOVIES_CALENDAR as $MOVIE_RAW) {
       $MOVIES[] = [
         'title' => $MOVIE_RAW['title'],
-        'poster' => $CONFIG->Proxy("tmdb_id={$MOVIE_RAW['tmdbId']}"),
+        'poster' => $CONFIG->Proxy("radarr_id={$MOVIE_RAW['id']}"),
         'release' => [
           'cinema' => (isset($MOVIE_RAW['inCinemas']) ? $MOVIE_RAW['inCinemas'] : null),
-          'physical' => (isset($MOVIE_RAW['physicalRelease']) ? $MOVIE_RAW['physicalRelease'] : null)
+          'physical' => (isset($MOVIE_RAW['physicalRelease']) ? $MOVIE_RAW['physicalRelease'] : null),
+          'status' => strtolower($MOVIE_RAW['status'])
         ],
         'overview' => (isset($MOVIE_RAW['overview']) ? $MOVIE_RAW['overview'] : ""),
         'downloaded' => $MOVIE_RAW['downloaded'],
