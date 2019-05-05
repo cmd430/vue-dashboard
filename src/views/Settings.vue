@@ -29,8 +29,8 @@
       <h2>Calendar Settings</h2>
       <div class="checkbox">
         <label>
-          Hide Episodes and Movies that are '{{ this.$store.state.strings.downloaded }}'
-          <input type="checkbox" v-model="showDownloaded" />
+          Hide Episodes and Movies that are 'In Plex'
+          <input type="checkbox" v-model="hideDownloaded" />
           <span></span>
         </label>
       </div>
@@ -38,6 +38,13 @@
         <label>
           Only Show Next Unaired Episode
           <input type="checkbox" v-model="showNextUnairedOnly" />
+          <span></span>
+        </label>
+      </div>
+      <div class="checkbox">
+        <label>
+          Always Show Todays Episodes
+          <input type="checkbox" v-model="alwaysShowToday" />
           <span></span>
         </label>
       </div>
@@ -85,12 +92,12 @@ export default {
         this.$store.commit('showRecent', value)
       }
     },
-    showDownloaded: {
+    hideDownloaded: {
       get () {
-        return this.$store.state.settings.showDownloaded
+        return this.$store.state.settings.hideDownloaded
       },
       set (value) {
-        this.$store.commit('showDownloaded', value)
+        this.$store.commit('hideDownloaded', value)
       }
     },
     showNextUnairedOnly: {
@@ -99,6 +106,14 @@ export default {
       },
       set (value) {
         this.$store.commit('showNextUnairedOnly', value)
+      }
+    },
+    alwaysShowToday: {
+      get () {
+        return this.$store.state.settings.alwaysShowToday
+      },
+      set (value) {
+        this.$store.commit('alwaysShowToday', value)
       }
     }
   },
