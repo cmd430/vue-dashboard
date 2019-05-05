@@ -1,6 +1,6 @@
 <?php
 
-  require "../Config/conf.php";
+  require "./Config/conf.php";
 
   $START = (isset($_GET['start']) ? "start=" . $_GET['start'] : "");
   $END = (isset($_GET['end']) ? "end=" . $_GET['end'] : "");

@@ -1,6 +1,6 @@
 <?php
 
-  require "../Config/conf.php";
+  require "./Config/conf.php";
 
   function getMovies() {
     $CONFIG = new Config();

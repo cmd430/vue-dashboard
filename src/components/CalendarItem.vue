@@ -22,7 +22,7 @@ export default {
   methods: {
     shouldShow () {
       if (this.calendar.series) {
-        //TV
+        // TV
         let a = (this.$store.state.settings.showNextUnairedOnly === true && this.calendar.release.status === 'next')
         let b = (this.$store.state.settings.showNextUnairedOnly === false && this.currentClass !== 'downloaded')
         let c = (this.$store.state.settings.hideDownloaded === true && this.currentClass !== 'downloaded')
@@ -50,7 +50,7 @@ export default {
         // TV
         if (this.calendar.release.air < cd) {
           let dt = new Date(this.calendar.release.air)
-          dt.setMinutes( dt.getMinutes() + this.calendar.release.runtime )
+          dt.setMinutes(dt.getMinutes() + this.calendar.release.runtime)
           if (dt.getUTCDate() < cd) return 'pending'
           return 'airing'
         }
@@ -79,6 +79,7 @@ export default {
           return this.$moment(this.calendar.release.cinema).fromNow()
         }
       }
+      return 'unknown'
     }
   }
 }

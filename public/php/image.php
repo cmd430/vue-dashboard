@@ -1,6 +1,6 @@
 <?php
 
-  require "../Config/conf.php";
+  require "./Config/conf.php";
 
   $CONFIG = new Config();
   $IMAGE_CACHE_TIME = 60*60*24*3; //3 Days

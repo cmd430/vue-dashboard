@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import QueueItem from '@/components/Queue/QueueItem'
+import QueueItem from '@/components/QueueItem'
 
 export default {
   name: 'Queue',
@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     processQueue: function () {
-      fetch(`/php/Queue/queue.php`)
+      fetch(`/php/queue.php`)
       .then(response => {
         if (response.status !== 200) {
           return []

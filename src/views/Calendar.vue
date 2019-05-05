@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import CalendarItem from '@/components/Calendar/CalendarItem'
+import CalendarItem from '@/components/CalendarItem'
 
 export default {
   name: 'Calendar',
@@ -37,7 +37,7 @@ export default {
   },
   methods: {
     processCalendar: function () {
-      fetch(`/php/Calendar/calendar.php?start=${this.month.start}&end=${this.month.end}`)
+      fetch(`/php/calendar.php?start=${this.month.start}&end=${this.month.end}`)
       .then(response => {
         if (response.status !== 200) {
           return []

@@ -38,7 +38,7 @@
      ******************************************/
 
     public function Proxy($params) {
-      return "/php/Shared/image.php?{$params}";
+      return "/php/image.php?{$params}";
     }
     public function Plex($route, $params = null, $json = true) {
       if (is_null($params)) {
