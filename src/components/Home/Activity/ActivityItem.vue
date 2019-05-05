@@ -31,7 +31,7 @@
   <div id="progress">
     <span class="progress_text">{{ activity.playback.progress.time | MediaTime((activity.playback.runtime.length >= 7)) }} / {{ activity.playback.runtime | MediaTime() }}</span>
     <span class="percent_text">{{ activity.playback.progress_percent }}</span>
-    <span class="progress" v-bind:style="{ 'width': activity.playback.progress.percent }"></span>
+    <span class="progress" v-bind:style="{ 'width': activity.playback.progress.percent + '%'}"></span>
   </div>
 </li>
 </template>
