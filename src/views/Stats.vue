@@ -32,8 +32,8 @@ export default {
           }
           return response.json()
         })
-        .then(statItems => {
-          this.stats = statItems
+        .then(stats => {
+          this.stats = stats
         })
         .catch(err => {
           console.log(err)

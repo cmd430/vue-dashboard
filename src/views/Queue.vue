@@ -45,19 +45,18 @@ export default {
         .catch(err => {
           console.log(err)
         })
-    },
-    clearAll: function () {
-      this.queue = []
     }
   },
   data () {
     return {
-      queue: null,
+      queue: {
+        series: null,
+        movies: null
+      },
       update: null
     }
   },
   created () {
-    this.clearAll()
     this.processQueue()
   },
   mounted () {
