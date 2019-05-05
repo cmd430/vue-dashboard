@@ -22,38 +22,37 @@ export default {
   methods: {
     processRecent: function () {
       fetch('/php/Home/recent.php')
-        .then(response => {
-          if (response.status !== 200) {
-            return []
-          }
-          return response.json()
-        })
-        .then(recent => {
-          this.recent = recent
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    },
-    clearAll: function () {
-      this.recent = []
+      .then(response => {
+        if (response.status !== 200) {
+          return []
+        }
+        return response.json()
+      })
+      .then(recent => {
+        this.recent = recent
+      })
+      .catch(err => {
+        console.error('[Recent]', err)
+      })
     }
   },
   data () {
     return {
-      recent: [],
+      recent: null,
       update: null
     }
   },
   created () {
-    this.clearAll()
     this.processRecent()
   },
   mounted () {
     this.update = setInterval(() => {
-      console.log('Updating...')
+      console.log('[Recent] Updating...')
       this.processRecent()
     }, 10000)
+  },
+  beforeDestroy () {
+    clearInterval(this.update)
   }
 }
 </script>

@@ -22,38 +22,37 @@ export default {
   methods: {
     processActivity: function () {
       fetch('/php/Home/activity.php')
-        .then(response => {
-          if (response.status !== 200) {
-            return []
-          }
-          return response.json()
-        })
-        .then(activity => {
-          this.activity = activity
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    },
-    clearAll: function () {
-      this.activity = []
+      .then(response => {
+        if (response.status !== 200) {
+          return []
+        }
+        return response.json()
+      })
+      .then(activity => {
+        this.activity = activity
+      })
+      .catch(err => {
+        console.error('[Activity]', err)
+      })
     }
   },
   data () {
     return {
-      activity: [],
+      activity: null,
       update: null
     }
   },
   created () {
-    this.clearAll()
     this.processActivity()
   },
   mounted () {
     this.update = setInterval(() => {
-      console.log('Updating...')
+      console.log('[Activity] Updating...')
       this.processActivity()
     }, 10000)
+  },
+  beforeDestroy () {
+    clearInterval(this.update)
   }
 }
 </script>

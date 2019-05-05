@@ -22,38 +22,37 @@ export default {
   methods: {
     processHistory: function () {
       fetch('/php/Home/history.php')
-        .then(response => {
-          if (response.status !== 200) {
-            return []
-          }
-          return response.json()
-        })
-        .then(history => {
-          this.history = history
-        })
-        .catch(err => {
-          console.log(err)
-        })
+      .then(response => {
+        if (response.status !== 200) {
+          return []
+        }
+        return response.json()
+      })
+      .then(history => {
+        this.history = history
+      })
+      .catch(err => {
+        console.error('[History]', err)
+      })
     },
-    clearAll: function () {
-      this.history = []
-    }
   },
   data () {
     return {
-      history: [],
+      history: null,
       update: null
     }
   },
   created () {
-    this.clearAll()
     this.processHistory()
   },
   mounted () {
     this.update = setInterval(() => {
-      console.log('Updating...')
+      console.log('[History] Updating...')
       this.processHistory()
     }, 30000)
+  },
+  beforeDestroy () {
+    clearInterval(this.update)
   }
 }
 </script>

@@ -26,18 +26,18 @@ export default {
   methods: {
     showStats: function () {
       fetch(`/php/Stats/stats.php`)
-        .then(response => {
-          if (response.status !== 200) {
-            return []
-          }
-          return response.json()
-        })
-        .then(stats => {
-          this.stats = stats
-        })
-        .catch(err => {
-          console.log(err)
-        })
+      .then(response => {
+        if (response.status !== 200) {
+          return []
+        }
+        return response.json()
+      })
+      .then(stats => {
+        this.stats = stats
+      })
+      .catch(err => {
+        console.error('[Stats]', err)
+      })
     }
   },
   data () {
@@ -55,7 +55,7 @@ export default {
   },
   mounted () {
     this.update = setInterval(() => {
-      console.log('Updating...')
+      console.log('[Stats] Updating...')
       this.showStats()
     }, 1000)
   },

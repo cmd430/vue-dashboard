@@ -33,18 +33,18 @@ export default {
   methods: {
     processQueue: function () {
       fetch(`/php/Queue/queue.php`)
-        .then(response => {
-          if (response.status !== 200) {
-            return []
-          }
-          return response.json()
-        })
-        .then(queue => {
-          this.queue = queue
-        })
-        .catch(err => {
-          console.log(err)
-        })
+      .then(response => {
+        if (response.status !== 200) {
+          return []
+        }
+        return response.json()
+      })
+      .then(queue => {
+        this.queue = queue
+      })
+      .catch(err => {
+        console.error('[Queue]', err)
+      })
     }
   },
   data () {
@@ -61,7 +61,7 @@ export default {
   },
   mounted () {
     this.update = setInterval(() => {
-      console.log('Updating...')
+      console.log('[Queue] Updating...')
       this.processQueue()
     }, 30000)
   },
