@@ -4,8 +4,8 @@
     <ul>
       <history-item
         v-for="item in history"
-        v-bind:key="item.id"
-        v-bind:history="item"
+        :key="item.id"
+        :history="item"
       />
     </ul>
   </div>

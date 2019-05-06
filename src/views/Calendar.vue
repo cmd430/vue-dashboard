@@ -9,16 +9,16 @@
     <ul>
       <calendar-item
         v-for="show in calendar.series"
-        v-bind:key="show.id"
-        v-bind:calendar="show"
+        :key="show.id"
+        :calendar="show"
       />
     </ul>
     <h1>Movies</h1>
     <ul>
       <calendar-item
         v-for="movie in calendar.movies"
-        v-bind:key="movie.id"
-        v-bind:calendar="movie"
+        :key="movie.id"
+        :calendar="movie"
       />
     </ul>
   </div>

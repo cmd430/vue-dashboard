@@ -1,9 +1,9 @@
 <template>
   <div id="stats">
     <ul>
-      <libraries v-bind:libraries="stats.libraries"/>
-      <diskspace v-bind:diskspace="stats.diskspace"/>
-      <bandwidth v-bind:bandwidth="stats.bandwidth"/>
+      <libraries :libraries="stats.libraries"/>
+      <diskspace :diskspace="stats.diskspace"/>
+      <bandwidth :bandwidth="stats.bandwidth"/>
     </ul>
   </div>
 </template>

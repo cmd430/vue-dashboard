@@ -1,6 +1,6 @@
 <template>
 <li>
-  <div class="img" v-bind:style="{ 'background-image': 'url(' + (recent.series ? recent.series.poster : recent.poster) + ')' }">
+  <div class="img" :style="{ 'background-image': 'url(' + (recent.series ? recent.series.poster : recent.poster) + ')' }">
     <span>{{ recent.added | moment("from", "now") }}</span>
   </div>
   <div class="info">

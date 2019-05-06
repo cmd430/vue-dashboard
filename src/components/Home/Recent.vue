@@ -4,8 +4,8 @@
     <ul>
       <recent-item
         v-for="item in recent"
-        v-bind:key="item.id"
-        v-bind:recent="item"
+        :key="item.id"
+        :recent="item"
       />
     </ul>
   </div>

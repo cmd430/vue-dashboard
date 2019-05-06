@@ -4,8 +4,8 @@
     <ul>
       <activity-item
         v-for="item in activity"
-        v-bind:key="item.id"
-        v-bind:activity="item"
+        :key="item.id"
+        :activity="item"
       />
     </ul>
   </div>

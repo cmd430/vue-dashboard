@@ -4,16 +4,16 @@
     <ul>
       <queue-item
         v-for="item in queue.series"
-        v-bind:key="item.id"
-        v-bind:queue="item"
+        :key="item.id"
+        :queue="item"
       />
     </ul>
     <h1>Movie Download Queue</h1>
     <ul>
       <queue-item
         v-for="item in queue.movies"
-        v-bind:key="item.id"
-        v-bind:queue="item"
+        :key="item.id"
+        :queue="item"
       />
     </ul>
   </div>

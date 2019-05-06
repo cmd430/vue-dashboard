@@ -1,6 +1,6 @@
 <template>
 <li>
-  <div class="img" v-bind:style="{ 'background-image': 'url(' + (history.series ? history.series.poster : history.poster) + ')' }">
+  <div class="img" :style="{ 'background-image': 'url(' + (history.series ? history.series.poster : history.poster) + ')' }">
     <span>{{ history.watched.user }}</span>
     <span>{{ history.watched.stopped | moment("from", "now") }}</span>
   </div>

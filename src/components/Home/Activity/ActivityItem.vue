@@ -1,12 +1,12 @@
 <template>
 <li>
-  <div class="bg_img" v-bind:style="{ 'background-image': 'url(' + (activity.series ? activity.series.images.art : activity.images.art) + ')' }">
+  <div class="bg_img" :style="{ 'background-image': 'url(' + (activity.series ? activity.series.images.art : activity.images.art) + ')' }">
     <span>{{ activity.playback.user }}</span>
     <span>{{ activity.playback.state }}</span>
   </div>
-  <div class="img" v-bind:style="{ 'background-image': 'url(' + (activity.series ? activity.series.images.poster : activity.images.poster) + ')' }">
+  <div class="img" :style="{ 'background-image': 'url(' + (activity.series ? activity.series.images.poster : activity.images.poster) + ')' }">
   </div>
-  <div class="info" v-bind:data-type="activity.mediatype">
+  <div class="info" :data-type="activity.mediatype">
     <p v-if="activity.mediatype == 'episode'">
       <span>Series:</span>
       {{ activity.series.title }}
@@ -31,7 +31,7 @@
   <div id="progress">
     <span class="progress_text">{{ activity.playback.progress.time | MediaTime((activity.playback.runtime.length > 7)) }} / {{ activity.playback.runtime | MediaTime() }}</span>
     <span class="percent_text">{{ activity.playback.progress_percent }}</span>
-    <span class="progress" v-bind:style="{ 'width': activity.playback.progress.percent + '%'}"></span>
+    <span class="progress" :style="{ 'width': activity.playback.progress.percent + '%'}"></span>
   </div>
 </li>
 </template>
