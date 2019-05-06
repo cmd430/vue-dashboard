@@ -1,7 +1,7 @@
 <template>
-<li v-if="shouldShow()">
-  <div class="img" v-bind:style="{ 'background-image': 'url(' + (calendar.series ? calendar.series.poster : calendar.poster) + ')' }">
-    <span v-bind:class="currentClass">{{ currentText }}</span>
+<li v-if="shouldShow()" :class="((this.calendar.release.cinema > new Date().toISOString()) ? 'faded' : '')">
+  <div class="img" :style="{ 'background-image': 'url(' + (calendar.series ? calendar.series.poster : calendar.poster) + ')' }">
+    <span :class="currentClass">{{ currentText }}</span>
   </div>
   <div class="info">
     <p v-if="calendar.series" class="title">
@@ -41,10 +41,14 @@ export default {
   computed: {
     currentClass () {
       if (this.calendar.downloaded) return 'downloaded'
-      if (this.calendar.downloading.status === ('downloading' || 'queued')) {
-        if (this.calendar.downloading.message === 'ok') return 'downloading'
-        return 'warning'
-      }
+      let downloading = this.calendar.downloading.status === 'downloading'
+      let queued = this.calendar.downloading.status === 'queued'
+      let paused = this.calendar.downloading.status === 'paused'
+      if (downloading || queued || paused) return 'downloading'
+      let completed = this.calendar.downloading.status === 'completed'
+      let warning = this.calendar.downloading.message === 'warning'
+      let stalled = this.calendar.downloading.status === 'stalled'
+      if (stalled || (completed && warning)) return 'warning'
       let cd = new Date().toISOString()
       if (this.calendar.release.air) {
         // TV

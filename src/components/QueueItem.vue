@@ -1,16 +1,13 @@
 <template>
 <li>
-  <div class="img" v-bind:style="{ 'background-image': 'url(' + (queue.series ? queue.series.poster : queue.poster) + ')' }">
+  <div class="img" :style="{ 'background-image': 'url(' + (queue.series ? queue.series.poster : queue.poster) + ')' }">
     <span v-if="queue.downloading.status === 'downloading'" class="downloading">
-      <span>{{ queue.downloading.timeleft }}</span>
-      <span>{{ queue.downloading.progress }}</span>
+      <span>{{ queue.downloading.timeleft | duration('humanize', true) }}</span>
+      <span>{{ queue.downloading.progress + '%' }}</span>
     </span>
     <!-- These next two v-if blocks might not be correct -->
-    <span v-if="queue.downloading.status === 'warning'">
-      <span>check download</span>
-    </span>
-    <span v-if="queue.downloading.status === 'queued'">
-      <span>queued</span>
+    <span v-else :class="currentClass">
+      <span>{{ currentText }}</span>
     </span>
   </div>
   <div class="info">
@@ -28,7 +25,24 @@ export default {
   name: 'queue-item',
   props: [
     'queue'
-  ]
+  ],
+  computed: {
+    currentClass () {
+      let completed = this.queue.downloading.status === 'completed'
+      let warning = this.queue.downloading.message === 'warning'
+      let stalled = this.queue.downloading.status === 'stalled'
+      if (stalled || (completed && warning)) return 'warning'
+      if (this.queue.downloading.status === 'queued') return 'queued'
+      if (this.queue.downloading.status === 'paused') return 'paused'
+      return 'unknown'
+    },
+    currentText () {
+      if (this.currentClass === 'warning') return 'check download'
+      if (this.currentClass === 'queued') return 'queued'
+      if (this.currentClass === 'paused') return 'paused'
+      return 'unknown status'
+    }
+  }
 }
 </script>
 
@@ -56,16 +70,21 @@ div {
       text-transform: uppercase;
       letter-spacing: 1px;
       font-size: 12px;
+      color: rgb(238, 238, 238);
+      padding: 0;
       &.downloading,
-      &.queued {
+      &.queued,
+      &.paused {
         background-color: rgba(143, 44, 189, 0.8);
-        color: rgb(238, 238, 238);
-        padding: 0;
       }
       &.warning {
-        background-color: hsla(24, 62%, 46%, 0.8);
-        color: rgb(238, 238, 238);
-        padding: 0;
+        background-color: rgba(190, 102, 44, 0.8);
+      }
+      &.unknown {
+        background-color: rgba(238, 238, 238, 0.8);
+        span {
+          color: rgb(0, 0, 0);
+        }
       }
       &.downloading span:first-child {
         padding: 5px 10px 0;
@@ -74,7 +93,9 @@ div {
         padding: 0 10px 5px;
       }
       &.queued span,
-      &.warning span {
+      &.paused span,
+      &.warning span,
+      &.unknown span {
         padding: 10px;
       }
     }
