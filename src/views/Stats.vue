@@ -57,7 +57,7 @@ export default {
     this.update = setInterval(() => {
       console.log('[Stats] Updating...')
       this.showStats()
-    }, 1000)
+    }, 1400)
   },
   beforeDestroy () {
     clearInterval(this.update)

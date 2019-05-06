@@ -87,11 +87,11 @@
     foreach (array_reverse($BANDWIDTH_LIVE['MediaContainer']['StatisticsBandwidth'], true) as $account_bandwidth) {
       if ($account_bandwidth['accountID'] == $Account['id'] && !in_array($Account['id'], $ACCOUNTS_LIVE)) {
         $ACCOUNTS_LIVE[] = $Account['id'];
-        $STATS['bandwidth']['plex']['live']['total'] += $account_bandwidth['bytes'];
+        $STATS['bandwidth']['plex']['live']['total'] += $account_bandwidth['bytes'] * 8;
         if ($account_bandwidth['lan'] === true) {
-          $STATS['bandwidth']['plex']['live']['local'] += $account_bandwidth['bytes'];
+          $STATS['bandwidth']['plex']['live']['local'] += $account_bandwidth['bytes'] * 8;
         } else {
-          $STATS['bandwidth']['plex']['live']['remote'] += $account_bandwidth['bytes'];
+          $STATS['bandwidth']['plex']['live']['remote'] += $account_bandwidth['bytes'] * 8;
         }
       }
     }

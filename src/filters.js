@@ -21,9 +21,6 @@ export default {
         'ebps'
       ]
       if (speed) {
-        // Value is in Bytes so we need to multiply by 8
-        // to get Bytes per Second
-        value = value * 8
         units = speedUnits
       } else {
         units = dataUnits
