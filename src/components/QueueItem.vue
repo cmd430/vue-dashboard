@@ -77,14 +77,9 @@ div {
       &.paused {
         background-color: rgba(143, 44, 189, 0.8);
       }
-      &.warning {
-        background-color: rgba(190, 102, 44, 0.8);
-      }
+      &.warning,
       &.unknown {
-        background-color: rgba(238, 238, 238, 0.8);
-        span {
-          color: rgb(0, 0, 0);
-        }
+        background-color: rgba(190, 102, 44, 0.8);
       }
       &.downloading span:first-child {
         padding: 5px 10px 0;
