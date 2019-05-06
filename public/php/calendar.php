@@ -9,7 +9,7 @@
     $CONFIG = new Config();
     $SERIES_QUEUE = $CONFIG->Sonarr("queue");
     $SERIES_CALENDAR = $CONFIG->Sonarr("calendar", "{$START}&{$END}&unmonitored=false");
-    $SERIES_UPCOMMING = $CONFIG->Sonarr("calendar", "unmonitored=false");
+    $SERIES_UPCOMMING = $CONFIG->Sonarr("calendar", "end=" . date('Y-m-d', strtotime('midnight tomorrow')) ."&unmonitored=false");
     $SERIES_DOWNLOADING = [];
     $SERIES_UPCOMMING_EPISODES = [];
     $SERIES_IDS = [];
