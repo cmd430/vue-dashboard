@@ -14,7 +14,7 @@
       $HISTORY[] = [
         'title' => explode(" - ", $TV_RAW['full_title'])[1],
         'series' => [
-          'title' => explode(" - ", $TV_RAW['full_title'])[0],
+          'title' => $TV_RAW['grandparent_title'],
           'season' => (strlen($TV_RAW['parent_media_index']) > 1 ? $TV_RAW['parent_media_index'] : "0" . $TV_RAW['parent_media_index']),
           'episode' => (strlen($TV_RAW['media_index']) > 1 ? $TV_RAW['media_index'] : "0" . $TV_RAW['media_index']),
           'poster' => $CONFIG->Proxy("rating_key={$TV_RAW['grandparent_rating_key']}&type=thumb")
@@ -30,7 +30,7 @@
   foreach ($MOVIE_HISTORY['response']['data']['data'] as $MOVIE_RAW) {
     if ($MOVIE_RAW['state'] !== 'playing' && $MOVIE_RAW['percent_complete'] >= 80) {
       $HISTORY[] = [
-        'title' => $MOVIE_RAW['title'],
+        'title' => $MOVIE_RAW['full_title'],
         'poster' => $CONFIG->Proxy("rating_key={$MOVIE_RAW['rating_key']}&type=thumb"),
         'mediatype' => 'movie',
         'watched' => [
