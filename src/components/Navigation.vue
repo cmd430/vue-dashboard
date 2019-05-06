@@ -21,12 +21,14 @@
       </li>
     </ul>
     <ul class="right">
+      <!--
       <li>
         <router-link tag="li" to="/stats">
           <i class="icon-chart-pie"></i>
           Stats
         </router-link>
       </li>
+      -->
       <li>
         <router-link tag="li" to="/settings">
           <i class="icon-cog"></i>
