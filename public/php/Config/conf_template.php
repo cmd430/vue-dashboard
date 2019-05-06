@@ -1,45 +1,115 @@
 <?php
 
-  /*
-    User changable configs
-  */
+  class Config {
 
-  $API_KEY_PLEX = "";                         // api key for plex
-  $API_KEY_SONARR = "";                       // api key for sonarr
-  $API_KEY_RADARR = "";                       // api key for radarr
-  $API_KEY_TAUTULLI = "";                     // api key for tautulli
-  $API_KEY_TMDB = "";                         // api key to TMDB
+    /** USER EDITABLE SETTINGS
+     ******************************************/
 
-  $CONNECTION  = "http";                      // http or https
+    // Connections
+    private const PLEX_CONNECTION =        "<http | https>";
+    private const SONARR_CONNECTION =      "<http | https>";
+    private const RADARR_CONNECTION =      "<http | https>";
+    private const TAUTULLI_CONNECTION =    "<http | https>";
+    private const QBITTORRENT_CONNECTION = "<http | https>";
 
-  $GLOBAL_HOST = "127.0.0.1";                 // ip/url for reuse
-  $PLEX_HOST = $GLOBAL_HOST;                  // ip/url for plex
-  $SONARR_HOST = $GLOBAL_HOST;                // ip/url for sonarr
-  $RADARR_HOST = $GLOBAL_HOST;                // ip/url for radarr
-  $TAUTULLI_HOST = $GLOBAL_HOST;              // ip/url for tautulli
-  $QBITTORRENT_HOST = $GLOBAL_HOST;           // ip/url for qbittorrent
+    // Hosts
+    private const PLEX_HOST =              "<your plex host ip here | e.g 127.0.0.1>";
+    private const SONARR_HOST =            "<your sonarr host ip here | e.g 127.0.0.1>";
+    private const RADARR_HOST =            "<your radarr host ip here | e.g 127.0.0.1>";
+    private const TAUTULLI_HOST =          "<your tautulli host ip here | e.g 127.0.0.1>";
+    private const QBITTORRENT_HOST =       "<your qbittorrent host ip here | e.g 127.0.0.1>";
 
-  $PLEX_PORT = "32400";                       // port used by plex
-  $SONARR_PORT = "8989";                      // port used by sonarr
-  $RADARR_PORT = "7878";                      // port used by radarr
-  $TAUTULLI_PORT = "9191";                    // port used by tautulli
-  $QBITTORRENT_PORT = "8112";                 // port used by qbittorrent
+    // API Keys
+    private const PLEX_API_KEY =           "<your plex api key here>";
+    private const SONARR_API_KEY =         "<your sonarr api key here>";
+    private const RADARR_API_KEY =         "<your radarr api key here>";
+    private const TAUTULLI_API_KEY =       "<your tautulli api key here>";
+    public  const TMDB_API_KEY =           "<your tmdb api key here>";
 
-  $SONARR_BASE = "";                          // base url if sonarr is behind a reverse proxy
-  $RADARR_BASE = "";                          // base url if raadarr is behind a reverse proxy
-  $TAUTULLI_BASE = "";                        // base url if tautulli is behind a reverse proxy
+    // Ports
+    private const PLEX_PORT =              "<your plex port here | e.g 32400>";
+    private const SONARR_PORT =            "<your sonarr port here | e.g 8989>";
+    private const RADARR_PORT =            "<your radarr port here | e.g 7878>";
+    private const TAUTULLI_PORT =          "<your tautulli port here | e.g 9191>";
+    private const QBITTORRENT_PORT =       "<your qbittorrent port here | e.g 8112>";
 
+    /** DO NOT MODIFY BELOW THIS LINE
+     * (unless you know what you're doing)
+     ******************************************/
 
-  /*
-    Config items below this line should not be modified
-  */
-
-  $PLEX = "${CONNECTION}://${PLEX_HOST}:${PLEX_PORT}/statistics";
-  $SONARR = "${CONNECTION}://${SONARR_HOST}:${SONARR_PORT}${SONARR_BASE}/api";
-  $RADARR = "${CONNECTION}://${RADARR_HOST}:${RADARR_PORT}${RADARR_BASE}/api";
-  $TAUTULLI = "${CONNECTION}://${TAUTULLI_HOST}:${TAUTULLI_PORT}${TAUTULLI_BASE}/api/v2";
-  $QBITTORRENT = "${CONNECTION}://${QBITTORRENT_HOST}:${QBITTORRENT_PORT}/api/v2";
-
-  $IMAGE_PROXY = "/php/Shared/image.php";
+    public function Proxy($params) {
+      return "/php/image.php?{$params}";
+    }
+    public function Plex($route, $params = null, $json = true) {
+      if (is_null($params)) {
+        $params = "?";
+      } else {
+        $params = "?" . $params . "&";
+      }
+      $URL = $this::PLEX_CONNECTION ."://" . $this::PLEX_HOST .":" . $this::PLEX_PORT ."/statistics/{$route}{$params}X-Plex-Token=" . $this::PLEX_API_KEY;
+      if ($json) {
+        return json_decode(file_get_contents($URL, false, stream_context_create([
+          $this::PLEX_CONNECTION => [
+            "method" => "GET",
+            "header" => "Accept: application/json"
+          ]
+        ])), true);
+      } else {
+        return $URL;
+      }
+    }
+    public function Sonarr($route, $params = null, $json = true) {
+      if (is_null($params)) {
+        $params = "?";
+      } else {
+        $params = "?" . $params . "&";
+      }
+      $URL = $this::SONARR_CONNECTION . "://" . $this::SONARR_HOST . ":" . $this::SONARR_PORT . "/api/{$route}{$params}apikey=" . $this::SONARR_API_KEY;
+      if ($json) {
+        return json_decode(file_get_contents($URL), true);
+      } else {
+        return $URL;
+      }
+    }
+    public function Radarr($route, $params = null, $json = true) {
+      if (is_null($params)) {
+        $params = "?";
+      } else {
+        $params = "?" . $params . "&";
+      }
+      $URL = $this::RADARR_CONNECTION ."://" . $this::RADARR_HOST .":" . $this::RADARR_PORT ."/api/{$route}{$params}apikey=" . $this::RADARR_API_KEY;
+      if ($json) {
+        return json_decode(file_get_contents($URL), true);
+      } else {
+        return $URL;
+      }
+    }
+    public function Tautulli($route, $params = null, $json = true) {
+      if (is_null($params)) {
+        $params = "";
+      } else {
+        $params = "&" . $params;
+      }
+      $URL = $this::TAUTULLI_CONNECTION ."://" . $this::TAUTULLI_HOST .":" . $this::TAUTULLI_PORT ."/api/v2/?apikey=" . $this::TAUTULLI_API_KEY . "&cmd={$route}{$params}";
+      if ($json) {
+        return json_decode(file_get_contents($URL), true);
+      } else {
+        return $URL;
+      }
+    }
+    public function qBittorrent($route, $json = true) {
+      $URL = $this::QBITTORRENT_CONNECTION ."://" . $this::QBITTORRENT_HOST .":" . $this::QBITTORRENT_PORT ."/api/v2/sync/{$route}";
+      if ($json) {
+        return json_decode(file_get_contents($URL, false, stream_context_create([
+          $this::QBITTORRENT_CONNECTION => [
+            "method" => "GET",
+            "timeout" => .1 // hack to make it not take FUCKING ages to close the connection
+          ]
+        ])), true);
+      } else {
+        return $URL;
+      }
+    }
+  }
 
 ?>

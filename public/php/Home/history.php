@@ -1,68 +1,52 @@
 <?php
 
-include "../Config/conf.php";
-header("Content-Type: application/json");
+  require "../Config/conf.php";
 
-$COUNT = 9;
+  $CONFIG = new Config();
 
-$TV_HISTORY = json_decode(file_get_contents("${TAUTULLI}?apikey=${API_KEY_TAUTULLI}&cmd=get_history&section_id=2"), true);
-$MOVIE_HISTORY = json_decode(file_get_contents("${TAUTULLI}?apikey=${API_KEY_TAUTULLI}&cmd=get_history&section_id=1"), true);
+  $LIMIT = 9;
+  $TV_HISTORY = $CONFIG->Tautulli("get_history", "section_id=2");
+  $MOVIE_HISTORY = $CONFIG->Tautulli("get_history", "section_id=1");
+  $HISTORY = [];
 
-$HISTORY = array();
-
-function getInbetweenStrings ($start, $end, $str) {
-  $matches = array();
-  $regex = "/$start([a-zA-Z0-9_]*)$end/";
-  preg_match_all($regex, $str, $matches);
-  return $matches[1];
-}
-
-foreach ($TV_HISTORY['response']['data']['data'] as $item) {
-  if ($item['state'] !== 'playing' && $item['percent_complete'] >= 80) {
-    $newItem = array();
-    $newItem['media_type'] = "episode";
-    $title_episode = explode(" - ", $item['full_title']);
-    $newItem['title'] = $title_episode[0];
-    $newItem['episode_title'] = $title_episode[1];
-
-    $season = $item['parent_media_index'];
-    if (strlen($season) == 1) {
-      $newItem['season'] = '0' . $season;
-    } else {
-      $newItem['season'] = $season;
+  foreach ($TV_HISTORY['response']['data']['data'] as $TV_RAW) {
+    if ($TV_RAW['state'] !== 'playing' && $TV_RAW['percent_complete'] >= 80) {
+      $HISTORY[] = [
+        'title' => explode(" - ", $TV_RAW['full_title'])[1],
+        'series' => [
+          'title' => explode(" - ", $TV_RAW['full_title'])[0],
+          'season' => (strlen($TV_RAW['parent_media_index']) > 1 ? $TV_RAW['parent_media_index'] : "0" . $TV_RAW['parent_media_index']),
+          'episode' => (strlen($TV_RAW['media_index']) > 1 ? $TV_RAW['media_index'] : "0" . $TV_RAW['media_index']),
+          'poster' => $CONFIG->Proxy("rating_key={$TV_RAW['grandparent_rating_key']}&type=thumb")
+        ],
+        'mediatype' => 'episode',
+        'watched' => [
+          'stopped' => date('c', $TV_RAW['stopped']),
+          'user' => $TV_RAW['friendly_name']
+        ]
+      ];
     }
-    $episode = $item['media_index'];
-    if (strlen($episode) == 1) {
-      $newItem['episode'] = '0' . $episode;
-    } else {
-      $newItem['episode'] = $episode;
+  }
+  foreach ($MOVIE_HISTORY['response']['data']['data'] as $MOVIE_RAW) {
+    if ($MOVIE_RAW['state'] !== 'playing' && $MOVIE_RAW['percent_complete'] >= 80) {
+      $HISTORY[] = [
+        'title' => $MOVIE_RAW['title'],
+        'poster' => $CONFIG->Proxy("rating_key={$MOVIE_RAW['rating_key']}&type=thumb"),
+        'mediatype' => 'movie',
+        'watched' => [
+          'stopped' => date('c', $MOVIE_RAW['stopped']),
+          'user' => $MOVIE_RAW['friendly_name']
+        ]
+      ];
     }
-    $newItem['image'] = "${IMAGE_PROXY}?rating_key=${item['grandparent_rating_key']}&type=poster";
-    $newItem['last_watch'] = $item['stopped'];
-    $newItem['user'] = $item['friendly_name'];
-    $newItem['id'] = $item['id'];
-    array_push($HISTORY, $newItem);
   }
-}
-foreach ($MOVIE_HISTORY['response']['data']['data'] as $item) {
-  if ($item['state'] !== 'playing' && $item['percent_complete'] >= 80) {
-    $newItem = array();
-    $newItem['media_type'] = "movie";
-    $newItem['title'] = $item['title'];
-    $RATING_KEY = getInbetweenStrings("\/library\/metadata\/", "\/thumb\/", $item['thumb'])[0];
-    $newItem['image'] = "${IMAGE_PROXY}?rating_key=${RATING_KEY}&type=poster";
-    $newItem['last_watch'] = $item['stopped'];
-    $newItem['user'] = $item['friendly_name'];
-    $newItem['id'] = $item['id'];
-    array_push($HISTORY, $newItem);
-  }
-}
 
-usort($HISTORY, function ($item1, $item2) {
-  if ($item1['last_watch'] == $item2['last_watch']) return 0;
-  return $item1['last_watch'] > $item2['last_watch'] ? -1 : 1;
-});
+  usort($HISTORY, function ($a, $b) {
+    if ($a['watched']['stopped'] === $b['watched']['stopped']) return 0;
+    return $a['watched']['stopped'] > $b['watched']['stopped'] ? -1 : 1;
+  });
 
-echo json_encode(array_slice($HISTORY, 0, $COUNT));
+  header("Content-Type: application/json");
+  echo json_encode(array_slice($HISTORY, 0, $LIMIT));
 
 ?>

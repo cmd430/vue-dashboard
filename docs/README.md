@@ -25,13 +25,15 @@ scp -r dist <username>@<hostname>:<destination path>
 ```
 ## Requirments
 
+This project requires a webserver with php such as `Nginx + PHP FPM`
+
 - Plex
 - Tautulli
 - Sonarr
 - Radarr
 - qBittorrent
-
-This project requires a webserver with php such as `Nginx + PHP FPM`
+- Webserver i.e `Nginx`
+  - PHP `7.2+`
 
 ## License
 GNU GENERAL PUBLIC LICENSE

@@ -1,51 +1,60 @@
 <?php
 
-  include "../Config/conf.php";
-  header("Content-Type: application/json");
+  require "../Config/conf.php";
 
-  $CURRENT_ACTIVITY = json_decode(file_get_contents("${TAUTULLI}?apikey=${API_KEY_TAUTULLI}&cmd=get_activity"), true);
+  $CONFIG = new Config();
 
-  $ACTIVITY = array();
+  $CURRENT_ACTIVITY = $CONFIG->Tautulli("get_activity");
+  $ACTIVITY = [];
 
-  foreach ($CURRENT_ACTIVITY['response']['data']['sessions'] as $item) {
-    $newItem = array();
-    if ($item['media_type'] == "episode") {
-      $newItem['series']['title'] = $item['grandparent_title'];
-      $season = $item['parent_media_index'];
-      $episode = $item['media_index'];
-      if (strlen($season) == 1) {
-        $newItem['series']['season'] = '0' . $season;
-      } else {
-        $newItem['series']['season'] = $season;
-      }
-      if (strlen($episode) == 1) {
-        $newItem['series']['episode'] = '0' . $episode;
-      } else {
-        $newItem['series']['episode'] = $episode;
-      }
-      $newItem['series']['episode_title'] = $item['title'];
-      $RATING_KEY = $item['grandparent_rating_key'];
-      $newItem['images']['poster'] = "${IMAGE_PROXY}?rating_key=${RATING_KEY}&type=poster";
-      $newItem['images']['art'] = "${IMAGE_PROXY}?rating_key=${RATING_KEY}&type=art";
-    } else if ($item['media_type'] == 'movie') {
-      $newItem['title'] = $item['title'];
-      $RATING_KEY = $item['rating_key'];
-      $newItem['images']['poster'] = "${IMAGE_PROXY}?rating_key=${RATING_KEY}&type=poster";
-      $newItem['images']['art'] = "${IMAGE_PROXY}?rating_key=${RATING_KEY}&type=art";
-    } else {
-      continue;
+  foreach ($CURRENT_ACTIVITY['response']['data']['sessions'] as $ACTIVITY_RAW) {
+    if ($ACTIVITY_RAW['media_type'] == "episode") {
+      $ACTIVITY[] = [
+        'title' => $ACTIVITY_RAW['title'],
+        'series' => [
+          'title' => $ACTIVITY_RAW['grandparent_title'],
+          'season' => (strlen($ACTIVITY_RAW['parent_media_index']) > 1 ? $ACTIVITY_RAW['parent_media_index'] : "0" . $ACTIVITY_RAW['parent_media_index']),
+          'episode' => (strlen($ACTIVITY_RAW['media_index']) > 1 ? $ACTIVITY_RAW['media_index'] : "0" . $ACTIVITY_RAW['media_index']),
+          'images' => [
+            'poster' => $CONFIG->Proxy("rating_key={$ACTIVITY_RAW['grandparent_rating_key']}&type=thumb"),
+            'art' => $CONFIG->Proxy("rating_key={$ACTIVITY_RAW['grandparent_rating_key']}&type=art")
+          ]
+        ],
+        'playback' => [
+          'user' => $ACTIVITY_RAW['friendly_name'],
+          'state' => $ACTIVITY_RAW['state'],
+          'runtime' => $ACTIVITY_RAW['stream_duration'],
+          'quality' => $ACTIVITY_RAW['stream_video_resolution'],
+          'progress' => [
+            'percent' => $ACTIVITY_RAW['progress_percent'],
+            'time' => $ACTIVITY_RAW['view_offset']
+          ]
+        ],
+        'mediatype' => 'episode'
+      ];
+    } else if ($ACTIVITY_RAW['media_type'] == 'movie') {
+      $ACTIVITY[] = [
+        'title' => $ACTIVITY_RAW['title'],
+        'images' => [
+          'poster' => $CONFIG->Proxy("rating_key={$ACTIVITY_RAW['rating_key']}&type=thumb"),
+          'art' => $CONFIG->Proxy("rating_key={$ACTIVITY_RAW['rating_key']}&type=art")
+        ],
+        'playback' => [
+          'user' => $ACTIVITY_RAW['friendly_name'],
+          'state' => $ACTIVITY_RAW['state'],
+          'runtime' => $ACTIVITY_RAW['stream_duration'],
+          'quality' => $ACTIVITY_RAW['stream_video_resolution'],
+          'progress' => [
+            'percent' => $ACTIVITY_RAW['progress_percent'],
+            'time' => $ACTIVITY_RAW['view_offset']
+          ]
+        ],
+        'mediatype' => 'movie'
+      ];
     }
-    $newItem['media_type'] = $item['media_type'];
-    $newItem['playback']['progress_percent'] = $item['progress_percent'] . "%";
-    $newItem['playback']['progress_ms'] = $item['view_offset'];
-    $newItem['playback']['runtime_ms'] = $item['stream_duration'];
-    $newItem['playback']['quality'] = $item['stream_video_resolution'];
-    $newItem['playback']['state'] = $item['state'];
-    $newItem['playback']['user'] = $item['friendly_name'];
-    $newItem['id'] = $item['rating_key'];
-    array_push($ACTIVITY, $newItem);
   }
 
+  header("Content-Type: application/json");
   echo json_encode($ACTIVITY);
 
 ?>

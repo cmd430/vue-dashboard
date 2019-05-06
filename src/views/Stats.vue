@@ -1,9 +1,9 @@
 <template>
   <div id="stats">
     <ul>
-      <libraries v-bind:libraries="stats.libraries"/>
-      <diskspace v-bind:diskspace="stats.diskspace"/>
-      <bandwidth v-bind:bandwidth="stats.bandwidth"/>
+      <libraries :libraries="stats.libraries"/>
+      <diskspace :diskspace="stats.diskspace"/>
+      <bandwidth :bandwidth="stats.bandwidth"/>
     </ul>
   </div>
 </template>
@@ -25,24 +25,28 @@ export default {
   },
   methods: {
     showStats: function () {
-      fetch(`/php/Stats/stats.php`)
+      fetch(`/php/stats.php`)
         .then(response => {
           if (response.status !== 200) {
             return []
           }
           return response.json()
         })
-        .then(statItems => {
-          this.stats = statItems
+        .then(stats => {
+          this.stats = stats
         })
         .catch(err => {
-          console.log(err)
+          console.error('[Stats]', err)
         })
     }
   },
   data () {
     return {
-      stats: [],
+      stats: {
+        libraries: null,
+        diskspace: null,
+        bandwidth: null
+      },
       update: null
     }
   },
@@ -51,7 +55,7 @@ export default {
   },
   mounted () {
     this.update = setInterval(() => {
-      console.log('Updating...')
+      console.log('[Stats] Updating...')
       this.showStats()
     }, 1000)
   },

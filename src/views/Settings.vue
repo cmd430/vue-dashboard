@@ -2,7 +2,7 @@
   <div id="settings">
     <h1>Settings</h1>
     <section id="home" class="left">
-      <h4>Home Settings</h4>
+      <h2>Home Settings</h2>
       <div class="checkbox">
         <label>
           Show Activity
@@ -26,11 +26,11 @@
       </div>
     </section>
     <section id="calendar" class="center">
-      <h4>Calendar Settings</h4>
+      <h2>Calendar Settings</h2>
       <div class="checkbox">
         <label>
-          Hide Episodes and Movies that are '{{ this.$store.state.strings.downloaded }}'
-          <input type="checkbox" v-model="showDownloaded" />
+          Hide Episodes and Movies that are 'In Plex'
+          <input type="checkbox" v-model="hideDownloaded" />
           <span></span>
         </label>
       </div>
@@ -41,9 +41,16 @@
           <span></span>
         </label>
       </div>
+      <div class="checkbox">
+        <label>
+          Always Show Todays Episodes
+          <input type="checkbox" v-model="alwaysShowToday" />
+          <span></span>
+        </label>
+      </div>
     </section>
     <section id="queue" class="right">
-      <h4>Queue Settings</h4>
+      <h2>Queue Settings</h2>
       <p>No Settings</p>
     </section>
   </div>
@@ -85,12 +92,12 @@ export default {
         this.$store.commit('showRecent', value)
       }
     },
-    showDownloaded: {
+    hideDownloaded: {
       get () {
-        return this.$store.state.settings.showDownloaded
+        return this.$store.state.settings.hideDownloaded
       },
       set (value) {
-        this.$store.commit('showDownloaded', value)
+        this.$store.commit('hideDownloaded', value)
       }
     },
     showNextUnairedOnly: {
@@ -99,6 +106,14 @@ export default {
       },
       set (value) {
         this.$store.commit('showNextUnairedOnly', value)
+      }
+    },
+    alwaysShowToday: {
+      get () {
+        return this.$store.state.settings.alwaysShowToday
+      },
+      set (value) {
+        this.$store.commit('alwaysShowToday', value)
       }
     }
   },
@@ -118,19 +133,6 @@ p {
 }
 div#settings {
   margin-bottom: 40px;
-}
-h1, h2, h4 {
-  text-align: left;
-  margin: 20px 107px;
-  font-size: 28px;
-  font-weight: 100;
-  letter-spacing: 1px;
-}
-h4 {
-  font-size: 18px;
-  margin: 0 0 20px 0;
-  left: -20px;
-  position: relative;
 }
 section {
   width: 400px;
