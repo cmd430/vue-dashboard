@@ -102,7 +102,7 @@ div {
     background-position: center;
     background-repeat: no-repeat;
     span {
-      text-align: right;
+      text-align: left;
       top: 0px;
       left: 0;
       right: 0;
@@ -118,28 +118,24 @@ div {
       &.want {
         background-color: rgba(238, 238, 238, 0.8);
         color: rgb(0, 0,0 );
+        text-align: right;
       }
       &.airing,
       &.cinema {
         background-color: rgba(214, 214, 56, 0.8);
         color: rgb(0, 0,0 );
-        text-align: left;
       }
       &.pending {
         background-color: rgba(215, 57, 57, 0.8);             /* http://colorizer.org/ */
-        text-align: left;
       }
       &.downloading {
         background-color: rgba(143, 44, 189, 0.8);
-        text-align: left;
       }
       &.warning {
         background-color: hsla(24, 62%, 46%, 0.8);
-        text-align: left;
       }
       &.downloaded {
         background-color: rgba(44, 189, 78, 0.8);
-        text-align: left;
       }
     }
   }
