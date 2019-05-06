@@ -37,45 +37,43 @@
   </div>
 </template>
 
-<script>
-</script>
-
-<style scoped>
-div#navigation {
-  top: 0;
-  height: 54px;
-  margin-bottom: 60px;
-  background-color: rgba(0, 0, 0, 0.3);
+<style lang="scss" scoped>
+div {
+  #navigation {
+    top: 0;
+    height: 54px;
+    margin-bottom: 60px;
+    background-color: rgba(0, 0, 0, 0.3);
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0 40px;
+      position: absolute;
+      display: inline-block;
+      &.left {
+        left: 0;
+      }
+      &.right {
+        right: 0;
+      }
+      li {
+        cursor: pointer;
+        display: inline-block;
+        padding: 6px;
+        line-height: 1.9;
+        color: rgb(153, 153, 153);
+        transition: color 100ms;
+        &:hover {
+          color: rgb(238, 238, 238);
+        }
+        &.router-link-active,
+        &.router-link-exact-active {
+          color: rgb(249, 190, 3);
+        }
+      }
+    }
+  }
 }
-ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0 40px;
-  position: absolute;
-  display: inline-block;
-}
-ul.left {
-  left: 0;
-}
-ul.right {
-  right: 0;
-}
-li {
-  cursor: pointer;
-  display: inline-block;
-  padding: 6px;
-  line-height: 1.9;
-  color: rgb(153, 153, 153);
-  transition: color 100ms;
-}
-li:hover {
-  color: rgb(238, 238, 238);
-}
-li.router-link-active,
-li.router-link-exact-active {
-  color: rgb(249, 190, 3);
-}
-
 @font-face {
   font-family: 'fontello';
   src: url('~@/assets/fontello.eot?96551581');
