@@ -46,8 +46,8 @@
         'overview' => (isset($SERIES_RAW['overview']) ? $SERIES_RAW['overview'] : ""),
         'downloaded' => $SERIES_RAW['hasFile'],
         'downloading' => [
-          'status' => (in_array($SERIES_RAW['id'], $SERIES_DOWNLOADING) ? strtolower($SERIES_DOWNLOADING[$SERIES_RAW['id']]['status']) : 'idle'),
-          'message' => (in_array($SERIES_RAW['id'], $SERIES_DOWNLOADING) ? strtolower($SERIES_DOWNLOADING[$SERIES_RAW['id']]['trackedStatus']) : 'ok')
+          'status' => (array_key_exists($SERIES_RAW['id'], $SERIES_DOWNLOADING) ? strtolower($SERIES_DOWNLOADING[$SERIES_RAW['id']]['status']) : 'idle'),
+          'message' => (array_key_exists($SERIES_RAW['id'], $SERIES_DOWNLOADING) ? strtolower($SERIES_DOWNLOADING[$SERIES_RAW['id']]['trackedStatus']) : 'ok')
         ]
       ];
     }
@@ -77,8 +77,8 @@
         'overview' => (isset($MOVIE_RAW['overview']) ? $MOVIE_RAW['overview'] : ""),
         'downloaded' => $MOVIE_RAW['downloaded'],
         'downloading' => [
-          'status' => (in_array($MOVIE_RAW['tmdbId'], $MOVIES_DOWNLOADING) ? strtolower($MOVIES_DOWNLOADING[$MOVIE_RAW['tmdbId']]['status']) : 'idle'),
-          'message' => (in_array($MOVIE_RAW['tmdbId'], $MOVIES_DOWNLOADING) ? strtolower($MOVIES_DOWNLOADING[$MOVIE_RAW['tmdbId']]['trackedStatus']) : 'ok')
+          'status' => (array_key_exists($MOVIE_RAW['tmdbId'], $MOVIES_DOWNLOADING) ? strtolower($MOVIES_DOWNLOADING[$MOVIE_RAW['tmdbId']]['status']) : 'idle'),
+          'message' => (array_key_exists($MOVIE_RAW['tmdbId'], $MOVIES_DOWNLOADING) ? strtolower($MOVIES_DOWNLOADING[$MOVIE_RAW['tmdbId']]['trackedStatus']) : 'ok')
         ]
       ];
     }
