@@ -59,7 +59,6 @@ div {
     background-position: center;
     background-repeat: no-repeat;
     span {
-      text-align: right;
       top: 0px;
       left: 0;
       right: 0;
@@ -81,11 +80,14 @@ div {
       &.unknown {
         background-color: rgba(190, 102, 44, 0.8);
       }
-      &.downloading span:first-child {
-        padding: 5px 10px 0;
-      }
-      &.downloading span:last-child {
-        padding: 0 10px 5px;
+      &.downloading {
+        text-align: right;
+        span:first-child {
+          padding: 5px 10px 0;
+        }
+        span:last-child {
+          padding: 0 10px 5px;
+        }
       }
       &.queued span,
       &.paused span,

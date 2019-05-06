@@ -101,7 +101,6 @@ div {
     background-position: center;
     background-repeat: no-repeat;
     span {
-      text-align: left;
       top: 0px;
       left: 0;
       right: 0;
