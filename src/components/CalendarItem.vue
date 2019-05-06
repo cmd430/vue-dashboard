@@ -53,9 +53,8 @@ export default {
       if (this.calendar.release.air) {
         // TV
         if (this.calendar.release.air < cd) {
-          let dt = new Date(this.calendar.release.air)
-          dt.setMinutes(dt.getMinutes() + this.calendar.release.runtime)
-          if (dt.getUTCDate() < cd) return 'pending'
+          let finished = new Date(this.calendar.release.air).getTime() + this.calendar.release.runtime * (60 * 1000)
+          if (new Date(finished).toISOString() < cd) return 'pending'
           return 'airing'
         }
       } else {
