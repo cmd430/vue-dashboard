@@ -47,8 +47,8 @@ export default {
       if (downloading || queued || paused) return 'downloading'
       let completed = this.calendar.downloading.status === 'completed'
       let warning = this.calendar.downloading.message === 'warning'
-      let stalled = this.calendar.downloading.status === 'stalled'
-      if (stalled || (completed && warning)) return 'warning'
+      if ((completed && warning)) return 'warning'
+      if (this.calendar.downloading.status === 'stalled') return 'stalled'
       let cd = new Date().toISOString()
       if (this.calendar.release.air) {
         // TV
@@ -65,7 +65,9 @@ export default {
       return 'want'
     },
     currentText () {
-      if (this.currentClass === 'warning') return 'check download'
+      let stalled = this.currentClass === 'stalled'
+      let warning = this.currentClass === 'warning'
+      if (stalled|| warning) return 'requires attention'
       if (this.currentClass === 'pending') return 'pending'
       if (this.currentClass === 'downloading') return 'downloading'
       if (this.currentClass === 'downloaded') return 'in plex'

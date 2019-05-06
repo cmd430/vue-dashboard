@@ -5,7 +5,6 @@
       <span>{{ queue.downloading.timeleft | duration('humanize', true) }}</span>
       <span>{{ queue.downloading.progress + '%' }}</span>
     </span>
-    <!-- These next two v-if blocks might not be correct -->
     <span v-else :class="currentClass">
       <span>{{ currentText }}</span>
     </span>
@@ -30,14 +29,15 @@ export default {
     currentClass () {
       let completed = this.queue.downloading.status === 'completed'
       let warning = this.queue.downloading.message === 'warning'
-      let stalled = this.queue.downloading.status === 'stalled'
-      if (stalled || (completed && warning)) return 'warning'
+      if ((completed && warning)) return 'warning'
+      if (this.queue.downloading.status === 'stalled') return 'stalled'
       if (this.queue.downloading.status === 'queued') return 'queued'
       if (this.queue.downloading.status === 'paused') return 'paused'
       return 'unknown'
     },
     currentText () {
-      if (this.currentClass === 'warning') return 'check download'
+      if (this.currentClass === 'warning') return 'requires attention'
+      if (this.currentClass === 'stalled') return 'stalled'
       if (this.currentClass === 'queued') return 'queued'
       if (this.currentClass === 'paused') return 'paused'
       return 'unknown status'
@@ -77,6 +77,7 @@ div {
         background-color: rgba(143, 44, 189, 0.8);
       }
       &.warning,
+      &.stalled,
       &.unknown {
         background-color: rgba(190, 102, 44, 0.8);
       }

@@ -16,7 +16,7 @@
     $SERIES = [];
     foreach ($SERIES_QUEUE as $SHOW_QUEUE) {
       $SERIES_DOWNLOADING[$SHOW_QUEUE['episode']['id']] = [
-        'status' => $SHOW_QUEUE['status'],
+        'status' => ($SHOW_QUEUE['status'] === 'warning' ? 'stalled' : $SHOW_QUEUE['status']),
         'trackedStatus' => $SHOW_QUEUE['trackedDownloadStatus']
       ];
     }
@@ -61,7 +61,7 @@
     $MOVIES = [];
     foreach ($MOVIES_QUEUE as $MOVIE_QUEUE) {
       $MOVIES_DOWNLOADING[$MOVIE_QUEUE['movie']['tmdbId']] = [
-        'status' => $MOVIE_QUEUE['status'],
+        'status' => ($MOVIE_QUEUE['status'] === 'warning' ? 'stalled' : $MOVIE_QUEUE['status']),
         'trackedStatus' => $MOVIE_QUEUE['trackedDownloadStatus']
       ];
     }
