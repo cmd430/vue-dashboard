@@ -38,18 +38,18 @@ export default {
   methods: {
     processCalendar: function () {
       fetch(`/php/calendar.php?start=${this.month.start}&end=${this.month.end}`)
-        .then(response => {
-          if (response.status !== 200) {
-            return []
-          }
-          return response.json()
-        })
-        .then(calendar => {
-          this.calendar = calendar
-        })
-        .catch(err => {
-          console.error('[Calendar]', err)
-        })
+      .then(response => {
+        if (response.status !== 200) {
+          return []
+        }
+        return response.json()
+      })
+      .then(calendar => {
+        this.calendar = calendar
+      })
+      .catch(err => {
+        console.error('[Calendar]', err)
+      })
     },
     setMonth: function (date) {
       let year = date.getFullYear()

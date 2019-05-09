@@ -33,18 +33,18 @@ export default {
   methods: {
     processQueue: function () {
       fetch(`/php/queue.php`)
-        .then(response => {
-          if (response.status !== 200) {
-            return []
-          }
-          return response.json()
-        })
-        .then(queue => {
-          this.queue = queue
-        })
-        .catch(err => {
-          console.error('[Queue]', err)
-        })
+      .then(response => {
+        if (response.status !== 200) {
+          return []
+        }
+        return response.json()
+      })
+      .then(queue => {
+        this.queue = queue
+      })
+      .catch(err => {
+        console.error('[Queue]', err)
+      })
     }
   },
   data () {

@@ -26,18 +26,18 @@ export default {
   methods: {
     showStats: function () {
       fetch(`/php/stats.php`)
-        .then(response => {
-          if (response.status !== 200) {
-            return []
-          }
-          return response.json()
-        })
-        .then(stats => {
-          this.stats = stats
-        })
-        .catch(err => {
-          console.error('[Stats]', err)
-        })
+      .then(response => {
+        if (response.status !== 200) {
+          return []
+        }
+        return response.json()
+      })
+      .then(stats => {
+        this.stats = stats
+      })
+      .catch(err => {
+        console.error('[Stats]', err)
+      })
     }
   },
   data () {
