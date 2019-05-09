@@ -5,11 +5,11 @@
     <span>{{ history.watched.stopped | moment("from", "now") }}</span>
   </div>
   <div class="info">
-    <p v-if="history.mediatype == 'episode'" class="title">
+    <p v-if="history.mediatype == 'episode'" class="title" v-title>
       <span>{{ history.series.season }}x{{ history.series.episode }}</span>
       {{ history.title }}
     </p>
-    <p class="name">{{ (history.series ? history.series.title : history.title) }}</p>
+    <p class="name" v-title>{{ (history.series ? history.series.title : history.title) }}</p>
   </div>
 </li>
 </template>

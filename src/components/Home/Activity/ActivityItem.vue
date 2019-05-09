@@ -7,11 +7,11 @@
   <div class="img" :style="{ 'background-image': 'url(' + (activity.series ? activity.series.images.poster : activity.images.poster) + ')' }">
   </div>
   <div class="info" :data-type="activity.mediatype">
-    <p v-if="activity.mediatype == 'episode'">
+    <p v-if="activity.mediatype == 'episode'" v-title>
       <span>Series:</span>
       {{ activity.series.title }}
     </p>
-    <p v-if="activity.mediatype == 'episode'">
+    <p v-if="activity.mediatype == 'episode'" v-title>
       <span>Episode Title:</span>
       {{ activity.title }}
     </p>
@@ -23,14 +23,14 @@
       <span>Episode:</span>
       {{ activity.series.episode }}
     </p>
-    <p v-if="activity.mediatype == 'movie'">
+    <p v-if="activity.mediatype == 'movie'" v-title>
       <span>Movie Title:</span>
       {{ activity.title }}
     </p>
   </div>
   <div id="progress">
     <span class="progress_text">{{ activity.playback.progress.time | MediaTime((+activity.playback.runtime >= 3600000)) }} / {{ activity.playback.runtime | MediaTime() }}</span>
-    <span class="percent_text">{{ activity.playback.progress_percent }}</span>
+    <span class="percent_text">{{ activity.playback.progress.percent + '%' }}</span>
     <span class="progress" :style="{ 'width': activity.playback.progress.percent + '%'}"></span>
   </div>
 </li>

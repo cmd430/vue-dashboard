@@ -10,11 +10,11 @@
     </span>
   </div>
   <div class="info">
-    <p v-if="queue.series" class="title">
+    <p v-if="queue.series" class="title" v-title>
       <span>{{ queue.series.season }}x{{ queue.series.episode }}</span>
       {{ queue.title }}
     </p>
-    <p class="name">{{ (queue.series ? queue.series.title : queue.title) }}</p>
+    <p class="name" v-title>{{ (queue.series ? queue.series.title : queue.title) }}</p>
   </div>
 </li>
 </template>

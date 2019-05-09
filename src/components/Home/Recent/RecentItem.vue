@@ -4,11 +4,11 @@
     <span>{{ recent.added | moment("from", "now") }}</span>
   </div>
   <div class="info">
-    <p v-if="recent.mediatype == 'episode'" class="title">
+    <p v-if="recent.mediatype == 'episode'" class="title" v-title>
       <span>{{ recent.series.season }}x{{ recent.series.episode }}</span>
       {{ recent.title }}
     </p>
-    <p class="name">{{ (recent.series ? recent.series.title : recent.title) }}</p>
+    <p class="name" v-title>{{ (recent.series ? recent.series.title : recent.title) }}</p>
   </div>
 </li>
 </template>

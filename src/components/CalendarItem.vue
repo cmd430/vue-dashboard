@@ -4,11 +4,11 @@
     <span :class="currentClass">{{ currentText }}</span>
   </div>
   <div class="info">
-    <p v-if="calendar.series" class="title">
+    <p v-if="calendar.series" class="title" v-title>
       <span>{{ calendar.series.season }}x{{ calendar.series.episode }}</span>
       {{ calendar.title }}
     </p>
-    <p class="name">{{ (calendar.series ? calendar.series.title : calendar.title) }}</p>
+    <p class="name" v-title>{{ (calendar.series ? calendar.series.title : calendar.title) }}</p>
   </div>
 </li>
 </template>
@@ -67,7 +67,7 @@ export default {
     currentText () {
       let stalled = this.currentClass === 'stalled'
       let warning = this.currentClass === 'warning'
-      if (stalled|| warning) return 'requires attention'
+      if (stalled || warning) return 'requires attention'
       if (this.currentClass === 'pending') return 'pending'
       if (this.currentClass === 'downloading') return 'downloading'
       if (this.currentClass === 'downloaded') return 'in plex'
