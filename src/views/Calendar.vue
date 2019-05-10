@@ -23,6 +23,7 @@
         v-for="movie in calendar.movies"
         :key="movie.id"
         :calendar="movie"
+        class="movie"
       />
     </ul>
   </div>
@@ -124,6 +125,9 @@ ul {
     box-sizing: border-box;
     width: 190px;
     height: 351px;
+    &.movie {
+      height: 321px
+    }
   }
 }
 #navigation {
@@ -131,32 +135,16 @@ ul {
   width: 350px;
   right: 0;
   margin: 0 124px;
+  #month,
   #prev_month,
   #next_month {
-    top: 0;
-    position: absolute;
-    display: inline-block;
-    font-weight: 800;
-    letter-spacing: 1px;
-    line-height: 1.6;
-    border: 0;
-    font-size: 26px;
     color: rgb(153, 153, 153);
-    background-color: rgba(0, 0, 0, 0);
-    transition: color 100ms;
-    cursor: pointer;
-    outline: none;
     &:hover {
       color: rgb(238, 238, 238);
     }
-  }
-  #prev_month {
-    left: 0;
-  }
-  #next_month {
-    right: 0;
-    text-align: right;
-    letter-spacing: -10px;
+    &:active {
+      color: rgb(249, 190, 3);
+    }
   }
   #month {
     position: relative;
@@ -169,9 +157,29 @@ ul {
     letter-spacing: 5px;
     font-size: 26px;
     font-weight: 400;
-    &:hover {
-      color: rgb(249, 190, 3);
-    }
+  }
+  #prev_month,
+  #next_month {
+    top: 0;
+    position: absolute;
+    display: inline-block;
+    font-weight: 800;
+    letter-spacing: 1px;
+    line-height: 1.6;
+    border: 0;
+    font-size: 26px;
+    background-color: rgba(0, 0, 0, 0);
+    transition: color 100ms;
+    cursor: pointer;
+    outline: none;
+  }
+  #prev_month {
+    left: 0;
+  }
+  #next_month {
+    right: 0;
+    text-align: right;
+    letter-spacing: -10px;
   }
 }
 </style>
