@@ -1,7 +1,9 @@
 <template>
   <div id="app">
+    <portal-target name="header"/>
     <navigation/>
     <router-view/>
+    <portal-target name="footer"/>
   </div>
 </template>
 
@@ -27,6 +29,11 @@ export default {
 </script>
 
 <style lang="scss">
+html, body {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
 body {
   font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: rgb(238, 238, 238);
@@ -36,11 +43,11 @@ body {
     rgba(0, 0, 0, 0);
   line-height: 1.7;
   overflow: overlay;
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  margin: 0;
   #app {
+    box-sizing: border-box;
+    min-height: 100%;
+    padding: 0 0 50px;
+    position: relative;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     cursor: default;
