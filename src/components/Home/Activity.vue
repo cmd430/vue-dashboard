@@ -22,18 +22,18 @@ export default {
   methods: {
     processActivity: function () {
       fetch('/php/Home/activity.php')
-      .then(response => {
-        if (response.status !== 200) {
-          return []
-        }
-        return response.json()
-      })
-      .then(activity => {
-        this.activity = activity
-      })
-      .catch(err => {
-        console.error('[Activity]', err)
-      })
+        .then(response => {
+          if (response.status !== 200) {
+            return []
+          }
+          return response.json()
+        })
+        .then(activity => {
+          this.activity = activity
+        })
+        .catch(err => {
+          console.error('[Activity]', err)
+        })
     }
   },
   data () {

@@ -22,18 +22,18 @@ export default {
   methods: {
     processRecent: function () {
       fetch('/php/Home/recent.php')
-      .then(response => {
-        if (response.status !== 200) {
-          return []
-        }
-        return response.json()
-      })
-      .then(recent => {
-        this.recent = recent
-      })
-      .catch(err => {
-        console.error('[Recent]', err)
-      })
+        .then(response => {
+          if (response.status !== 200) {
+            return []
+          }
+          return response.json()
+        })
+        .then(recent => {
+          this.recent = recent
+        })
+        .catch(err => {
+          console.error('[Recent]', err)
+        })
     }
   },
   data () {

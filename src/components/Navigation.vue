@@ -70,18 +70,18 @@ export default {
   methods: {
     processUpdates: function () {
       fetch(`/php/navigation.php`)
-      .then(response => {
-        if (response.status !== 200) {
-          return []
-        }
-        return response.json()
-      })
-      .then(updates => {
-        this.updates = updates
-      })
-      .catch(err => {
-        console.error('[Navigation]', err)
-      })
+        .then(response => {
+          if (response.status !== 200) {
+            return []
+          }
+          return response.json()
+        })
+        .then(updates => {
+          this.updates = updates
+        })
+        .catch(err => {
+          console.error('[Navigation]', err)
+        })
     }
   },
   computed: {
