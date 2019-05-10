@@ -1,9 +1,13 @@
 <template>
   <div class="calendar">
     <div id="navigation">
-      <button id="prev_month" @click="setMonth(month.previous)">Previous Month</button>
-      <h1 id="month" @click="setMonth(new Date())">{{ month.name }}</h1>
-      <button id="next_month" @click="setMonth(month.next)">Next Month</button>
+      <button id="prev_month" @click="setMonth(month.previous)" title="Previous Month">
+        <i class="icon-left"></i>
+      </button>
+      <h1 id="month" @click="setMonth(new Date())" title="Return to Current Month">{{ month.name }}</h1>
+      <button id="next_month" @click="setMonth(month.next)" title="Next Month">
+        <i class="icon-right"></i>
+      </button>
     </div>
     <h1>TV Shows</h1>
     <ul>
@@ -124,30 +128,26 @@ ul {
 }
 #navigation {
   position: absolute;
-  width: 550px;
+  width: 350px;
   right: 0;
   margin: 0 124px;
   #prev_month,
   #next_month {
     top: 0;
-    width: 170px;
     position: absolute;
     display: inline-block;
-    padding: 13px 16px;
     font-weight: 800;
-    text-transform: uppercase;
     letter-spacing: 1px;
+    line-height: 1.6;
     border: 0;
-    font-size: 12px;
-    line-height: 1.5;
-    border-radius: 3px;
-    border-color: rgb(204, 204, 204);
-    color: rgb(255, 255, 255);
-    background-color: rgba(255, 255, 255, 0.25);
-    transition: background-color 100ms;
+    font-size: 26px;
+    color: rgb(153, 153, 153);
+    background-color: rgba(0, 0, 0, 0);
+    transition: color 100ms;
     cursor: pointer;
+    outline: none;
     &:hover {
-      background-color: rgba(255, 255, 255, 0.3);
+      color: rgb(238, 238, 238);
     }
   }
   #prev_month {
@@ -155,15 +155,23 @@ ul {
   }
   #next_month {
     right: 0;
+    text-align: right;
+    letter-spacing: -10px;
   }
   #month {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    display: inline-block;
+    cursor: pointer;
     text-transform: uppercase;
     letter-spacing: 5px;
     font-size: 26px;
     font-weight: 400;
-    text-align: center;
-    margin: 0;
-    cursor: pointer;
+    &:hover {
+      color: rgb(249, 190, 3);
+    }
   }
 }
 </style>
