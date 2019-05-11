@@ -30,6 +30,7 @@ export default {
       let completed = this.queue.downloading.status === 'completed'
       let warning = this.queue.downloading.message === 'warning'
       if ((completed && warning)) return 'warning'
+      if (this.queue.downloading.status === 'warning') return 'starting' // Seems to only be when first added...
       if (this.queue.downloading.status === 'stalled') return 'stalled'
       if (this.queue.downloading.status === 'queued') return 'queued'
       if (this.queue.downloading.status === 'paused') return 'paused'
@@ -37,6 +38,7 @@ export default {
     },
     currentText () {
       if (this.currentClass === 'warning') return 'requires attention'
+      if (this.currentClass === 'starting') return 'initializing'
       if (this.currentClass === 'stalled') return 'stalled'
       if (this.currentClass === 'queued') return 'queued'
       if (this.currentClass === 'paused') return 'paused'
@@ -73,7 +75,8 @@ div {
       padding: 0;
       &.downloading,
       &.queued,
-      &.paused {
+      &.paused,
+      &.starting {
         background-color: rgba(143, 44, 189, 0.8);
       }
       &.warning,
@@ -83,18 +86,23 @@ div {
       }
       &.downloading {
         text-align: right;
-        span:first-child {
+        span {
+         &:first-child {
           padding: 5px 10px 0;
-        }
-        span:last-child {
-          padding: 0 10px 5px;
+         }
+          &:last-child {
+            padding: 0 10px 5px;
+          }
         }
       }
-      &.queued span,
-      &.paused span,
-      &.warning span,
-      &.unknown span {
-        padding: 10px;
+      &.queued,
+      &.paused,
+      &.starting,
+      &.warning,
+      &.unknown {
+        span {
+          padding: 10px;
+        }
       }
     }
   }

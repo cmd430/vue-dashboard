@@ -25,7 +25,8 @@ export default {
       let downloading = this.calendar.downloading.status === 'downloading'
       let queued = this.calendar.downloading.status === 'queued'
       let paused = this.calendar.downloading.status === 'paused'
-      if (downloading || queued || paused) return 'downloading'
+      let starting = this.calendar.downloading.status === 'warning' // Seems to only be when first added...
+      if (downloading || queued || paused || starting) return 'downloading'
       let completed = this.calendar.downloading.status === 'completed'
       let warning = this.calendar.downloading.message === 'warning'
       if ((completed && warning)) return 'warning'
