@@ -34,11 +34,21 @@ import CalendarItem from '@/components/CalendarItem'
 
 export default {
   name: 'Calendar',
-  metaInfo: {
+  meta: {
     title: 'Calendar'
   },
   components: {
     'calendar-item': CalendarItem
+  },
+  data () {
+    return {
+      month: {},
+      calendar: {
+        series: null,
+        movies: null
+      },
+      update: null
+    }
   },
   methods: {
     processCalendar: function () {
@@ -72,16 +82,6 @@ export default {
         next: next
       }
       this.processCalendar()
-    }
-  },
-  data () {
-    return {
-      month: {},
-      calendar: {
-        series: null,
-        movies: null
-      },
-      update: null
     }
   },
   created () {

@@ -19,6 +19,12 @@ export default {
   components: {
     'history-item': HistoryItem
   },
+  data () {
+    return {
+      history: null,
+      update: null
+    }
+  },
   methods: {
     processHistory: function () {
       fetch('/php/Home/history.php')
@@ -34,12 +40,6 @@ export default {
         .catch(err => {
           console.error('[History]', err)
         })
-    }
-  },
-  data () {
-    return {
-      history: null,
-      update: null
     }
   },
   created () {

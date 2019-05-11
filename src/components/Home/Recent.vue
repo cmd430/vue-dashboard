@@ -19,6 +19,12 @@ export default {
   components: {
     'recent-item': RecentItem
   },
+  data () {
+    return {
+      recent: null,
+      update: null
+    }
+  },
   methods: {
     processRecent: function () {
       fetch('/php/Home/recent.php')
@@ -34,12 +40,6 @@ export default {
         .catch(err => {
           console.error('[Recent]', err)
         })
-    }
-  },
-  data () {
-    return {
-      recent: null,
-      update: null
     }
   },
   created () {

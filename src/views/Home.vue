@@ -13,7 +13,7 @@ import Recent from '@/components/Home/Recent'
 
 export default {
   name: 'Home',
-  metaInfo: {
+  meta: {
     title: 'Home'
   },
   components: {

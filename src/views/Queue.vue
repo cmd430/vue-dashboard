@@ -24,11 +24,20 @@ import QueueItem from '@/components/QueueItem'
 
 export default {
   name: 'Queue',
-  metaInfo: {
+  meta: {
     title: 'Download Queue'
   },
   components: {
     'queue-item': QueueItem
+  },
+  data () {
+    return {
+      queue: {
+        series: null,
+        movies: null
+      },
+      update: null
+    }
   },
   methods: {
     processQueue: function () {
@@ -45,15 +54,6 @@ export default {
         .catch(err => {
           console.error('[Queue]', err)
         })
-    }
-  },
-  data () {
-    return {
-      queue: {
-        series: null,
-        movies: null
-      },
-      update: null
     }
   },
   created () {

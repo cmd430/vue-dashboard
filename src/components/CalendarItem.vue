@@ -19,25 +19,6 @@ export default {
   props: [
     'calendar'
   ],
-  methods: {
-    shouldShow () {
-      if (this.calendar.series) {
-        // TV
-        let a = (this.$store.state.settings.showNextUnairedOnly === true && this.calendar.release.status === 'next')
-        let b = (this.$store.state.settings.showNextUnairedOnly === false && this.currentClass !== 'downloaded')
-        let c = (this.$store.state.settings.hideDownloaded === true && this.currentClass !== 'downloaded')
-        let d = (this.$store.state.settings.hideDownloaded === false && this.currentClass === 'downloaded')
-        let e = (this.$store.state.settings.alwaysShowToday === true && this.calendar.release.status === 'today')
-        if (a || b || (a && c) || d || e) return true
-      } else {
-        // Movie
-        let a = (this.$store.state.settings.hideDownloaded === true && this.currentClass !== 'downloaded')
-        let b = (this.$store.state.settings.hideDownloaded === false)
-        if (a || b) return true
-      }
-      return false
-    }
-  },
   computed: {
     currentClass () {
       if (this.calendar.downloaded) return 'downloaded'
@@ -85,6 +66,25 @@ export default {
         }
       }
       return 'unknown'
+    }
+  },
+  methods: {
+    shouldShow () {
+      if (this.calendar.series) {
+        // TV
+        let a = (this.$store.state.settings.showNextUnairedOnly === true && this.calendar.release.status === 'next')
+        let b = (this.$store.state.settings.showNextUnairedOnly === false && this.currentClass !== 'downloaded')
+        let c = (this.$store.state.settings.hideDownloaded === true && this.currentClass !== 'downloaded')
+        let d = (this.$store.state.settings.hideDownloaded === false && this.currentClass === 'downloaded')
+        let e = (this.$store.state.settings.alwaysShowToday === true && this.calendar.release.status === 'today')
+        if (a || b || (a && c) || d || e) return true
+      } else {
+        // Movie
+        let a = (this.$store.state.settings.hideDownloaded === true && this.currentClass !== 'downloaded')
+        let b = (this.$store.state.settings.hideDownloaded === false)
+        if (a || b) return true
+      }
+      return false
     }
   }
 }

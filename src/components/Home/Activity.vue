@@ -19,6 +19,12 @@ export default {
   components: {
     'activity-item': ActivityItem
   },
+  data () {
+    return {
+      activity: null,
+      update: null
+    }
+  },
   methods: {
     processActivity: function () {
       fetch('/php/Home/activity.php')
@@ -34,12 +40,6 @@ export default {
         .catch(err => {
           console.error('[Activity]', err)
         })
-    }
-  },
-  data () {
-    return {
-      activity: null,
-      update: null
     }
   },
   created () {

@@ -7,7 +7,7 @@
 <script>
 export default {
   name: 'Error',
-  metaInfo: {
+  meta: {
     title: 'Error'
   }
 }
