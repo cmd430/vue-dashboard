@@ -5,12 +5,14 @@ import store from './store'
 import filters from './filters'
 import directives from './directives'
 import moment from 'vue-moment'
-import portal from 'portal-vue'
+import Meta from 'vue-meta'
 
 Vue.config.devtools = true
 Vue.config.productionTip = false
 
-Vue.use(portal)
+Vue.use(Meta, {
+  keyName: 'meta'
+})
 Vue.use(moment)
 Vue.use(filters)
 Vue.use(directives)
@@ -18,5 +20,8 @@ Vue.use(directives)
 new Vue({
   router,
   store,
+  meta: {
+    titleTemplate: chunk => (chunk ? `${App.name} | ${chunk}` : `${App.name}`)
+  },
   render: h => h(App)
 }).$mount('#app')

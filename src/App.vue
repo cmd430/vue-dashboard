@@ -1,30 +1,20 @@
 <template>
   <div id="app">
-    <portal-target name="header"/>
-    <navigation/>
+    <navigation display="header"/>
     <router-view/>
-    <portal-target name="footer"/>
+    <navigation display="footer"/>
   </div>
 </template>
 
 <script>
+import Vue from 'vue'
 import Navigation from '@/components/Navigation.vue'
 
 export default {
-  name: 'App',
+  name: 'Dashboard',
   components: {
     'navigation': Navigation
-  },
-  metaInfo: {
-    title: '',
-    titleTemplate: (titleChunk) => {
-      return titleChunk ? `Dashboard | ${titleChunk}` : 'Dashboard'
-    }
-  },
-  data () {
-    return {}
-  },
-  methods: {}
+  }
 }
 </script>
 
