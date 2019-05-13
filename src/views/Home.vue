@@ -3,6 +3,7 @@
     <activity v-if="(this.$store.state.settings.showActivity === true)" />
     <history v-if="(this.$store.state.settings.showHistory === true)"/>
     <recent v-if="(this.$store.state.settings.showRecent === true)"/>
+    <missing v-if="(this.$store.state.settings.showMissing === true)"/>
   </div>
 </template>
 
@@ -10,6 +11,7 @@
 import Activity from '@/components/Home/Activity'
 import History from '@/components/Home/History'
 import Recent from '@/components/Home/Recent'
+import Missing from '@/components/Home/Missing'
 
 export default {
   name: 'Home',
@@ -19,7 +21,8 @@ export default {
   components: {
     'activity': Activity,
     'history': History,
-    'recent': Recent
+    'recent': Recent,
+    'missing': Missing
   }
 }
 </script>

@@ -25,6 +25,13 @@
             <span></span>
           </label>
         </div>
+        <div class="checkbox">
+          <label>
+            Show Missing Items
+            <input type="checkbox" v-model="showMissing" />
+            <span></span>
+          </label>
+        </div>
       </section>
       <section id="calendar">
         <h2>Calendar Settings</h2>
@@ -87,6 +94,14 @@ export default {
       },
       set (value) {
         this.$store.commit('showRecent', value)
+      }
+    },
+    showMissing: {
+      get () {
+        return this.$store.state.settings.showMissing
+      },
+      set (value) {
+        this.$store.commit('showMissing', value)
       }
     },
     hideDownloaded: {

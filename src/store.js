@@ -17,6 +17,7 @@ export default new Vuex.Store({
       showActivity: true,
       showHistory: true,
       showRecent: true,
+      showMissing: true,
       hideDownloaded: true,
       showNextUnairedOnly: true,
       alwaysShowToday: true
@@ -31,6 +32,9 @@ export default new Vuex.Store({
     },
     showRecent (state, payload) {
       state.settings.showRecent = payload
+    },
+    showMissing (state, payload) {
+      state.settings.showMissing = payload
     },
     hideDownloaded (state, payload) {
       state.settings.showDownloaded = payload
