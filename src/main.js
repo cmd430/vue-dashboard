@@ -5,12 +5,12 @@ import store from './store'
 import filters from './filters'
 import directives from './directives'
 import moment from 'vue-moment'
-import Meta from 'vue-meta'
+import meta from 'vue-meta'
 
 Vue.config.devtools = true
 Vue.config.productionTip = false
 
-Vue.use(Meta, {
+Vue.use(meta, {
   keyName: 'meta'
 })
 Vue.use(moment)
