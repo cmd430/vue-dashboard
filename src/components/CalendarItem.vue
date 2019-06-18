@@ -42,7 +42,11 @@ export default {
       } else {
         // Movie
         if (this.calendar.release.physical < cd) return 'pending'
-        if (this.calendar.release.cinema < cd && this.calendar.release.status.includes('cinema')) return 'cinema'
+        if (this.calendar.release.cinema < cd && this.calendar.release.status.includes('cinema')) {
+          if(new Date(this.calendar.release.cinema).getMonth() === new Date().getMonth()) {
+            return 'cinema'
+          }
+        }
       }
       return 'want'
     },
