@@ -56,6 +56,13 @@
             <span></span>
           </label>
         </div>
+        <div class="checkbox">
+          <label>
+            Show Movie Cinema Release
+            <input type="checkbox" v-model="showCinemaRelease" />
+            <span></span>
+          </label>
+        </div>
       </section>
       <section id="queue">
         <h2>Queue Settings</h2>
@@ -126,6 +133,14 @@ export default {
       },
       set (value) {
         this.$store.commit('alwaysShowToday', value)
+      }
+    },
+    showCinemaRelease: {
+      get () {
+        return this.$store.state.settings.showCinemaRelease
+      },
+      set (value) {
+        this.$store.commit('showCinemaRelease', value)
       }
     }
   }

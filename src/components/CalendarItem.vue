@@ -1,5 +1,5 @@
 <template>
-<li v-if="shouldShow()" :class="((this.calendar.release.cinema > new Date().toISOString()) ? 'faded' : '')">
+<li v-if="shouldShow()">
   <div class="img" :style="{ 'background-image': 'url(' + (calendar.series ? calendar.series.poster : calendar.poster) + ')' }">
     <span :class="currentClass">{{ currentText }}</span>
   </div>
@@ -17,7 +17,8 @@
 export default {
   name: 'calendar-item',
   props: [
-    'calendar'
+    'calendar',
+    'month'
   ],
   computed: {
     currentClass () {
@@ -43,9 +44,11 @@ export default {
         // Movie
         if (this.calendar.release.physical < cd) return 'pending'
         if (this.calendar.release.cinema < cd && this.calendar.release.status.includes('cinema')) {
-          if(new Date(this.calendar.release.cinema).getMonth() === new Date().getMonth()) {
+          if (new Date(this.calendar.release.cinema).getMonth() === new Date().getMonth()) {
             return 'cinema'
           }
+        } else if (this.calendar.release.cinema < cd && !this.calendar.release.status.includes('cinema')) {
+          return 'unknown'
         }
       }
       return 'want'
@@ -87,7 +90,9 @@ export default {
         // Movie
         let a = (this.$store.state.settings.hideDownloaded === true && this.currentClass !== 'downloaded')
         let b = (this.$store.state.settings.hideDownloaded === false)
-        if (a || b) return true
+        let c = (this.$store.state.settings.showCinemaRelease === true)
+        let d = (new Date(this.calendar.release.physical).getMonth() === new Date(this.month.start).getMonth())
+        if ((a || b) && (c || d)) return true
       }
       return false
     }
@@ -141,6 +146,9 @@ div {
       }
       &.downloaded {
         background-color: rgba(44, 189, 78, 0.8);
+      }
+      &.unknown {
+        background-color: hsla(24, 62%, 46%, 0.8);
       }
     }
   }

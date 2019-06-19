@@ -15,6 +15,7 @@
         v-for="show in calendar.series"
         :key="show.id"
         :calendar="show"
+        :month="month"
       />
     </ul>
     <h1>Movies</h1>
@@ -23,7 +24,7 @@
         v-for="movie in calendar.movies"
         :key="movie.id"
         :calendar="movie"
-        class="movie"
+        :month="month"
       />
     </ul>
   </div>

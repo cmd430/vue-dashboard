@@ -20,7 +20,8 @@ export default new Vuex.Store({
       showMissing: true,
       hideDownloaded: true,
       showNextUnairedOnly: true,
-      alwaysShowToday: true
+      alwaysShowToday: true,
+      showCinemaRelease: false
     }
   },
   mutations: {
@@ -44,6 +45,9 @@ export default new Vuex.Store({
     },
     alwaysShowToday (state, payload) {
       state.settings.alwaysShowToday = payload
+    },
+    showCinemaRelease (state, payload) {
+      state.settings.showCinemaRelease = payload
     }
   },
   actions: {}
