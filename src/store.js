@@ -38,7 +38,7 @@ export default new Vuex.Store({
       state.settings.showMissing = payload
     },
     hideDownloaded (state, payload) {
-      state.settings.showDownloaded = payload
+      state.settings.hideDownloaded = payload
     },
     showNextUnairedOnly (state, payload) {
       state.settings.showNextUnairedOnly = payload
