@@ -21,7 +21,8 @@ export default new Vuex.Store({
       hideDownloaded: true,
       showNextUnairedOnly: true,
       alwaysShowToday: true,
-      showCinemaRelease: false
+      showCinemaRelease: false,
+      relativeCaldendar: true
     }
   },
   mutations: {
@@ -48,6 +49,9 @@ export default new Vuex.Store({
     },
     showCinemaRelease (state, payload) {
       state.settings.showCinemaRelease = payload
+    },
+    relativeCaldendar (state, payload) {
+      state.settings.relativeCaldendar = payload
     }
   },
   actions: {}

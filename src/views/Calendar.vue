@@ -35,6 +35,8 @@
 <script>
 import CalendarItem from '@/components/CalendarItem'
 
+const nonRelativeDateFormat = 'ddd D, h:mm a' // Thu 10, 3:00 pm
+
 export default {
   name: 'Calendar',
   meta: {
@@ -50,7 +52,7 @@ export default {
         series: null,
         movies: null
       },
-      display: 'relative',
+      display: this.$store.state.settings.relativeCaldendar ? 'relative' : nonRelativeDateFormat,
       update: null
     }
   },
@@ -91,9 +93,9 @@ export default {
       if (e.key === 'Tab') {
         e.preventDefault()
         if (this.display === 'relative') {
-          this.display = 'ddd D, h:mm a' // Thu 10, 3:00 pm
+          this.display = nonRelativeDateFormat
         } else {
-          this.display = 'relative' // In 6 Days
+          this.display = 'relative'
         }
       }
     }

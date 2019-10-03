@@ -63,6 +63,13 @@
             <span></span>
           </label>
         </div>
+        <div class="checkbox">
+          <label>
+            Use Relative Date (Temporarily Toggle with 'Tab')
+            <input type="checkbox" v-model="relativeCaldendar" />
+            <span></span>
+          </label>
+        </div>
       </section>
       <section id="queue">
         <h2>Queue Settings</h2>
@@ -142,6 +149,14 @@ export default {
       set (value) {
         this.$store.commit('showCinemaRelease', value)
       }
+    },
+    relativeCaldendar: {
+      get () {
+        return this.$store.state.settings.relativeCaldendar
+      },
+      set (value) {
+        this.$store.commit('relativeCaldendar', value)
+      }
     }
   }
 }
@@ -159,7 +174,6 @@ div {
   .checkbox {
     position: relative;
     height: 20px;
-    width: 100px;
     &:not(:last-child) {
       margin-bottom: 10px;
     }
@@ -171,7 +185,7 @@ div {
       font-size: 12px;
       user-select: none;
       color: rgb(153, 153, 153);
-      width: 250px;
+      max-width: 335px;
       input[type=checkbox] {
         position: absolute;
         opacity: 0;
