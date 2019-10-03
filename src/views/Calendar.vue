@@ -16,6 +16,7 @@
         :key="show.id"
         :calendar="show"
         :month="month"
+        :display="display"
       />
     </ul>
     <h1>Movies</h1>
@@ -25,6 +26,7 @@
         :key="movie.id"
         :calendar="movie"
         :month="month"
+        :display="display"
       />
     </ul>
   </div>
@@ -48,6 +50,7 @@ export default {
         series: null,
         movies: null
       },
+      display: 'relative',
       update: null
     }
   },
@@ -83,6 +86,16 @@ export default {
         next: next
       }
       this.processCalendar()
+    },
+    toggleDisplay (e) {
+      if (e.key === 'Tab') {
+        e.preventDefault()
+        if (this.display === 'relative') {
+          this.display = 'ddd D, h:mm a' // Thu 10, 3:00 pm
+        } else {
+          this.display = 'relative' // In 6 Days
+        }
+      }
     }
   },
   created () {
@@ -93,9 +106,11 @@ export default {
       console.log('[Calendar] Updating...')
       this.processCalendar()
     }, 30000)
+    document.addEventListener('keydown', this.toggleDisplay)
   },
   beforeDestroy () {
     clearInterval(this.update)
+    document.removeEventListener('keydown', this.toggleDisplay)
   }
 }
 </script>

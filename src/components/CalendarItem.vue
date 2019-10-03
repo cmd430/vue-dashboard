@@ -18,7 +18,8 @@ export default {
   name: 'calendar-item',
   props: [
     'calendar',
-    'month'
+    'month',
+    'display'
   ],
   computed: {
     currentClass () {
@@ -63,13 +64,13 @@ export default {
       if (this.calendar.release.air) {
         // TV
         if (this.currentClass === 'airing') return 'on air'
-        if (this.currentClass === 'want') return this.$moment(this.calendar.release.air).fromNow()
+        if (this.currentClass === 'want') return this.display === 'relative' ? this.$moment(this.calendar.release.air).fromNow() : this.$moment(this.calendar.release.air).format(this.display)
       } else {
         // Movie
         if (this.currentClass === 'cinema') return 'in cinemas'
         if (this.currentClass === 'want') {
           let physical = this.calendar.release.physical
-          if (physical !== null) return this.$moment(physical).fromNow()
+          if (physical !== null) return this.display === 'relative' ? this.$moment(physical).fromNow() : this.$moment(physical).format(this.display)
           return this.$moment(this.calendar.release.cinema).fromNow()
         }
       }
