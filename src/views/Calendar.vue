@@ -13,7 +13,7 @@
     <ul>
       <calendar-item
         v-for="show in calendar.series"
-        :key="show.id"
+        :key="show.title"
         :calendar="show"
         :month="month"
         :display="display"
@@ -23,7 +23,7 @@
     <ul>
       <calendar-item
         v-for="movie in calendar.movies"
-        :key="movie.id"
+        :key="movie.title"
         :calendar="movie"
         :month="month"
         :display="display"
@@ -138,6 +138,7 @@ ul {
     border-radius: 4px;
   }
   &::v-deep li { /* use ::v-deep to select child componets */
+    position: relative;
     display: inline-block;
     padding: 10px;
     box-sizing: border-box;

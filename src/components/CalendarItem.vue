@@ -1,6 +1,6 @@
 <template>
-<li v-if="shouldShow()">
-  <div class="img" :style="{ 'background-image': 'url(' + (calendar.series ? calendar.series.poster : calendar.poster) + ')' }">
+<li v-if="shouldShow()" :class="extended ? 'extended' : ''">
+  <div class="img" :style="{ 'background-image': 'url(' + (calendar.series ? calendar.series.poster : calendar.poster) + ')' }" v-on:click="extended = !extended">
     <span :class="currentClass">{{ currentText }}</span>
   </div>
   <div class="info">
@@ -9,6 +9,15 @@
       {{ calendar.title }}
     </p>
     <p class="name" v-title>{{ (calendar.series ? calendar.series.title : calendar.title) }}</p>
+  </div>
+  <div :class="'extended-info ' + currentClass">
+    <p class="runtime" v-title>
+      <i class="icon-clock"></i>{{ formatRuntime(calendar.release.runtime) }}
+    </p>
+    <div class="scroll">
+      <p v-if="calendar.overview === ''">Overview is not currently available for this item.</p>
+      <p>{{ calendar.overview }}</p>
+    </div>
   </div>
 </li>
 </template>
@@ -21,6 +30,11 @@ export default {
     'month',
     'display'
   ],
+  data () {
+    return {
+      extended: false
+    }
+  },
   computed: {
     currentClass () {
       if (this.calendar.downloaded) return 'downloaded'
@@ -96,6 +110,11 @@ export default {
         if ((a || b) && (c || d)) return true
       }
       return false
+    },
+    formatRuntime (r) {
+      let hours = r / 60 ^ 0
+      let minutes = r % 60
+      return hours > 0 ? `${hours}h ${minutes}m` : ` ${minutes}m`
     }
   }
 }
@@ -113,6 +132,7 @@ div {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    cursor: pointer;
     span {
       top: 0px;
       left: 0;
@@ -143,21 +163,20 @@ div {
         background-color: rgba(143, 44, 189, 0.8);
       }
       &.warning {
-        background-color: hsla(24, 62%, 46%, 0.8);
+        background-color: rgba(190, 102, 44, 0.8);
       }
       &.downloaded {
         background-color: rgba(44, 189, 78, 0.8);
       }
       &.unknown {
-        background-color: hsla(24, 62%, 46%, 0.8);
+        background-color: rgba(190, 102, 44, 0.8);
       }
     }
   }
   .info {
     text-align: center;
     p {
-      width: 160px;
-      margin: 5px 0 5px 5px;
+      margin: 5px;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
@@ -174,4 +193,91 @@ div {
     }
   }
 }
+li {
+  transition: width 200ms linear;
+  &.extended {
+    width: 570px;
+    .extended-info {
+      width: 380px;
+      &::before {
+        border-left: 15px solid;
+      }
+    }
+  }
+  .extended-info {
+    position: absolute;
+    top: 10px;
+    left: 180px;
+    width: 0px;
+    height: 270px;
+    background-color: rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    z-index: 1;
+    transition: width 200ms linear;
+    &::before {
+      position: absolute;
+      content: '';
+      width: 0;
+      height: 0;
+      border-top: 20px solid transparent;
+      border-bottom: 20px solid transparent;
+      border-left: 0 solid;
+      transition: border-left 200ms linear;
+    }
+    &.want {
+      &::before {
+         border-left-color: rgba(238, 238, 238, 0.8);
+      }
+    }
+    &.airing,
+    &.cinema {
+      &::before {
+        border-left-color: rgba(214, 214, 56, 0.8);
+      }
+    }
+    &.pending {
+      &::before {
+        border-left-color: rgba(215, 57, 57, 0.8);
+      }
+    }
+    &.downloading {
+      &::before {
+        border-left-color: rgba(143, 44, 189, 0.8);
+      }
+    }
+    &.warning {
+      &::before {
+        border-left-color: rgba(190, 102, 44, 0.8);
+      }
+    }
+    &.downloaded {
+      &::before {
+        border-left-color: rgba(44, 189, 78, 0.8);
+      }
+    }
+    &.unknown {
+      &::before {
+        border-left-color: rgba(190, 102, 44, 0.8);
+      }
+    }
+    .runtime {
+      position: absolute;
+      right: 7px;
+      top: 7px;
+      margin: 0;
+      font-size: 16px;
+      font-variant: small-caps;
+    }
+    .scroll {
+      width: 360px;
+      height: 220px;
+      margin: 40px 10px 10px 10px;
+      overflow: auto;
+      p {
+        font-size: 12px;
+      }
+    }
+  }
+}
+
 </style>

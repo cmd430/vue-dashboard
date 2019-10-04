@@ -72,6 +72,7 @@
         'release' => [
           'cinema' => (isset($MOVIE_RAW['inCinemas']) ? $MOVIE_RAW['inCinemas'] : null),
           'physical' => (isset($MOVIE_RAW['physicalRelease']) ? $MOVIE_RAW['physicalRelease'] : null),
+          'runtime' => $MOVIE_RAW['runtime'],
           'status' => strtolower($MOVIE_RAW['status'])
         ],
         'overview' => (isset($MOVIE_RAW['overview']) ? $MOVIE_RAW['overview'] : ""),
