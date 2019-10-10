@@ -173,6 +173,18 @@
       "css": "attention",
       "code": 59408,
       "src": "modernpics"
+    },
+    {
+      "uid": "cfb6e143c0650c485536374f2a2f88fb",
+      "css": "television",
+      "code": 62060,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "aa4ded7a2d22e21c3cfe775efe267120",
+      "css": "network",
+      "code": 61966,
+      "src": "fontawesome"
     }
   ]
 }

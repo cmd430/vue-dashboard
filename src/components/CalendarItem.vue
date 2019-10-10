@@ -14,6 +14,9 @@
     <p class="runtime" v-title>
       <i class="icon-clock"></i>{{ formatRuntime(calendar.release.runtime) }}
     </p>
+    <p v-if="calendar.series" class="network" v-title>
+      <i class="icon-network"></i>{{ calendar.series.network }}
+    </p>
     <div class="scroll">
       <p v-if="calendar.overview === ''">Overview is not currently available for this item.</p>
       <p>{{ calendar.overview }}</p>
@@ -260,13 +263,20 @@ li {
         border-left-color: rgba(190, 102, 44, 0.8);
       }
     }
-    .runtime {
-      position: absolute;
-      right: 7px;
-      top: 7px;
-      margin: 0;
+    .runtime,
+    .network {
+      position: relative;
+      float: right;
+      right: 4px;
+      margin: 7px;
       font-size: 16px;
       font-variant: small-caps;
+      .icon-network {
+        margin-right: 5px;
+      }
+      .icon-clock {
+        margin-right: -2px;
+      }
     }
     .scroll {
       width: 360px;

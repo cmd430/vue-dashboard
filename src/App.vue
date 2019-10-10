@@ -7,7 +7,6 @@
 </template>
 
 <script>
-import Vue from 'vue'
 import Navigation from '@/components/Navigation.vue'
 
 export default {
@@ -98,32 +97,34 @@ body {
     display: inline-block;
   }
 }
-.icon-menu::before { content: '\e800'; }
-.icon-th::before { content: '\e801'; }
-.icon-hourglass::before { content: '\e802'; }
-.icon-th-large::before { content: '\e803'; }
-.icon-th-list::before { content: '\e804'; }
-.icon-reload::before { content: '\e805'; }
-.icon-upload::before { content: '\e806'; }
-.icon-download::before { content: '\e807'; }
-.icon-home::before { content: '\e808'; }
-.icon-play::before { content: '\e80c'; }
-.icon-pause::before { content: '\e80d'; }
-.icon-warning::before { content: '\e80e'; }
-.icon-calendar::before { content: '\e80f'; }
-.icon-attention::before { content: '\e810'; }
-.icon-cog::before { content: '\e813'; }
-.icon-cancel::before { content: '\e816'; }
-.icon-ok::before { content: '\e817'; }
-.icon-info::before { content: '\e818'; }
-.icon-chart-pie::before { content: '\e81a'; }
-.icon-clock::before { content: '\e820'; }
-.icon-reloading::before { content: '\e832'; }
-.icon-down-open::before { content: '\f004'; }
-.icon-up::before { content: '\f005'; }
-.icon-right::before { content: '\f006'; }
-.icon-left::before { content: '\f007'; }
-.icon-github::before { content: '\f09b'; }
-.icon-lock::before { content: '\f512'; }
-.icon-unlock::before { content: '\f513'; }
+.icon-menu:before { content: '\e800'; }
+.icon-th:before { content: '\e801'; }
+.icon-hourglass:before { content: '\e802'; }
+.icon-th-large:before { content: '\e803'; }
+.icon-th-list:before { content: '\e804'; }
+.icon-reload:before { content: '\e805'; }
+.icon-upload:before { content: '\e806'; }
+.icon-download:before { content: '\e807'; }
+.icon-home:before { content: '\e808'; }
+.icon-play:before { content: '\e80c'; }
+.icon-pause:before { content: '\e80d'; }
+.icon-warning:before { content: '\e80e'; }
+.icon-calendar:before { content: '\e80f'; }
+.icon-attention:before { content: '\e810'; }
+.icon-cog:before { content: '\e813'; }
+.icon-cancel:before { content: '\e816'; }
+.icon-ok:before { content: '\e817'; }
+.icon-info:before { content: '\e818'; }
+.icon-chart-pie:before { content: '\e81a'; }
+.icon-clock:before { content: '\e820'; }
+.icon-reloading:before { content: '\e832'; }
+.icon-down-open:before { content: '\f004'; }
+.icon-up:before { content: '\f005'; }
+.icon-right:before { content: '\f006'; }
+.icon-left:before { content: '\f007'; }
+.icon-github:before { content: '\f09b'; }
+.icon-network:before { content: '\f20e'; }
+.icon-television:before { content: '\f26c'; }
+.icon-lock:before { content: '\f512'; }
+.icon-unlock:before { content: '\f513'; }
 </style>

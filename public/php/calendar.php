@@ -36,7 +36,8 @@
           'season' => (strlen($SERIES_RAW['seasonNumber']) === 1 ? 0 : null) . $SERIES_RAW['seasonNumber'],
           'episode' => (strlen($SERIES_RAW['episodeNumber']) === 1 ? 0 : null) . $SERIES_RAW['episodeNumber'],
           'overview' => (isset($SERIES_RAW['series']['overview']) ? $SERIES_RAW['series']['overview'] : ""),
-          'poster' => $CONFIG->Proxy("sonarr_id={$SERIES_RAW['series']['id']}")
+          'poster' => $CONFIG->Proxy("sonarr_id={$SERIES_RAW['series']['id']}"),
+          'network' => $SERIES_RAW['series']['network']
         ],
         'release' => [
           'air' => (isset($SERIES_RAW['airDateUtc']) ? $SERIES_RAW['airDateUtc'] : null),
