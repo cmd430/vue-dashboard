@@ -13,7 +13,7 @@
     <ul>
       <calendar-item
         v-for="show in calendar.series"
-        :key="show.title"
+        :key="`${show.title} (${show.series.title} - ${show.series.season }x${show.series.episode})`"
         :calendar="show"
         :month="month"
         :display="display"
