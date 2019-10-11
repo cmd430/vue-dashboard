@@ -76,6 +76,7 @@
           'runtime' => $MOVIE_RAW['runtime'],
           'status' => strtolower($MOVIE_RAW['status'])
         ],
+        'studio' => $MOVIE_RAW['studio'],
         'overview' => (isset($MOVIE_RAW['overview']) ? $MOVIE_RAW['overview'] : ""),
         'downloaded' => $MOVIE_RAW['downloaded'],
         'downloading' => [

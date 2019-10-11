@@ -11,12 +11,14 @@
     <p class="name" v-title>{{ (calendar.series ? calendar.series.title : calendar.title) }}</p>
   </div>
   <div :class="'extended-info ' + currentClass">
-    <p class="runtime" v-title>
-      <i class="icon-clock"></i>{{ formatRuntime(calendar.release.runtime) }}
-    </p>
-    <p v-if="calendar.series" class="network" v-title>
-      <i class="icon-network"></i>{{ calendar.series.network }}
-    </p>
+    <div class="top-info">
+      <p class="network" v-title>
+        <i class="icon-network"></i>{{ calendar.series ? calendar.series.network : calendar.studio }}
+      </p>
+      <p class="runtime" v-title>
+        <i class="icon-clock"></i>{{ formatRuntime(calendar.release.runtime) }}
+      </p>
+    </div>
     <div class="scroll">
       <p v-if="calendar.overview === ''">Overview is not currently available for this item.</p>
       <p>{{ calendar.overview }}</p>
@@ -117,7 +119,7 @@ export default {
     formatRuntime (r) {
       let hours = r / 60 ^ 0
       let minutes = r % 60
-      return hours > 0 ? `${hours}h ${minutes}m` : ` ${minutes}m`
+      return hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`
     }
   }
 }
@@ -263,28 +265,45 @@ li {
         border-left-color: rgba(190, 102, 44, 0.8);
       }
     }
-    .runtime,
-    .network {
-      position: relative;
-      float: right;
-      right: 4px;
-      margin: 7px;
-      font-size: 16px;
+    .top-info {
+      position: absolute;
+      width: 380px;
+      height: 20px;
+      padding: 10px 0;
+      z-index: 1;
+      font-size: 12px;
+      letter-spacing: 1px;
       font-variant: small-caps;
-      .icon-network {
-        margin-right: 5px;
-      }
-      .icon-clock {
-        margin-right: -2px;
+      text-align: right;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: clip;
+      color: rgb(238, 238, 238);
+      .runtime,
+      .network {
+        display: inline;
+        margin: 0 12px 0 0;
+        .icon-network {
+          margin-right: 5px;
+        }
+        .icon-clock {
+          margin-right: 2px;
+        }
       }
     }
     .scroll {
       width: 360px;
       height: 220px;
       margin: 40px 10px 10px 10px;
-      overflow: auto;
+      overflow: hidden auto;
+      white-space: nowrap;
+      white-space: initial;
+      user-select: text;
+      cursor: auto;
       p {
+        width: 360px;
         font-size: 12px;
+        color: rgb(153, 153, 153);
       }
     }
   }
