@@ -96,6 +96,11 @@ export default {
       return 'unknown'
     }
   },
+  watch: {
+    extended (val) {
+      if (val === true) this.$el.lastChild.querySelector('.scroll').scrollTop = 0
+    }
+  },
   methods: {
     shouldShow () {
       if (this.calendar.series) {
