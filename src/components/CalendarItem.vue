@@ -120,7 +120,25 @@ export default {
       let hours = r / 60 ^ 0
       let minutes = r % 60
       return hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`
+    },
+    overflow (e) {
+      let scroll = e.target
+      if (e.type === 'mouseenter') {
+        scroll.style.overflow = 'hidden auto'
+      } else if (e.type === 'mouseleave') {
+        scroll.style.overflow = 'hidden'
+      }
     }
+  },
+  mounted () {
+    let scroll = this.$el.lastChild.querySelector('.scroll')
+    scroll.addEventListener('mouseenter', this.overflow)
+    scroll.addEventListener('mouseleave', this.overflow)
+  },
+  beforeDestroy () {
+    let scroll = this.$el.lastChild.querySelector('.scroll')
+    scroll.removeEventListener('mouseenter', this.overflow)
+    scroll.removeEventListener('mouseleave', this.overflow)
   }
 }
 </script>
@@ -294,8 +312,9 @@ li {
     .scroll {
       width: 360px;
       height: 220px;
-      margin: 40px 10px 10px 10px;
-      overflow: hidden auto;
+      margin: 40px 0 10px 10px;
+      padding-right: 10px;
+      overflow: hidden;
       white-space: nowrap;
       white-space: initial;
       user-select: text;
