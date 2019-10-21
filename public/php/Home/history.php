@@ -17,7 +17,7 @@
           'title' => $TV_RAW['grandparent_title'],
           'season' => (strlen($TV_RAW['parent_media_index']) > 1 ? $TV_RAW['parent_media_index'] : "0" . $TV_RAW['parent_media_index']),
           'episode' => (strlen($TV_RAW['media_index']) > 1 ? $TV_RAW['media_index'] : "0" . $TV_RAW['media_index']),
-          'poster' => $CONFIG->Proxy("rating_key={$TV_RAW['grandparent_rating_key']}&type=thumb")
+          'poster' => $CONFIG->Proxy("rating_key={$TV_RAW['grandparent_rating_key']}&type=poster")
         ],
         'mediatype' => 'episode',
         'watched' => [
@@ -31,7 +31,7 @@
     if ($MOVIE_RAW['state'] !== 'playing' && $MOVIE_RAW['percent_complete'] >= 80) {
       $HISTORY[] = [
         'title' => $MOVIE_RAW['full_title'],
-        'poster' => $CONFIG->Proxy("rating_key={$MOVIE_RAW['rating_key']}&type=thumb"),
+        'poster' => $CONFIG->Proxy("rating_key={$MOVIE_RAW['rating_key']}&type=poster"),
         'mediatype' => 'movie',
         'watched' => [
           'stopped' => date('c', $MOVIE_RAW['stopped']),

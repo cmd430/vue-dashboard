@@ -17,7 +17,7 @@
           'title' => $SERIES_RAW['grandparent_title'],
           'season' => (strlen($SERIES_RAW['parent_media_index']) > 1 ? $SERIES_RAW['parent_media_index'] : "0" . $SERIES_RAW['parent_media_index']),
           'episode' => (strlen($SERIES_RAW['media_index']) > 1 ? $SERIES_RAW['media_index'] : "0" . $SERIES_RAW['media_index']),
-          'poster' => $CONFIG->Proxy("rating_key={$SERIES_RAW['grandparent_rating_key']}&type=thumb")
+          'poster' => $CONFIG->Proxy("rating_key={$SERIES_RAW['grandparent_rating_key']}&type=poster")
         ],
         'mediatype' => 'episode',
         'added' => date('c', $SERIES_RAW['added_at'])
@@ -28,7 +28,7 @@
     if ($MOVIE_RAW['media_type'] == "movie") {
       $RECENT_ITEMS[] = [
         'title' => $MOVIE_RAW['full_title'],
-        'poster' => $CONFIG->Proxy("rating_key={$MOVIE_RAW['rating_key']}&type=thumb"),
+        'poster' => $CONFIG->Proxy("rating_key={$MOVIE_RAW['rating_key']}&type=poster"),
         'mediatype' => 'movie',
         'added' => date('c', $MOVIE_RAW['added_at'])
       ];

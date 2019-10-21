@@ -16,7 +16,7 @@
           'season' => (strlen($ACTIVITY_RAW['parent_media_index']) > 1 ? $ACTIVITY_RAW['parent_media_index'] : "0" . $ACTIVITY_RAW['parent_media_index']),
           'episode' => (strlen($ACTIVITY_RAW['media_index']) > 1 ? $ACTIVITY_RAW['media_index'] : "0" . $ACTIVITY_RAW['media_index']),
           'images' => [
-            'poster' => $CONFIG->Proxy("rating_key={$ACTIVITY_RAW['grandparent_rating_key']}&type=thumb"),
+            'poster' => $CONFIG->Proxy("rating_key={$ACTIVITY_RAW['grandparent_rating_key']}&type=poster"),
             'art' => $CONFIG->Proxy("rating_key={$ACTIVITY_RAW['grandparent_rating_key']}&type=art")
           ]
         ],
@@ -36,7 +36,7 @@
       $ACTIVITY[] = [
         'title' => $ACTIVITY_RAW['title'],
         'images' => [
-          'poster' => $CONFIG->Proxy("rating_key={$ACTIVITY_RAW['rating_key']}&type=thumb"),
+          'poster' => $CONFIG->Proxy("rating_key={$ACTIVITY_RAW['rating_key']}&type=poster"),
           'art' => $CONFIG->Proxy("rating_key={$ACTIVITY_RAW['rating_key']}&type=art")
         ],
         'playback' => [
