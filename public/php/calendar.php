@@ -25,10 +25,18 @@
     }
     foreach ($SERIES_CALENDAR as $SERIES_RAW) {
       $NEXT = null;
-      if ($SERIES_RAW['hasFile'] === false && !in_array($SERIES_RAW['seriesId'], $SERIES_IDS, true)) {
-        $SERIES_IDS[] = $SERIES_RAW['seriesId'];
-        $NEXT = 'next';
+
+      if ($SERIES_RAW['hasFile'] === false) {
+        if (!in_array($SERIES_RAW['seriesId'], $SERIES_IDS, true) && !in_array($SERIES_RAW['id'], $SERIES_UPCOMMING_EPISODES)) {
+          $SERIES_IDS[] = $SERIES_RAW['seriesId'];
+          $NEXT = 'next';
+        }
+        if (in_array($SERIES_RAW['seriesId'], $SERIES_IDS, true) && !in_array($SERIES_RAW['id'], $SERIES_UPCOMMING_EPISODES) && array_count_values($SERIES_IDS)[$SERIES_RAW['seriesId']] === 1) {
+          $SERIES_IDS[] = $SERIES_RAW['seriesId'];
+          $NEXT = 'next';
+        }
       }
+
       $SERIES[] = [
         'title' => $SERIES_RAW['title'],
         'series' => [
