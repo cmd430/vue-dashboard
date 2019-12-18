@@ -1,5 +1,6 @@
 {
   "name": "dashboard",
+  "description": "A Dashboard for showing information about a Plex, Tautulli, Sonarr and Radarr Media server",
   "version": "0.1.0",
   "private": true,
   "scripts": {
