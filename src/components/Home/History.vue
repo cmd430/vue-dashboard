@@ -1,7 +1,7 @@
 <template>
   <div class="history">
     <h1>Recent Plays</h1>
-    <ul>
+    <ul ref="history">
       <history-item
         v-for="item in history"
         :key="item.id"
@@ -27,7 +27,11 @@ export default {
   },
   methods: {
     processHistory: function () {
-      fetch('/php/Home/history.php')
+      let limit = 9
+      try {
+        limit = Math.floor((this.$refs.history.getBoundingClientRect().width - (96 * 2)) / 190)
+      } catch (err) {}
+      fetch(`/php/Home/history.php?limit=${limit}`)
         .then(response => {
           if (response.status !== 200) {
             return []
@@ -49,7 +53,7 @@ export default {
     this.update = setInterval(() => {
       console.log('[History] Updating...')
       this.processHistory()
-    }, 30000)
+    }, 10000)
   },
   beforeDestroy () {
     clearInterval(this.update)

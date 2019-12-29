@@ -4,7 +4,7 @@
 
   $CONFIG = new Config();
 
-  $LIMIT = 9;
+  $LIMIT = (isset($_GET['limit']) ? $_GET['limit'] : 9);
   $RECENT_ADDED_SHOWS = $CONFIG->Tautulli("get_recently_added", "count={$LIMIT}&type=show");
   $RECENT_ADDED_MOVIES = $CONFIG->Tautulli("get_recently_added", "count={$LIMIT}&type=movie");
   $RECENT_ITEMS = [];

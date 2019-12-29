@@ -4,7 +4,7 @@
 
   $CONFIG = new Config();
 
-  $LIMIT = 9;
+  $LIMIT = (isset($_GET['limit']) ? $_GET['limit'] : 9);
   $TV_HISTORY = $CONFIG->Tautulli("get_history", "section_id=2");
   $MOVIE_HISTORY = $CONFIG->Tautulli("get_history", "section_id=1");
   $HISTORY = [];

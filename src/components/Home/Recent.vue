@@ -1,7 +1,7 @@
 <template>
   <div class="recent">
     <h1>Recently Added</h1>
-    <ul>
+    <ul ref="recent">
       <recent-item
         v-for="item in recent"
         :key="item.id"
@@ -27,7 +27,11 @@ export default {
   },
   methods: {
     processRecent: function () {
-      fetch('/php/Home/recent.php')
+      let limit = 9
+      try {
+        limit = Math.floor((this.$refs.recent.getBoundingClientRect().width - (96 * 2)) / 190)
+      } catch (err) {}
+      fetch(`/php/Home/recent.php?limit=${limit}`)
         .then(response => {
           if (response.status !== 200) {
             return []
