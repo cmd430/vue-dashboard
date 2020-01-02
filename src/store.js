@@ -8,11 +8,15 @@ export default new Vuex.Store({
   plugins: [
     createPersistedState({
       paths: [
+        'cache',
         'settings'
       ]
     })
   ],
   state: {
+    cache: {
+      maxHomeItems: 9
+    },
     settings: {
       showActivity: true,
       showHistory: true,
@@ -26,6 +30,9 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    maxHomeItems (state, payload) {
+      state.cache.maxHomeItems = payload
+    },
     showActivity (state, payload) {
       state.settings.showActivity = payload
     },

@@ -1,5 +1,5 @@
 <template>
-  <div id="home">
+  <div id="home" ref="home">
     <activity v-if="(this.$store.state.settings.showActivity === true)" />
     <history v-if="(this.$store.state.settings.showHistory === true)"/>
     <recent v-if="(this.$store.state.settings.showRecent === true)"/>
@@ -23,6 +23,25 @@ export default {
     'history': History,
     'recent': Recent,
     'missing': Missing
+  },
+  data () {
+    return {
+      update: null
+    }
+  },
+  methods: {
+    updateCache: function () {
+      this.$store.commit('maxHomeItems', Math.floor((this.$refs.home.getBoundingClientRect().width - (96 * 2)) / 190))
+    }
+  },
+  mounted () {
+    this.updateCache()
+    this.update = setInterval(() => {
+      this.updateCache()
+    }, 5000)
+  },
+  beforeDestroy () {
+    clearInterval(this.update)
   }
 }
 </script>

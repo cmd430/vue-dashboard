@@ -1,7 +1,7 @@
 <template>
   <div class="history">
     <h1>Recent Plays</h1>
-    <ul ref="history">
+    <ul>
       <history-item
         v-for="item in history"
         :key="item.id"
@@ -27,11 +27,7 @@ export default {
   },
   methods: {
     processHistory: function () {
-      let limit = 9
-      try {
-        limit = Math.floor((this.$refs.history.getBoundingClientRect().width - (96 * 2)) / 190)
-      } catch (err) {}
-      fetch(`/php/Home/history.php?limit=${limit}`)
+      fetch(`/php/Home/history.php?limit=${this.$store.state.cache.maxHomeItems}`)
         .then(response => {
           if (response.status !== 200) {
             return []
