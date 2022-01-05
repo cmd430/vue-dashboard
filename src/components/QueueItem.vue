@@ -1,5 +1,5 @@
 <template>
-<li>
+<li v-if="shouldShow()">
   <div class="img" :style="{ 'background-image': 'url(' + (queue.series ? queue.series.poster : queue.poster) + ')' }">
     <span v-if="queue.downloading.status === 'downloading'" class="downloading">
       <span>{{ queue.downloading.timeleft | duration('humanize', true) }}</span>
@@ -25,6 +25,11 @@ export default {
   props: [
     'queue'
   ],
+  methods: {
+    shouldShow () {
+      return this.$store.state.settings.showInitializing
+    }
+  },
   computed: {
     currentClass () {
       let completed = this.queue.downloading.status === 'completed'

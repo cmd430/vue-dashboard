@@ -73,7 +73,13 @@
       </section>
       <section id="queue">
         <h2>Queue Settings</h2>
-        <p>No Settings</p>
+        <div class="checkbox">
+          <label>
+            Show initializing downloads
+            <input type="checkbox" v-model="showInitializing" />
+            <span></span>
+          </label>
+        </div>
       </section>
     </div>
   </div>
@@ -156,6 +162,14 @@ export default {
       },
       set (value) {
         this.$store.commit('relativeCaldendar', value)
+      }
+    },
+    showInitializing: {
+      get () {
+        return this.$store.state.settings.showInitializing
+      },
+      set (value) {
+        this.$store.commit('showInitializing', value)
       }
     }
   }
