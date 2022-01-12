@@ -27,7 +27,7 @@ export default {
   ],
   methods: {
     shouldShow () {
-      return this.$store.state.settings.showInitializing
+      return this.queue.downloading.status === 'warning' ? this.$store.state.settings.showInitializing : true
     }
   },
   computed: {
