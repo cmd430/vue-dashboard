@@ -12,6 +12,9 @@
   </div>
   <div :class="'extended-info ' + currentClass">
     <div class="top-info">
+      <p class="download-progress" v-if="shouldShowDownloadProgress()" >
+        <i class="icon-download"></i>{{ Math.round(calendar.downloading.progress) + '%' }}
+      </p>
       <p class="network" v-title>
         <i class="icon-network"></i>{{ calendar.series ? calendar.series.network : calendar.studio }}
       </p>
@@ -98,7 +101,9 @@ export default {
   },
   watch: {
     extended (val) {
-      if (val === true) this.$el.lastChild.querySelector('.scroll').scrollTop = 0
+      if (val === true) {
+        this.$el.lastChild.querySelector('.scroll').scrollTop = 0
+      }
     }
   },
   methods: {
@@ -133,6 +138,10 @@ export default {
       } else if (e.type === 'mouseleave') {
         scroll.style.overflow = 'hidden'
       }
+    },
+    shouldShowDownloadProgress () {
+      if (this.currentClass === 'downloading') return true
+      return false
     }
   },
   mounted () {
@@ -302,10 +311,14 @@ li {
       white-space: nowrap;
       text-overflow: clip;
       color: rgb(238, 238, 238);
+      .download-progress,
       .runtime,
       .network {
         display: inline;
         margin: 0 12px 0 0;
+        .icon-download {
+          margin-right: 3px;
+        }
         .icon-network {
           margin-right: 5px;
         }

@@ -17,7 +17,8 @@
     foreach ($SERIES_QUEUE as $SHOW_QUEUE) {
       $SERIES_DOWNLOADING[$SHOW_QUEUE['episode']['id']] = [
         'status' => ($SHOW_QUEUE['status'] === 'warning' ? 'stalled' : $SHOW_QUEUE['status']),
-        'trackedStatus' => $SHOW_QUEUE['trackedDownloadStatus']
+        'trackedStatus' => $SHOW_QUEUE['trackedDownloadStatus'],
+        'progress' => round(($SHOW_QUEUE['size'] - $SHOW_QUEUE['sizeleft']) / ($SHOW_QUEUE['size'] / 100), 2)
       ];
     }
     foreach ($SERIES_UPCOMMING as $UPCOMMING) {
@@ -50,7 +51,8 @@
         'downloaded' => $SERIES_RAW['hasFile'],
         'downloading' => [
           'status' => (array_key_exists($SERIES_RAW['id'], $SERIES_DOWNLOADING) ? strtolower($SERIES_DOWNLOADING[$SERIES_RAW['id']]['status']) : 'idle'),
-          'message' => (array_key_exists($SERIES_RAW['id'], $SERIES_DOWNLOADING) ? strtolower($SERIES_DOWNLOADING[$SERIES_RAW['id']]['trackedStatus']) : 'ok')
+          'message' => (array_key_exists($SERIES_RAW['id'], $SERIES_DOWNLOADING) ? strtolower($SERIES_DOWNLOADING[$SERIES_RAW['id']]['trackedStatus']) : 'ok'),
+          'progress' => (array_key_exists($SERIES_RAW['id'], $SERIES_DOWNLOADING) ? $SERIES_DOWNLOADING[$SERIES_RAW['id']]['progress'] : 0)
         ]
       ];
     }
@@ -65,7 +67,8 @@
     foreach ($MOVIES_QUEUE as $MOVIE_QUEUE) {
       $MOVIES_DOWNLOADING[$MOVIE_QUEUE['movie']['tmdbId']] = [
         'status' => ($MOVIE_QUEUE['status'] === 'warning' ? 'stalled' : $MOVIE_QUEUE['status']),
-        'trackedStatus' => $MOVIE_QUEUE['trackedDownloadStatus']
+        'trackedStatus' => $MOVIE_QUEUE['trackedDownloadStatus'],
+        'progress' => round(($MOVIE_QUEUE['size'] - $MOVIE_QUEUE['sizeleft']) / ($MOVIE_QUEUE['size'] / 100), 2)
       ];
     }
     foreach ($MOVIES_CALENDAR as $MOVIE_RAW) {
@@ -83,7 +86,8 @@
         'downloaded' => $MOVIE_RAW['downloaded'],
         'downloading' => [
           'status' => (array_key_exists($MOVIE_RAW['tmdbId'], $MOVIES_DOWNLOADING) ? strtolower($MOVIES_DOWNLOADING[$MOVIE_RAW['tmdbId']]['status']) : 'idle'),
-          'message' => (array_key_exists($MOVIE_RAW['tmdbId'], $MOVIES_DOWNLOADING) ? strtolower($MOVIES_DOWNLOADING[$MOVIE_RAW['tmdbId']]['trackedStatus']) : 'ok')
+          'message' => (array_key_exists($MOVIE_RAW['tmdbId'], $MOVIES_DOWNLOADING) ? strtolower($MOVIES_DOWNLOADING[$MOVIE_RAW['tmdbId']]['trackedStatus']) : 'ok'),
+          'progress' => (array_key_exists($MOVIE_RAW['id'], $MOVIES_DOWNLOADING) ? $MOVIES_DOWNLOADING[$MOVIE_RAW['id']]['progress'] : 0)
         ]
       ];
     }
