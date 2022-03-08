@@ -27,7 +27,7 @@ export default {
   ],
   methods: {
     shouldShow () {
-      return this.queue.downloading.status === 'warning' ? this.$store.state.settings.showInitializing : true
+      return this.queue.downloading.status === 'stalled' ? this.$store.state.settings.showStalled : true
     }
   },
   computed: {
@@ -101,12 +101,13 @@ div {
         }
       }
       &.queued,
+      &.stalled,
       &.paused,
       &.starting,
       &.warning,
       &.unknown {
         span {
-          padding: 10px;
+          padding: 10px !important;
         }
       }
     }

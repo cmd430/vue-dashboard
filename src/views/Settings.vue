@@ -75,8 +75,8 @@
         <h2>Queue Settings</h2>
         <div class="checkbox">
           <label>
-            Show initializing downloads
-            <input type="checkbox" v-model="showInitializing" />
+            Show stalled downloads
+            <input type="checkbox" v-model="showStalled" />
             <span></span>
           </label>
         </div>
@@ -164,12 +164,12 @@ export default {
         this.$store.commit('relativeCaldendar', value)
       }
     },
-    showInitializing: {
+    showStalled: {
       get () {
-        return this.$store.state.settings.showInitializing
+        return this.$store.state.settings.showStalled
       },
       set (value) {
-        this.$store.commit('showInitializing', value)
+        this.$store.commit('showStalled', value)
       }
     }
   }

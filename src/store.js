@@ -27,7 +27,7 @@ export default new Vuex.Store({
       alwaysShowToday: true,
       showCinemaRelease: false,
       relativeCaldendar: true,
-      showInitializing: false
+      showStalled: false
     }
   },
   mutations: {
@@ -61,8 +61,8 @@ export default new Vuex.Store({
     relativeCaldendar (state, payload) {
       state.settings.relativeCaldendar = payload
     },
-    showInitializing (state, payload) {
-      state.settings.showInitializing = payload
+    showStalled (state, payload) {
+      state.settings.showStalled = payload
     }
   },
   actions: {}
