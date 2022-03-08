@@ -4,14 +4,14 @@
 
   function getMovies() {
     $CONFIG = new Config();
-    $MOVIES_QUEUE = $CONFIG->Radarr("queue", "sort_by=timeleft&order=asc");
+    $MOVIES_QUEUE = $CONFIG->Radarr("queue", "page=1&pageSize=100&sortDirection=asc&sortKey=timeLeft&includeUnknownMovieItems=false");
     $MOVIES = [];
-    foreach ($MOVIES_QUEUE as $MOVIE_RAW) {
+    foreach ($MOVIES_QUEUE['records'] as $MOVIE_RAW) {
       $MOVIES[] = [
         'title' => $MOVIE_RAW['movie']['title'],
         'poster' => $CONFIG->Proxy("radarr_id={$MOVIE_RAW['movie']['id']}"),
         'downloading' => [
-          'timeleft' => ($MOVIE_RAW['timeleft'] ? $MOVIE_RAW['timeleft'] : 0),
+          'timeleft' => (isset($MOVIE_RAW['timeleft']) ? $MOVIE_RAW['timeleft'] : 0),
           'progress' => round(($MOVIE_RAW['size'] - $MOVIE_RAW['sizeleft'])/ ($MOVIE_RAW['size'] / 100), 2),
           'status' => strtolower(($MOVIE_RAW['status'] === 'warning' ? 'stalled' : $MOVIE_RAW['status'])),
           'message' => strtolower($MOVIE_RAW['trackedDownloadStatus'])
@@ -22,19 +22,29 @@
   }
   function getSeries() {
     $CONFIG = new Config();
-    $SERIES_QUEUE = $CONFIG->Sonarr("queue", "sort_by=timeleft&order=asc");
+    $SERIES_QUEUE = $CONFIG->Sonarr("queue");
     $SERIES = [];
-    foreach ($SERIES_QUEUE as $SERIES_RAW) {
+    $SERIES_INFO_IDS = [];
+    $SERIES_INFO = [];
+
+    foreach ($SERIES_QUEUE['records'] as $SERIES_RAW) {
+      if (!in_array($SERIES_RAW['seriesId'], $SERIES_INFO_IDS, true)) {
+        $SERIES_INFO[] = $CONFIG->Sonarr("series/{$SERIES_RAW['seriesId']}");
+      }
+
+      $SERIES_INFO_RAW = $SERIES_INFO[array_search($SERIES_RAW['seriesId'], array_column($SERIES_INFO, 'id'))];
+      $EPISODE_INFO_RAW = $CONFIG->Sonarr("episode/{$SERIES_RAW['episodeId']}");
+
       $SERIES[] = [
-        'title' => $SERIES_RAW['episode']['title'],
+        'title' => $EPISODE_INFO_RAW['title'],
         'series' => [
-          'title' => $SERIES_RAW['series']['title'],
-          'season' => (strlen($SERIES_RAW['episode']['seasonNumber']) === 1 ? 0 : null) . $SERIES_RAW['episode']['seasonNumber'],
-          'episode' => (strlen($SERIES_RAW['episode']['episodeNumber']) === 1 ? 0 : null) . $SERIES_RAW['episode']['episodeNumber'],
-          'poster' => $CONFIG->Proxy("sonarr_id={$SERIES_RAW['series']['id']}")
+          'title' => $SERIES_INFO_RAW['title'],
+          'season' => (strlen($EPISODE_INFO_RAW['seasonNumber']) === 1 ? 0 : null) . $EPISODE_INFO_RAW['seasonNumber'],
+          'episode' => (strlen($EPISODE_INFO_RAW['episodeNumber']) === 1 ? 0 : null) . $EPISODE_INFO_RAW['episodeNumber'],
+          'poster' => $CONFIG->Proxy("sonarr_id={$SERIES_RAW['seriesId']}")
         ],
         'downloading' => [
-          'timeleft' => ($SERIES_RAW['timeleft'] ? $SERIES_RAW['timeleft'] : 0),
+          'timeleft' => (isset($SERIES_RAW['timeleft']) ? $SERIES_RAW['timeleft'] : 0),
           'progress' => round(($SERIES_RAW['size'] - $SERIES_RAW['sizeleft'])/ ($SERIES_RAW['size'] / 100), 2),
           'status' => strtolower(($SERIES_RAW['status'] === 'warning' ? 'stalled' : $SERIES_RAW['status'])),
           'message' => strtolower($SERIES_RAW['trackedDownloadStatus'])
