@@ -14,6 +14,9 @@
     $SERIES_UPCOMMING_EPISODES = [];
     $SERIES_IDS = [];
     $SERIES = [];
+    $SERIES_INFO_IDS = [];
+    $SERIES_INFO = [];
+    
     foreach ($SERIES_QUEUE as $SHOW_QUEUE) {
       $SERIES_DOWNLOADING[$SHOW_QUEUE['episode']['id']] = [
         'status' => ($SHOW_QUEUE['status'] === 'warning' ? 'stalled' : $SHOW_QUEUE['status']),
@@ -31,20 +34,25 @@
         $SERIES_IDS[] = $SERIES_RAW['seriesId'];
         $NEXT = 'next';
       }
+      if (!in_array($SERIES_RAW['seriesId'], $SERIES_INFO_IDS, true)) {
+        $SERIES_INFO[] = $CONFIG->Sonarr("series/{$SERIES_RAW['seriesId']}");
+      }
+
+      $SERIES_INFO_RAW = $SERIES_INFO[array_search($SERIES_RAW['seriesId'], array_column($SERIES_INFO, 'id'))];
 
       $SERIES[] = [
         'title' => $SERIES_RAW['title'],
         'series' => [
-          'title' => $SERIES_RAW['series']['title'],
+          'title' => $SERIES_INFO_RAW['title'],
           'season' => (strlen($SERIES_RAW['seasonNumber']) === 1 ? 0 : null) . $SERIES_RAW['seasonNumber'],
           'episode' => (strlen($SERIES_RAW['episodeNumber']) === 1 ? 0 : null) . $SERIES_RAW['episodeNumber'],
-          'overview' => (isset($SERIES_RAW['series']['overview']) ? $SERIES_RAW['series']['overview'] : ""),
-          'poster' => $CONFIG->Proxy("sonarr_id={$SERIES_RAW['series']['id']}"),
-          'network' => $SERIES_RAW['series']['network']
+          'overview' => (isset($SERIES_INFO_RAW['overview']) ? $SERIES_INFO_RAW['overview'] : ""),
+          'poster' => $CONFIG->Proxy("sonarr_id={$SERIES_RAW['seriesId']}"),
+          'network' => $SERIES_INFO_RAW['network']
         ],
         'release' => [
           'air' => (isset($SERIES_RAW['airDateUtc']) ? $SERIES_RAW['airDateUtc'] : null),
-          'runtime' => $SERIES_RAW['series']['runtime'],
+          'runtime' => $SERIES_INFO_RAW['runtime'],
           'status' => (in_array($SERIES_RAW['id'], $SERIES_UPCOMMING_EPISODES) ? 'today' : $NEXT)
         ],
         'overview' => (isset($SERIES_RAW['overview']) ? $SERIES_RAW['overview'] : ""),
@@ -83,7 +91,7 @@
         ],
         'studio' => $MOVIE_RAW['studio'],
         'overview' => (isset($MOVIE_RAW['overview']) ? $MOVIE_RAW['overview'] : ""),
-        'downloaded' => $MOVIE_RAW['downloaded'],
+        'downloaded' => $MOVIE_RAW['hasFile'],
         'downloading' => [
           'status' => (array_key_exists($MOVIE_RAW['tmdbId'], $MOVIES_DOWNLOADING) ? strtolower($MOVIES_DOWNLOADING[$MOVIE_RAW['tmdbId']]['status']) : 'idle'),
           'message' => (array_key_exists($MOVIE_RAW['tmdbId'], $MOVIES_DOWNLOADING) ? strtolower($MOVIES_DOWNLOADING[$MOVIE_RAW['tmdbId']]['trackedStatus']) : 'ok'),
