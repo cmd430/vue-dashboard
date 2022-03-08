@@ -64,7 +64,7 @@
       } else {
         $params = "?" . $params . "&";
       }
-      $URL = $this::SONARR_CONNECTION . "://" . $this::SONARR_HOST . ":" . $this::SONARR_PORT . "/api/{$route}{$params}apikey=" . $this::SONARR_API_KEY;
+      $URL = $this::SONARR_CONNECTION . "://" . $this::SONARR_HOST . ":" . $this::SONARR_PORT . "/api/v3/{$route}{$params}apikey=" . $this::SONARR_API_KEY;
       if ($json) {
         return json_decode(file_get_contents($URL), true);
       } else {
@@ -77,7 +77,7 @@
       } else {
         $params = "?" . $params . "&";
       }
-      $URL = $this::RADARR_CONNECTION ."://" . $this::RADARR_HOST .":" . $this::RADARR_PORT ."/api/{$route}{$params}apikey=" . $this::RADARR_API_KEY;
+      $URL = $this::RADARR_CONNECTION ."://" . $this::RADARR_HOST .":" . $this::RADARR_PORT ."/api/v3/{$route}{$params}apikey=" . $this::RADARR_API_KEY;
       if ($json) {
         return json_decode(file_get_contents($URL), true);
       } else {
