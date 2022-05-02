@@ -6,10 +6,19 @@
     $CONFIG = new Config();
     $MOVIES_QUEUE = $CONFIG->Radarr("queue", "page=1&pageSize=100&sortDirection=asc&sortKey=timeLeft&includeUnknownMovieItems=false");
     $MOVIES = [];
+    $MOVIES_INFO_IDS = [];
+    $MOVIES_INFO = [];
+
     foreach ($MOVIES_QUEUE['records'] as $MOVIE_RAW) {
+      if (!in_array($MOVIE_RAW['movieId'], $MOVIES_INFO_IDS, true)) {
+        $MOVIES_INFO[] = $CONFIG->Radarr("movie/{$MOVIE_RAW['movieId']}");
+      }
+
+      $MOVIE_INFO_RAW = $MOVIES_INFO[array_search($MOVIE_RAW['movieId'], array_column($MOVIES_INFO, 'id'))];
+
       $MOVIES[] = [
-        'title' => $MOVIE_RAW['movie']['title'],
-        'poster' => $CONFIG->Proxy("radarr_id={$MOVIE_RAW['movie']['id']}"),
+        'title' => $MOVIE_INFO_RAW['title'],
+        'poster' => $CONFIG->Proxy("radarr_id={$MOVIE_RAW['movieId']}"),
         'downloading' => [
           'timeleft' => (isset($MOVIE_RAW['timeleft']) ? $MOVIE_RAW['timeleft'] : 0),
           'progress' => round(($MOVIE_RAW['size'] - $MOVIE_RAW['sizeleft'])/ ($MOVIE_RAW['size'] / 100), 2),
