@@ -5,6 +5,14 @@
   $START = (isset($_GET['start']) ? "start=" . $_GET['start'] : "");
   $END = (isset($_GET['end']) ? "end=" . $_GET['end'] : "");
 
+  function safeRound($LEFT, $RIGHT) {
+    try {
+      return round($LEFT / $RIGHT, 2);
+    } catch (DivisionByZeroError $e) {
+      return 0;
+    }
+  }
+
   function getSeries($START, $END) {
     $CONFIG = new Config();
     $SERIES_QUEUE = $CONFIG->Sonarr("queue");
@@ -16,12 +24,12 @@
     $SERIES = [];
     $SERIES_INFO_IDS = [];
     $SERIES_INFO = [];
-    
-    foreach ($SERIES_QUEUE as $SHOW_QUEUE) {
-      $SERIES_DOWNLOADING[$SHOW_QUEUE['episode']['id']] = [
-        'status' => ($SHOW_QUEUE['status'] === 'warning' ? 'stalled' : $SHOW_QUEUE['status']),
-        'trackedStatus' => $SHOW_QUEUE['trackedDownloadStatus'],
-        'progress' => round(($SHOW_QUEUE['size'] - $SHOW_QUEUE['sizeleft']) / ($SHOW_QUEUE['size'] / 100), 2)
+
+    foreach ($SERIES_QUEUE as $SHOW_QUEUE => $SHOW) {
+      $SERIES_DOWNLOADING[isset($SHOW['episode']['id'])] = [
+        'status' => (isset($SHOW['status']) === 'warning' ? 'stalled' : isset($SHOW['status'])),
+        'trackedStatus' => isset($SHOW['trackedDownloadStatus']),
+        'progress' => safeRound((isset($SHOW['size']) - isset($SHOW['sizeleft'])), (isset($SHOW['size']) / 100), 2)
       ];
     }
     foreach ($SERIES_UPCOMMING as $UPCOMMING) {
@@ -72,11 +80,11 @@
     $MOVIES_CALENDAR = $CONFIG->Radarr("calendar", "{$START}&{$END}&unmonitored=false");
     $MOVIES_DOWNLOADING = [];
     $MOVIES = [];
-    foreach ($MOVIES_QUEUE as $MOVIE_QUEUE) {
-      $MOVIES_DOWNLOADING[$MOVIE_QUEUE['movie']['tmdbId']] = [
-        'status' => ($MOVIE_QUEUE['status'] === 'warning' ? 'stalled' : $MOVIE_QUEUE['status']),
-        'trackedStatus' => $MOVIE_QUEUE['trackedDownloadStatus'],
-        'progress' => round(($MOVIE_QUEUE['size'] - $MOVIE_QUEUE['sizeleft']) / ($MOVIE_QUEUE['size'] / 100), 2)
+    foreach ($MOVIES_QUEUE as $MOVIE_QUEUE => $MOVIE) {
+      $MOVIES_DOWNLOADING[isset($MOVIE['movie']['tmdbId'])] = [
+        'status' => (isset($MOVIE['status']) === 'warning' ? 'stalled' : isset($MOVIE['status'])),
+        'trackedStatus' => isset($MOVIE['trackedDownloadStatus']),
+        'progress' => safeRound((isset($MOVIE['size']) - isset($MOVIE['sizeleft'])), (isset($MOVIE['size']) / 100), 2)
       ];
     }
     foreach ($MOVIES_CALENDAR as $MOVIE_RAW) {
