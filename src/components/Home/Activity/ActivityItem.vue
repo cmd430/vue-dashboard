@@ -1,34 +1,42 @@
 <template>
 <li>
-  <div class="bg_img" :style="{ 'background-image': 'url(' + (activity.series ? activity.series.images.art : activity.images.art) + ')' }">
+  <div class="bg_img" :style="{ 'background-image': 'url(' + (activity.channel ? activity.channel.images.art : (activity.series ? activity.series.images.art : activity.images.art)) + ')' }">
     <span>{{ activity.playback.user }}</span>
     <span>{{ activity.playback.state }}</span>
   </div>
-  <div class="img" :style="{ 'background-image': 'url(' + (activity.series ? activity.series.images.poster : activity.images.poster) + ')' }">
+  <div class="img" :style="{ 'background-image': 'url(' + (activity.channel ? activity.channel.images.poster : (activity.series ? activity.series.images.poster : activity.images.poster)) + ')' }"></div>
+  <div v-if="activity.mediatype == 'live'" class="info" :data-type="activity.mediatype">
+    <img :src="activity.channel.images.logo" />
+    <p>
+      <span>Channel:</span>
+      {{ activity.channel.title }}
+    </p>
   </div>
-  <div class="info" :data-type="activity.mediatype">
-    <p v-if="activity.mediatype == 'episode'" v-title>
+  <div v-if="activity.mediatype == 'episode'" class="info" :data-type="activity.mediatype">
+    <p v-title>
       <span>Series:</span>
       {{ activity.series.title }}
     </p>
-    <p v-if="activity.mediatype == 'episode'" v-title>
+    <p v-title>
       <span>Episode Title:</span>
       {{ activity.title }}
     </p>
-    <p v-if="activity.mediatype == 'episode'">
+    <p>
       <span>Season:</span>
       {{ activity.series.season }}
     </p>
-    <p v-if="activity.mediatype == 'episode'">
+    <p>
       <span>Episode:</span>
       {{ activity.series.episode }}
     </p>
-    <p v-if="activity.mediatype == 'movie'" v-title>
+  </div>
+  <div v-if="activity.mediatype == 'movie'" class="info" :data-type="activity.mediatype">
+    <p>
       <span>Movie Title:</span>
       {{ activity.title }}
     </p>
   </div>
-  <div id="progress">
+  <div v-if="activity.mediatype != 'live'" id="progress">
     <span class="progress_text">{{ activity.playback.progress.time | MediaTime((+activity.playback.runtime >= 3600000)) }} / {{ activity.playback.runtime | MediaTime() }}</span>
     <span class="percent_text">{{ activity.playback.progress.percent + '%' }}</span>
     <span class="progress" :style="{ 'width': activity.playback.progress.percent + '%'}"></span>
@@ -102,6 +110,9 @@ div {
     left: 162px;
     width: 318px;
     height: 114px;
+    &[data-type="live"] img {
+      max-height: 114px;
+    }
     &[data-type="movie"] {
       top: 145px;
     }

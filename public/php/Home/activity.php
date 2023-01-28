@@ -8,7 +8,25 @@
   $ACTIVITY = [];
 
   foreach ($CURRENT_ACTIVITY['response']['data']['sessions'] as $ACTIVITY_RAW) {
-    if ($ACTIVITY_RAW['media_type'] == "episode") {
+    if ($ACTIVITY_RAW['library_name'] == "Live TV") {
+      $ACTIVITY[] = [
+        'title' => "Live TV",
+        'channel' => [
+          'title' => $ACTIVITY_RAW['channel_call_sign'],
+          'images' => [
+            'logo' => $ACTIVITY_RAW['channel_thumb'],
+            'poster' => $CONFIG->Proxy("rating_key=live&type=poster"),
+            'art' => $CONFIG->Proxy("rating_key=live&type=art")
+          ]
+        ],
+        'playback' => [
+          'user' => $ACTIVITY_RAW['friendly_name'],
+          'state' => $ACTIVITY_RAW['state'],
+          'quality' => $ACTIVITY_RAW['stream_video_resolution'],
+        ],
+        'mediatype' => 'live'
+      ];
+    } else if ($ACTIVITY_RAW['media_type'] == "episode") {
       $ACTIVITY[] = [
         'title' => $ACTIVITY_RAW['title'],
         'series' => [
