@@ -24,7 +24,6 @@
     private const SONARR_API_KEY =         "<your sonarr api key here>";
     private const RADARR_API_KEY =         "<your radarr api key here>";
     private const TAUTULLI_API_KEY =       "<your tautulli api key here>";
-    public  const TMDB_API_KEY =           "<your tmdb api key here>";
 
     // Ports
     private const PLEX_PORT =              "<your plex port here | e.g 32400>";
