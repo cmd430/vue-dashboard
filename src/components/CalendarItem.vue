@@ -22,7 +22,7 @@
         <i class="icon-clock"></i>{{ formatRuntime(calendar.release.runtime) }}
       </p>
     </div>
-    <div class="scroll">
+    <div class="scroll" ref="scroller">
       <p v-if="calendar.overview === ''">Overview is not currently available for this item.</p>
       <p>{{ calendar.overview }}</p>
     </div>
@@ -102,7 +102,7 @@ export default {
   watch: {
     extended (val) {
       if (val === true) {
-        this.$el.lastChild.querySelector('.scroll').scrollTop = 0
+        this.$refs.scroller.scrollTop = 0
       }
     }
   },
@@ -145,14 +145,18 @@ export default {
     }
   },
   mounted () {
-    let scroll = this.$el.lastChild.querySelector('.scroll')
-    scroll.addEventListener('mouseenter', this.overflow)
-    scroll.addEventListener('mouseleave', this.overflow)
+    let scroll = this.$refs.scroller
+    if (scroll) {
+      scroll.addEventListener('mouseenter', this.overflow)
+      scroll.addEventListener('mouseleave', this.overflow)
+    }
   },
   beforeDestroy () {
-    let scroll = this.$el.lastChild.querySelector('.scroll')
-    scroll.removeEventListener('mouseenter', this.overflow)
-    scroll.removeEventListener('mouseleave', this.overflow)
+    let scroll = this.$refs.scroller
+    if (scroll) {
+      scroll.removeEventListener('mouseenter', this.overflow)
+      scroll.removeEventListener('mouseleave', this.overflow)
+    }
   }
 }
 </script>

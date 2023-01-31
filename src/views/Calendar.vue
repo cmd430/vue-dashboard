@@ -53,11 +53,12 @@ export default {
         movies: null
       },
       display: this.$store.state.settings.relativeCaldendar ? 'relative' : nonRelativeDateFormat,
-      update: null
+      update: null,
+      monthsAhead: 0
     }
   },
   methods: {
-    processCalendar: function () {
+    processCalendar: function (isMount) {
       fetch(`/php/calendar.php?start=${this.month.start}&end=${this.month.end}`)
         .then(response => {
           if (response.status !== 200) {
@@ -66,13 +67,23 @@ export default {
           return response.json()
         })
         .then(calendar => {
-          this.calendar = calendar
+          const itemsMonth = calendar.series.length < 1 && calendar.movies.length < 1
+          const itemsLeftMonth = [ ...calendar.series.filter(s => s.downloaded === false), ...calendar.movies.filter(m => m.downloaded === false) ].length < 1
+          const itemsToday = [ ...calendar.series.filter(s => s.release.status === 'today'), ...calendar.movies.filter(m => m.release.status === 'today') ].length < 1
+          const itemsShowMonth = this.$store.state.settings.hideDownloaded === true && (this.$store.state.settings.alwaysShowToday === false || itemsToday)
+
+          if (isMount === true && (itemsMonth || (itemsLeftMonth && itemsShowMonth))) {
+            this.setMonth(this.month.next)
+            this.processCalendar()
+          } else {
+            this.calendar = calendar
+          }
         })
         .catch(err => {
           console.error('[Calendar]', err)
         })
     },
-    setMonth: function (date) {
+    setMonth: function (date, isMount) {
       let year = date.getFullYear()
       let month = date.getMonth()
       let start = new Date(year, month, 1).toISOString()
@@ -87,7 +98,7 @@ export default {
         previous: previous,
         next: next
       }
-      this.processCalendar()
+      this.processCalendar(isMount)
     },
     toggleDisplay (e) {
       if (e.key === 'Tab') {
@@ -101,7 +112,7 @@ export default {
     }
   },
   created () {
-    this.setMonth(new Date())
+    this.setMonth(new Date(), true)
   },
   mounted () {
     this.update = setInterval(() => {
