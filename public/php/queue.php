@@ -21,7 +21,7 @@
         'poster' => $CONFIG->Proxy("radarr_id={$MOVIE_RAW['movieId']}"),
         'downloading' => [
           'timeleft' => (isset($MOVIE_RAW['timeleft']) ? $MOVIE_RAW['timeleft'] : 0),
-          'progress' => round(($MOVIE_RAW['size'] - $MOVIE_RAW['sizeleft'])/ ($MOVIE_RAW['size'] / 100), 2),
+          'progress' => $MOVIE_RAW['size'] > 0 ? round(($MOVIE_RAW['size'] - $MOVIE_RAW['sizeleft']) / ($MOVIE_RAW['size'] / 100), 2) : 0,
           'status' => strtolower(($MOVIE_RAW['status'] === 'warning' ? 'stalled' : $MOVIE_RAW['status'])),
           'message' => strtolower($MOVIE_RAW['trackedDownloadStatus'])
         ]
@@ -54,7 +54,7 @@
         ],
         'downloading' => [
           'timeleft' => (isset($SERIES_RAW['timeleft']) ? $SERIES_RAW['timeleft'] : 0),
-          'progress' => round(($SERIES_RAW['size'] - $SERIES_RAW['sizeleft'])/ ($SERIES_RAW['size'] / 100), 2),
+          'progress' => $SERIES_RAW['size'] > 0 ? round(($SERIES_RAW['size'] - $SERIES_RAW['sizeleft']) / ($SERIES_RAW['size'] / 100), 2) : 0,
           'status' => strtolower(($SERIES_RAW['status'] === 'warning' ? 'stalled' : $SERIES_RAW['status'])),
           'message' => strtolower($SERIES_RAW['trackedDownloadStatus'])
         ]
