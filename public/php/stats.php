@@ -9,7 +9,7 @@
   $LIBRARY_MOVIES_WATCHTIME_STATS = $CONFIG->Tautulli("get_library_watch_time_stats", "section_id=1");
   $LIBRARY_SHOWS_WATCHTIME_STATS = $CONFIG->Tautulli("get_library_watch_time_stats", "section_id=2");
   $DISKSPACE = $CONFIG->Sonarr("diskspace");
-  $BANDWIDTH_TORRENT = $CONFIG->qBittorrent("maindata");
+  $BANDWIDTH_TORRENT = $CONFIG->qBittorrent("sync/maindata");
   $BANDWIDTH_LIVE = $CONFIG->Plex("bandwidth", "timespan=6");
   $BANDWIDTH = $CONFIG->Plex("bandwidth", "timespan=1&at>=0");
 

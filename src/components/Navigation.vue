@@ -27,7 +27,9 @@
         <div class="hover-box">
           <span v-if="updates.sonarr">An Update is Availible for Sonarr</span>
           <span v-if="updates.radarr">An Update is Availible for Radarr</span>
+          <span v-if="updates.prowlarr">An Update is Availible for Prowlarr</span>
           <span v-if="updates.tautulli">An Update is Availible for Tautulli</span>
+          <span v-if="updates.qbittorrent">An Update is Availible for qBittorrent</span>
         </div>
       </li>
       <!--
@@ -71,7 +73,9 @@ export default {
       if (this.updates !== null) {
         if (this.updates.sonarr !== false) return true
         if (this.updates.radarr !== false) return true
+        if (this.updates.prowlarr !== false) return true
         if (this.updates.tautulli !== false) return true
+        if (this.updates.qbittorrent !== false) return true
       }
       return false
     }
