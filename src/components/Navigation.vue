@@ -168,7 +168,7 @@ header {
           position: absolute;
           top: 50px;
           transform: translateX(-50%);
-          width: 250px;
+          width: 260px;
           height: auto;
           background: rgb(28, 35, 45);
           border: 1px solid rgb(247, 141, 2);

@@ -123,7 +123,12 @@
           ]
         ])), true);
       } else {
-        return $URL;
+        return file_get_contents($URL, false, stream_context_create([
+          $this::QBITTORRENT_CONNECTION => [
+            "method" => "GET",
+            "timeout" => .1 // hack to make it not take FUCKING ages to close the connection
+          ]
+        ]));
       }
     }
   }
