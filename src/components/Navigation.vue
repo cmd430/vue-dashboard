@@ -168,13 +168,14 @@ header {
           position: absolute;
           top: 50px;
           transform: translateX(-50%);
-          width: 260px;
+          width: 274px;
           height: auto;
           background: rgb(28, 35, 45);
           border: 1px solid rgb(247, 141, 2);
           border-radius: 3px;
           padding: 5px 10px;
           visibility: hidden;
+          text-align: center;
           span {
             display: block;
           }
